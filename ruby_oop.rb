@@ -84,9 +84,9 @@ class Array
 
 end
 
-[1,2,5].my_inject(2) do |memo, item|
-  memo + item
-end
+#[1,2,5].my_inject() do |memo, item|
+#  memo + item
+#end
 
  #my_proc = Proc.new{|item| item.even?}
  #[10,2,4].my_all?(&my_proc)
