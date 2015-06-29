@@ -19,12 +19,9 @@ end
 
 class Array
   def my_each
-    if block_given?
       for i in 0..self.size-1 do
-        yield(self[i]) 
+        yield(self[i])   
       end
-    else
-    end
   end
 
   def my_map
@@ -39,24 +36,29 @@ class Array
 
   def select
     arr=[]
-    for i in 0..self.size-1 do
-      yield(self[i]) ? arr<<self[i] : next
-    end
+    #for i in 0..self.size-1 do
+    #  yield(self[i]) ? arr<<self[i] : next
+    #end
+    self.my_each {|item| arr<<item if yield(item)}
     arr
   end
 
   def my_all?
-    for i in 0..self.size-1 do
-      return false unless yield(self[i])
-    end
+    #for i in 0..self.size-1 do
+    #  return false unless yield(self[i])
+    #end
+    #return true
+    self.my_each {|item| return false unless yield(item) }
     return true
   end
 
   def my_inject(start)
     total=start
-    for i in 0..self.size-1 do
-      total += self[i]
-    end
+    #for i in 0..self.size-1 do
+    #  total += self[i]
+    #end
+    #total
+    self.my_each{|item| total = yield(total,item)}
     total
   end
 end
