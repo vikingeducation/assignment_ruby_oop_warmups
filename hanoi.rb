@@ -6,9 +6,7 @@ class GameState
   def initialize(height)
 
     @height = height
-
     @col1, @col2, @col3 = (1..height).to_a.reverse, [], []
-
     @board = [@col1, @col2, @col3]
 
     @win_condition = (1..height).to_a.reverse
@@ -53,7 +51,28 @@ end
 
 class Player
 
+  def initialize(gamestate)
+    @gamestate = gamestate
+  end
+
+  # Prompts the player until they have put in a valid and legal move
   def get_move
+  # Loop until we have a valid AND legal move
+    origin, dest = 0
+    until @gamestate.is_legal?(origin, dest)
+      current_move = get_valid_move
+      origin = current_move[0]
+      dest = current_move[1]
+      if !@gamestate.is_legal?(origin, dest)
+        puts "Invalid move, please try again."
+      else
+        break
+      end
+    end
+    return [origin, dest]
+  end
+
+  def get_valid_move
     origin, dest = 0
       loop do
         puts "\nEnter origin column."
@@ -83,14 +102,6 @@ class Drawer
 
   # This class just prints the board state out as arrays.
   def print_board
-
-    # board.each do |col|
-
-    #   p col.reverse
-
-    # end
-
-
 
     max_height = @board.max.max
 
@@ -126,54 +137,31 @@ class Game
 
 
   def initialize(height = 3)
-
-    
-
     @gamestate = GameState.new(height)
-
     @drawer = Drawer.new(@gamestate)
-
-    @player = Player.new
+    @player = Player.new(@gamestate)
   end
 
   # The main game loop is here.
   def play
 
     while true
-
       @drawer.print_board
-
-      current_move = [0,0]
-
-      # Loop until we have a valid move
-      until move_is_valid?(current_move)
-        current_move = @player.get_move
-        if !move_is_valid?(current_move)
-          puts "Invalid move, please try again."
-        else
-          break
-        end
-      end
-
+      current_move = @player.get_move
       @gamestate.move(current_move)
-
-      if @gamestate.check_win?
-        @drawer.print_board
-        @drawer.print_win
-        break
-      end
-
+      break if check_win?
     end
-
   end
 
-  def move_is_valid?(moves)
-    origin = moves[0]
-    dest = moves[1]
-    @gamestate.is_legal?(origin, dest)
+  def check_win?
+    if @gamestate.check_win?
+      @drawer.print_board
+      @drawer.print_win
+      return true
+    else
+      return false
+    end
   end
-
-
 end
 
 
