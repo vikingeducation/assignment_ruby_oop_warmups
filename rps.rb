@@ -1,10 +1,7 @@
-require 'pry-byebug'
+class RockPaperScissors
 
-class Game
   def initialize
     @player = Player.new("player1")
-    # @computer = Computer.new #@AI reference CLass Computer
-    #prompt play to play
     prompt_player
     play_against_computer?
     play
@@ -47,45 +44,38 @@ class Game
     end
   end
 
-  def is_computer?
-    if @player2.class == Computer
-      return true
-    else
-      return false
-    end
-  end
-
   def play
 
-
     p_choice = @player.get_input
+    puts "#{@player.name} picks #{p_choice}."
 
-    if is_computer?
-      c_choice = @player2.get_input(@player)
-    else
-      c_choice = @player2.get_input(@player2)
-    end
+    c_choice = @player2.get_input
+    puts "#{@player2.name} picks #{c_choice}."
 
-    puts "Player2 picks #{c_choice}."
     if tie?(p_choice, c_choice)
       puts "It's a tie!"
     elsif does_p1_win?(p_choice, c_choice)
-      puts "Player1 wins!"
+      puts "#{@player.name} wins!"
     else
-      puts "Player1 loses!"
+      puts "#{@player2.name} wins!"
     end
+
   end
 
 end
 
 class Player
 
-  def initialize(name) #??? do we need this?
+  def initialize(name)
     @name = name
   end
 
-  def get_input(player) #checks with get_input
-    print "#{player.name}>>"
+  def name
+    @name
+  end
+
+  def get_input #checks with get_input
+    print "#{self.name}>>"
     input = gets.strip
     until valid_input? (input)
       puts "Please choose: rock, paper, or scissors."
@@ -109,7 +99,11 @@ end
 class Computer
 
   def initialize
-    @name = "computer"
+    @name = "Computer"
+  end
+
+  def name
+    @name
   end
 
   def get_input
