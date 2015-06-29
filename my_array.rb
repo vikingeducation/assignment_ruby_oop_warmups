@@ -5,7 +5,7 @@ class Array
 
     i = 0
 
-    if proc == false
+    if block_given?
 
       while i < self.length
 
