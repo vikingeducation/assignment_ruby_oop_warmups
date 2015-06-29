@@ -39,21 +39,35 @@ class TowerOfHanoi
 
 
   def move
+    #[1,2,3][0,0,0][0,0,0]
+    get_from #1
+    get_to #2
 
-    get_from
-    get_to
+    disk = @board[@from_stack].detect {|i| i != 0}
+    #disk = 1
+    index_from = @board[@from_stack].index(disk)
+    #index_from = 0
+    @board[@from_stack][index_from] = 0
+    #[0,2,3][0,0,0][0,0,0]
+
+    first_value = @board[@to_stack].detect {|i| i != 0}
+
+    if first_value.nil?
+      @board[@to_stack][-1] = disk
+      #[0,2,3][0,0,1][0,0,0]
+    else
+      index = board[@from_stack].index(first_value)
 
 
+    end
 
-    p "To what stack do you want to move?"
-    to_stack = gets.chomp.to_i
 
   end
 
   def get_from
 
     p "From what stack do you want to move?"
-    from_stack = gets.chomp.to_i - 1
+    @from_stack = gets.chomp.to_i - 1
 
     if from_stack > 2 || from_stack < 0
       p "Invalid stack input"
@@ -70,9 +84,18 @@ class TowerOfHanoi
   def get_to
 
     p "To what stack do you want to move?"
-    to_stack = gets.chomp.to_i - 1
+    @to_stack = gets.chomp.to_i - 1
 
+    if from_stack > 2 || from_stack < 0
+      p "Invalid stack input"
+      get_to
+    end
 
+    if @board[@to_stack].detect {|i| i != 0} < @board[@from_stack].detect {|i| i != 0}
+      p "Invalid. There's a smaller disk in that stack"
+      get_to
+
+    end
 
   end
 
