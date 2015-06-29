@@ -60,7 +60,14 @@ class Array
 
 
 
+  def my_all?
+
+
+  end
+
+
+
 end
 
-puts [1, 5, 6, 8, 16, 4, 22, 33].my_select {|item| item.even?}
+puts [1, 5, 6, 8, 16, 4, 22, 33].my_all? {|item| item.even?}
 
