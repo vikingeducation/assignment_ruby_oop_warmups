@@ -56,7 +56,7 @@ class Player
   def get_move
     origin, dest = 0
       loop do
-        puts "Enter origin column."
+        puts "\nEnter origin column."
         origin = gets.to_i
         break if (origin < 4 && origin > 0)
       end
@@ -75,8 +75,14 @@ end
 # This class is in charge of representing the game state to the player.
 class Drawer
 
+  def initialize(gamestate)
+
+    @board = gamestate.board
+
+  end
+
   # This class just prints the board state out as arrays.
-  def print_board(board)
+  def print_board
 
     # board.each do |col|
 
@@ -84,14 +90,16 @@ class Drawer
 
     # end
 
-    max_height = board.max.max
+
+
+    max_height = @board.max.max
 
     tabl = "Current Board: \n"
     max_height.downto(0) do |val|
-      board.length.times do |col|
-        if board[col][val]
-          tabl += ("o" * board[col][val])
-          tabl += (" " * (max_height + 2 - board[col][val]))
+      @board.length.times do |col|
+        if @board[col][val]
+          tabl += ("o" * @board[col][val])
+          tabl += (" " * (max_height + 2 - @board[col][val]))
         else
           tabl += (" " * (max_height + 2))
         end
@@ -99,7 +107,7 @@ class Drawer
       tabl += "\n"
     end
 
-    board.length.times do |i|
+    @board.length.times do |i|
       tabl += "#{i+1}"
       tabl += (" " * (max_height + 1))
     end
@@ -119,9 +127,11 @@ class Game
 
   def initialize(height = 3)
 
-    @drawer = Drawer.new
+    
 
     @gamestate = GameState.new(height)
+
+    @drawer = Drawer.new(@gamestate)
 
     @player = Player.new
   end
@@ -131,7 +141,7 @@ class Game
 
     while true
 
-      @drawer.print_board(@gamestate.board)
+      @drawer.print_board
 
       current_move = [0,0]
 
@@ -148,7 +158,7 @@ class Game
       @gamestate.move(current_move)
 
       if @gamestate.check_win?
-        @drawer.print_board(@gamestate.board)
+        @drawer.print_board
         @drawer.print_win
         break
       end

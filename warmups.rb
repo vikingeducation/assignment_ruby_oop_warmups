@@ -84,20 +84,32 @@ class Array
     return result
   end
 
-  def my_select
+  def my_select(proc_argument = nil)
     result = []
     self.my_each do |val|
-      if yield(val)
-        result << val
+      if block_given?
+        if yield(val)
+          result << val
+        end
+      else
+         if proc_argument.call(val)
+          result << val
+        end
       end
     end
     return result
   end
 
-  def my_all?
+  def my_all?(proc_argument = nil)
     self.my_each do |val|
-      if !yield(val)
-        return false
+      if block_given?
+        if !yield(val)
+          return false
+        end
+      else
+        if !proc_argument.call(val)
+          return false
+        end
       end
     end
     return true
@@ -106,11 +118,16 @@ class Array
   # Memo = running total
   # item = current val
 
-  def my_inject(arg = 0)
+  def my_inject(arg = 0, proc_argument = nil)
     memo = arg
     self.my_each do |item|
-      memo = yield(memo, item)
+      if block_given?
+        memo = yield(memo, item)
+      else
+        memo = proc_argument.call(memo, item)
+      end
     end
+    
 
     return memo
 
@@ -120,17 +137,28 @@ end
 
 #[1,2,5].my_each {|item| puts item}
 
-#my_proc = Proc.new{|item| puts item ** 2}
+# my_proc = Proc.new{|item| puts item ** 2}
 
 #[1,2,5].my_each(my_proc)
 
-p [1,2,5].my_map {|item| item ** 2}
+# p [1,2,5].my_map {|item| item ** 2}
 
-my_second_proc = Proc.new{|item| item ** 2}
+# my_second_proc = Proc.new{|item| item ** 2}
 
-p [1,2,5].my_map(my_second_proc)
-#p [1,2,5].my_select{|item| item.even?}
+# p [1,2,5].my_map(my_second_proc)
 
-#p [4,2,6].my_all?{|item| item.even?}
+# my_third_proc = Proc.new{|num| num.even?}
+# p [1,2,5].my_select{|item| item.even?}
 
-#p [1,2,5].my_inject(0) {|memo, item| memo + item}
+# p [1,2,5].my_select(my_third_proc)
+
+# p [4,2,6].my_all?{|item| item.even?}
+
+# p [2,4,6].my_all?(my_third_proc)
+
+my_fourth_proc = Proc.new{|memo, item| memo * item}
+
+p [1,2,5].my_inject(0) {|memo, item| memo + item}
+
+p [1,2,7].my_inject(1, my_fourth_proc)
+
