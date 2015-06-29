@@ -3,7 +3,12 @@ class Rps
   def initialize(players)
 
     @player1 = Player.new
-    @player2 = Computer.new
+
+    if players == 1
+      @player2 = Computer.new
+    elsif players == 2
+      @player2 = Player.new
+    end
 
   end
 
@@ -106,5 +111,6 @@ class Computer < Player
 
 end
 
-game = Rps.new
+puts "How many players?"
+game = Rps.new(gets.chomp.to_i)
 game.play
