@@ -33,11 +33,10 @@ class Game
 
   def prompt_player  #intro & rules
     puts "Rock, paper, scissors game!"
-    print ">>"
+    puts ">>"
   end
 
   def play
-    binding.pry
     p_choice = @player.get_input
     c_choice = @computer.computer_choice
     puts "Computer picks #{c_choice}."
@@ -60,11 +59,12 @@ class Player
   end
 
   def get_input #checks with get_input
-    input = "rock" #gets.strip
+    input = gets.strip
     until valid_input? (input)
+      puts "Please choose: rock, paper, or scissors."
       input = gets.chomp
-      return input
     end
+    input
   end
 
   def valid_input? (input)#if not, get_input again
