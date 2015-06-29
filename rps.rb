@@ -1,9 +1,24 @@
-class RockPaperScissors
+class Rps
 
-  def intialize
+  def initialize(players)
 
-    @player1 = new.Player
-    @player2 = new.Computer
+    @player1 = Player.new
+    @player2 = Computer.new
+
+  end
+
+  def play
+
+    p "Let's play Rock Paper Scissors!"
+    p "To quit, enter 'q'"
+
+    while true
+      @player1.choose
+      puts "Player 1 chose #{@player1.choice}"
+      @player2.choose
+      puts "Player 2 chose #{@player2.choice}"
+      compare
+    end
 
   end
 
@@ -50,27 +65,31 @@ end
 
 class Player
 
-  attr_accesor :choice
+  attr_accessor :choice
+
+  def initialize
+
+    @options = ["rock", "paper", "scissors"]
+
+  end
 
   def choose
+
     puts "Choose between rock, paper or scissors"
     @choice = gets.chomp.downcase
+
+    exit if choice == 'q'
     
     if !validate(@choice)
       puts "Invalid input"
-      choose
+      self.choose
     end
 
   end
 
   def validate (entry)
-    @options = ["rock", "paper", "scissors"]
     
-    if options.include?(entry)
-      return true
-    end
-
-    return   false
+    @options.include?(entry)
 
   end
 
@@ -81,8 +100,11 @@ class Computer < Player
 
   def choose
     
-    @choice = @options[rand(1..3)]
+    @choice = @options.sample
 
   end
 
 end
+
+game = Rps.new
+game.play
