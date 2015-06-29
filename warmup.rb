@@ -16,3 +16,29 @@ def my_benchmark(ntimes)
   ntimes.times {yield}
   Time.now - start_time
 end
+
+class Array
+  def my_each
+    
+    for i in 0..self.size-1 do
+      yield(self[i]) 
+    end
+  end
+
+  def my_map
+    arr=[]
+    #Do it with my_each also
+    for i in 0..self.size-1 do
+      arr<<yield(self[i]) 
+    end
+    arr
+  end
+
+  def select
+    arr=[]
+    for i in 0..self.size-1 do
+      yield(self[i]) ? arr<<self[i] : next
+    end
+    arr
+  end
+end
