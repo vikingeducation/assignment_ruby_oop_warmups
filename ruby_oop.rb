@@ -35,6 +35,7 @@ end
 
 #puts my_benchmark(10000) { puts "hi" }
 class Array
+
   def my_each
     i = 0
     while i < self.length
@@ -43,8 +44,61 @@ class Array
     end
     return self
   end
+
+  def my_map
+    return_array = []
+    self.my_each do |item|
+      return_array.push(yield (item))
+    end
+    return_array
+  end
+
+  def my_select
+    return_array =[]
+    self.my_each do |item|
+      if yield(item)
+        return_array.push(item)
+      end
+    end
+    p return_array
+  end 
+
+  def my_all?
+    self.my_each do |item|
+      if !yield(item)
+        false
+        break
+      else
+        true
+      end
+    end
+  end
+
+  
+
 end
 
+# my_proc = Proc.new{|item| item.even?}
+# [1,2,5].my_all?(&my_proc)
+
+# my_proc = Proc.new{|item| item.even?}
+# [1,2,5].my_select(&my_proc)
+
+# [1,2,5].my_map do |item|
+#   item ** 2
+# end
+
 #[1,2,5].my_each {|item| puts item}
-my_proc = Proc.new {|item| puts item**2}
-[1,2,5].my_each(&my_proc)
+# my_proc = Proc.new {|item| puts item**2}
+# [1,2,5].my_each(&my_proc)
+
+
+
+
+
+
+
+
+
+
+
