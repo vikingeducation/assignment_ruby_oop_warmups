@@ -90,11 +90,36 @@ class Drawer
   # This class just prints the board state out as arrays.
   def print_board(board)
 
-    board.each do |col|
+    # board.each do |col|
 
-      p col.reverse
+    #   p col.reverse
 
+    # end
+
+    max_height = board.max.max
+
+    tabl = "Current Board: \n" 
+    max_height.downto(0) do |val|
+      3.times do |col|
+        if board[col][val] 
+          tabl += ("o" * board[col][val])
+          tabl += (" " * (max_height + 2 - board[col][val]))
+        else
+          tabl += (" " * (max_height + 2))
+        end
+
+      end
+      tabl += "\n"
     end
+    tabl += "1"
+    tabl += (" " * (max_height + 1))
+
+    tabl += "2"
+    tabl += (" " * (max_height + 1))
+
+    tabl += "3"
+    tabl += (" " * (max_height + 1))
+    print tabl
   end
 
   def print_win
@@ -105,6 +130,7 @@ end
 # This class represents the game as a whole.
 # It has its own drawer, move parser, and game state.
 class Game
+
 
   def initialize(height = 3)
 
