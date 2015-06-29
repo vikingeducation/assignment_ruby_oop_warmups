@@ -47,6 +47,33 @@ class Array
     modified_array
   end
 
+  def my_select
+    select_array = []
+    self.my_each do |item|
+      if yield(item)
+        select_array << item
+      end
+    end
+    select_array
+  end
+
+  def my_all?
+    self.my_each do |item|
+      unless yield(item)
+        return false
+      end
+    end
+    return true
+  end
+
+  def my_inject(value = 0)
+    memo = value
+    self.my_each do |item|
+      memo = yield(memo, item)
+    end
+    return memo
+  end
+
 
 end
 
