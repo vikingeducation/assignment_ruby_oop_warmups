@@ -30,6 +30,7 @@ end
 
 
 class Array
+  
   def my_each
     index = 0
     while index < self.length
