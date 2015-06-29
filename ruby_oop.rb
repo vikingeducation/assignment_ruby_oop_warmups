@@ -33,4 +33,18 @@ def my_benchmark(num_times)
   time = Time.now - t1
 end
 
-puts my_benchmark(10000) { puts "hi" }
+#puts my_benchmark(10000) { puts "hi" }
+class Array
+  def my_each
+    i = 0
+    while i < self.length
+      yield (self[i])
+      i+=1
+    end
+    return self
+  end
+end
+
+#[1,2,5].my_each {|item| puts item}
+my_proc = Proc.new {|item| puts item**2}
+[1,2,5].my_each(&my_proc)
