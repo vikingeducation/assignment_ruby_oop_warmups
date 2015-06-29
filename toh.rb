@@ -18,22 +18,25 @@ class TowerOfHanoi
       end
     end 
 
-    # print @board.inspect
-
   end
 
   def play
 
     p "Let's play Tower of Hanoi"
     p "To quit type 'q'"
+    render
 
     while true
 
+      move
+      render
 
+      if @board == @victory_board
+        puts "You win!"
+        exit
+      end
 
     end
-
-
 
   end
 
@@ -56,8 +59,7 @@ class TowerOfHanoi
       @board[@to_stack][-1] = disk
       #[0,2,3][0,0,1][0,0,0]
     else
-      index = board[@from_stack].index(first_value)
-
+      @board[@to_stack][@board[@to_stack].index(first_value) - 1] = disk
 
     end
 
@@ -69,12 +71,12 @@ class TowerOfHanoi
     p "From what stack do you want to move?"
     @from_stack = gets.chomp.to_i - 1
 
-    if from_stack > 2 || from_stack < 0
+    if @from_stack > 2 || @from_stack < 0
       p "Invalid stack input"
       get_from
     end
 
-    if board[from_stack].reduce == 0
+    if @board[@from_stack].reduce(:+) == 0
       p "Cannot choose empty stack"
       get_from
     end
@@ -86,21 +88,26 @@ class TowerOfHanoi
     p "To what stack do you want to move?"
     @to_stack = gets.chomp.to_i - 1
 
-    if from_stack > 2 || from_stack < 0
+    if @to_stack > 2 || @to_stack < 0
       p "Invalid stack input"
       get_to
     end
 
-    if @board[@to_stack].detect {|i| i != 0} < @board[@from_stack].detect {|i| i != 0}
-      p "Invalid. There's a smaller disk in that stack"
-      get_to
+    if !@board[@to_stack].detect {|i| i != 0}.nil?
+
+      if @board[@to_stack].detect {|i| i != 0} < @board[@from_stack].detect {|i| i != 0}
+        p "Invalid. There's a smaller disk in that stack"
+        get_to
+      end
 
     end
 
   end
 
 
-  def display_board
+  def render
+
+    puts "Current board: "
 
     @disks.times do |row|
       3.times do |disc|
@@ -112,20 +119,15 @@ class TowerOfHanoi
 
   end
 
-  def victory
+  def display_board
 
-    
+    print @board + "\n"
 
   end
-
-
 
 end
 
 
-
-
-
 p "How many disks you want to play with"
 game = TowerOfHanoi.new(gets.chomp.to_i)
-game.display_board
+game.play
