@@ -63,11 +63,23 @@ class Array
   def my_all?
 
 
+    self.my_each do |x|
+
+      if !yield x
+
+        return false
+
+      end
+
+    end
+
+    true
+
   end
 
 
 
 end
 
-puts [1, 5, 6, 8, 16, 4, 22, 33].my_all? {|item| item.even?}
+puts [6, 8, 16, 4, 22].my_all? {|item| item.even?}
 
