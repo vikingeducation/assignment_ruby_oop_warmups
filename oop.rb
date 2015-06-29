@@ -36,8 +36,34 @@ def my_benchmark(number_of_times, &block)
 end
 
 class Array
-	# att_accessor: @var
+	
 	def my_each(&block)
-		self
+	   for i in 0...self.length
+         yield(self[i])
+      end
+      return self
+    
 	end
+
+  def my_map
+      new_arr = []
+     
+     self.my_each do |item|
+       new_arr << yield(item)
+     end
+      return new_arr 
+  end
+
+  def my_select(&block)
+    
+    new_arr = []
+
+    self.my_each do |item|
+
+     new_arr << item  if  block.call(item)
+
+    end
+
+  end
+
 end
