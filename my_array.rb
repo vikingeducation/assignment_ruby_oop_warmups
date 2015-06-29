@@ -1,5 +1,7 @@
 class Array
 
+
+
   def my_each 
 
     i = 0
@@ -12,35 +14,53 @@ class Array
 
     end
 
+    self
+
   end
+
+
 
   def my_map
 
     i = 0
 
+    new_array = []
+
     while i < self.length
 
-      self[i] = yield self[i]
+      new_array << (yield self[i])
 
       i+=1
 
     end
 
-    self
+    new_array
 
   end
+
+
 
   def my_select
 
-    self.my_each do
+    new_array = []
 
-      yield 
+    self.my_each do |x|
+
+      if yield x
+
+        new_array << x
+
+      end
 
     end
 
+    new_array
+
   end
+
+
 
 end
 
-puts [1, 2, 3].my_select {|item| item.even?}
+puts [1, 5, 6, 8, 16, 4, 22, 33].my_select {|item| item.even?}
 
