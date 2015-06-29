@@ -19,7 +19,7 @@ class RockPaperScissors
     end
 
     winner = compare(@player.choice, @player2.choice)
-    arr = ["Tie wins","Player 1 wins", "Player 2 wins"]
+    arr = ["It's a tie!","Player 1 wins", "Player 2 wins"]
 
     arr[winner]
   end
