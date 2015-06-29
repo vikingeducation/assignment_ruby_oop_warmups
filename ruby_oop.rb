@@ -80,9 +80,9 @@ class Array
     end
     puts memo
   end
-
-
 end
+
+
 
 #[1,2,5].my_inject() do |memo, item|
 #  memo + item
