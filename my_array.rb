@@ -117,10 +117,12 @@ end
 # print [1, 2, 3].my_map(my_proc_each)
 
 # Select Test
-my_proc_each = Proc.new {|item| item.even?}
-puts [1, 2, 3].my_select(my_proc_each)
+# my_proc_each = Proc.new {|item| item.even?}
+# puts [1, 2, 3].my_select(my_proc_each)
 
-
+# My_all Test
+# my_proc_each = Proc.new {|item| item.even?}
+# puts [1, 2, 3].my_select(my_proc_each)
 
 # puts [1,2,5].my_inject(&my_proc)
 
