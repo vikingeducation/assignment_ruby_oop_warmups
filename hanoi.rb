@@ -12,30 +12,30 @@
 class Toh
 	def main
 		height = HeightOfTower.new
-		t1 = height.tower1
-		t2 = height.tower2
-		t3 = height.tower3
+		tower = height.tower
 		show = Display.new
-		show.create_display(t1,t2,t3)
+		show.create_display(tower)
 	end
 end
 
 class HeightOfTower
-	attr_accessor :tower1, :tower2, :tower3
+	attr_accessor :tower
 	def initialize
 		puts "What is the height of your tower?"
 		height = gets.chomp
-		@tower1 = (1..height.to_i).to_a
-		@tower2 = []
-		@tower3 = []
+		@tower = {:t1 => (1..height.to_i).to_a, :t2 => [], :t3 => []}
 	end
 end
 
 class Display
-	def create_display(t1,t2,t3)
-		arr = [t1, t2, t3]
-		
-
+	def create_display(tower)
+		tower.each do |tower_no, height|
+			for i in 0...height.length
+			    print "o" * height[i]
+			    puts ""
+			end
+			puts ""
+		end
 	end
 end
 
