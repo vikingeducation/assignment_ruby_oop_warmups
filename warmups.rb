@@ -58,20 +58,29 @@ end
 
 class Array
 
-  def my_each
+  def my_each(proc_argument = nil)
     i = 0
     while !self[i].nil?
-      yield self[i]
+      if block_given?
+        yield self[i]
+      else
+        proc_argument.call(self[i])
+      end
       i += 1
     end
     return self
   end
 
-  def my_map
+  def my_map(proc_argument = nil)
     result = []
     self.my_each do |val|
-      result << yield(val)
+      if block_given?
+        result << yield(val)
+      else
+        result << proc_argument.call(val)
+      end
     end
+    puts result
     return result
   end
 
@@ -113,12 +122,15 @@ end
 
 #my_proc = Proc.new{|item| puts item ** 2}
 
-#[1,2,5].my_each(&my_proc)
+#[1,2,5].my_each(my_proc)
 
-#p [1,2,5].my_map {|item| item ** 2}
+p [1,2,5].my_map {|item| item ** 2}
 
+my_second_proc = Proc.new{|item| item ** 2}
+
+p [1,2,5].my_map(my_second_proc)
 #p [1,2,5].my_select{|item| item.even?}
 
 #p [4,2,6].my_all?{|item| item.even?}
 
-p [1,2,5].my_inject(0) {|memo, item| memo + item}
+#p [1,2,5].my_inject(0) {|memo, item| memo + item}

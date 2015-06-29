@@ -53,13 +53,8 @@ end
 
 class Player
 
-  def initialize(gamestate)
-    @gamestate = gamestate
-  end
-
   def get_move
     origin, dest = 0
-    until @gamestate.is_legal?(origin, dest)
       loop do
         puts "Enter origin column."
         origin = gets.to_i
@@ -71,13 +66,6 @@ class Player
         dest = gets.to_i
         break if (dest < 4 && dest > 0)
       end
-
-      if !@gamestate.is_legal?(origin, dest)
-        puts "Invalid move, please try again"
-      else
-        break
-      end
-    end
     return [origin, dest]
   end
 end
@@ -98,27 +86,24 @@ class Drawer
 
     max_height = board.max.max
 
-    tabl = "Current Board: \n" 
+    tabl = "Current Board: \n"
     max_height.downto(0) do |val|
-      3.times do |col|
-        if board[col][val] 
+      board.length.times do |col|
+        if board[col][val]
           tabl += ("o" * board[col][val])
           tabl += (" " * (max_height + 2 - board[col][val]))
         else
           tabl += (" " * (max_height + 2))
         end
-
       end
       tabl += "\n"
     end
-    tabl += "1"
-    tabl += (" " * (max_height + 1))
 
-    tabl += "2"
-    tabl += (" " * (max_height + 1))
+    board.length.times do |i|
+      tabl += "#{i+1}"
+      tabl += (" " * (max_height + 1))
+    end
 
-    tabl += "3"
-    tabl += (" " * (max_height + 1))
     print tabl
   end
 
@@ -138,8 +123,7 @@ class Game
 
     @gamestate = GameState.new(height)
 
-    @player = Player.new(@gamestate)
-
+    @player = Player.new
   end
 
   # The main game loop is here.
@@ -149,7 +133,17 @@ class Game
 
       @drawer.print_board(@gamestate.board)
 
-      current_move = @player.get_move
+      current_move = [0,0]
+
+      # Loop until we have a valid move
+      until move_is_valid?(current_move)
+        current_move = @player.get_move
+        if !move_is_valid?(current_move)
+          puts "Invalid move, please try again."
+        else
+          break
+        end
+      end
 
       @gamestate.move(current_move)
 
@@ -163,8 +157,10 @@ class Game
 
   end
 
-  def get_input
-
+  def move_is_valid?(moves)
+    origin = moves[0]
+    dest = moves[1]
+    @gamestate.is_legal?(origin, dest)
   end
 
 
