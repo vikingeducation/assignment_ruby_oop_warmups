@@ -173,7 +173,7 @@ end
 
 #game = GameState.new
 
-game = GameState.new
+game = GameState.new("Human")
 
 game.play
 
