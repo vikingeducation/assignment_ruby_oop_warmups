@@ -21,7 +21,9 @@ class GameState
 
   # Takes a valid input and checks if the move is legal.
   # Then, makes a move.
-  def move(c1, c2)
+  def move(arr)
+    c1 = arr[0]
+    c2 = arr[1]
     @colmap[c2] << @colmap[c1].pop
   end
 
@@ -31,40 +33,56 @@ class GameState
 
   # This method is going to check if the move is legal and valid
   # c1 is origin column, c2 is destination column.
-  def validate_input(c1,c2)
+  def is_legal?(c1,c2)
+
+    if @colmap[c1].nil? || @colmap[c2].nil?
+      return false
+    end
 
     if @colmap[c1].length == 0
-      puts "There is nothing to take from Column #{c1}"
-      get_input
-    elsif @colmap[c1][-1] > @colmap[c2][-1]
-      puts "That is an invalid move"
-      get_input
+      return false
+    elsif !@colmap[c2][-1].nil? && @colmap[c1][-1] > @colmap[c2][-1]
+      return false
     else
-      move(c1,c2)
+      true
     end
-  end
-
-  def get_input()
-    c1, c2 = 0
-    loop do
-      puts "Enter origin column."
-      c1 = gets.to_i
-      break if (c1 < 4 && c1 > 0)
-    end
-
-    loop do
-      puts "Enter destination column."
-      c2 = gets.to_i
-      break if (c2 < 4 && c2 > 0)
-    end
-
-    validate_input(c1, c2)
-
-
-
   end
 
 end
+
+
+class Player
+
+  def initialize(gamestate)
+    @gamestate = gamestate
+  end
+
+  def get_move
+    origin, dest = 0
+    until @gamestate.is_legal?(origin, dest)
+      loop do
+        puts "Enter origin column."
+        origin = gets.to_i
+        break if (origin < 4 && origin > 0)
+      end
+
+      loop do
+        puts "Enter destination column."
+        dest = gets.to_i
+        break if (dest < 4 && dest > 0)
+      end
+
+      if !@gamestate.is_legal?(origin, dest)
+        puts "Invalid move, please try again"
+      else
+        break
+      end
+    end
+    return [origin, dest]
+  end
+end
+
+
 
 # This class is in charge of representing the game state to the player.
 class Drawer
@@ -74,12 +92,13 @@ class Drawer
 
     board.each do |col|
 
-      p col
+      p col.reverse
 
     end
+  end
 
-
-
+  def print_win
+    puts "\nYou win!"
   end
 end
 
@@ -91,7 +110,9 @@ class Game
 
     @drawer = Drawer.new
 
-    @game_state = GameState.new(height)
+    @gamestate = GameState.new(height)
+
+    @player = Player.new(@gamestate)
 
   end
 
@@ -102,18 +123,14 @@ class Game
 
       @drawer.print_board(@gamestate.board)
 
-      @gamestate.get_input
+      current_move = @player.get_move
 
       @gamestate.move(current_move)
 
       if @gamestate.check_win?
-
         @drawer.print_board(@gamestate.board)
-
         @drawer.print_win
-
         break
-
       end
 
     end
@@ -128,7 +145,15 @@ class Game
 end
 
 
-hanoi = Game.new
+puts "Enter a height (difficulty)"
+
+difficulty = gets.chomp.to_i
+
+if difficulty > 0
+  hanoi = Game.new(difficulty)
+else
+  hanoi = Game.new
+end
 
 hanoi.play
 
