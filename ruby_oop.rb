@@ -36,41 +36,60 @@ end
 #puts my_benchmark(10000) { puts "hi" }
 class Array
 
-  def my_each
+  def my_each (proc = nil)
     i = 0
     while i < self.length
-      yield (self[i])
+      if block_given?
+        yield (self[i])
+      else
+        proc.call (self[i])
+      end
       i+=1
     end
     return self
   end
 
-  def my_map
+  def my_map (proc = nil)
     return_array = []
     self.my_each do |item|
-      return_array.push(yield (item))
-    end
-    return_array
-  end
-
-  def my_select
-    return_array =[]
-    self.my_each do |item|
-      if yield(item)
-        return_array.push(item)
+      if block_given?
+        return_array.push(yield (item))
+      else
+        return_array.push(proc.call(item))
       end
     end
     p return_array
   end
 
-  def my_all?
+  def my_select (proc = nil)
+    return_array =[]
     self.my_each do |item|
-      if !yield(item)
-        false
-        break
+      if block_given?
+        if yield(item)
+          return_array.push(item)
+        end
+      else
+        if proc.call(item)
+          return_array.push(item)
+        end
       end
     end
-    true
+    p return_array
+  end
+
+  def my_all? (proc = nil)
+    self.my_each do |item|
+      if block_given?
+        if !yield(item)
+          return false
+        end
+      else
+        if !proc.call(item)
+          return false
+        end
+      end
+    end
+     true
   end
 
   def my_inject(sum = 0)
@@ -88,19 +107,22 @@ end
 #  memo + item
 #end
 
- #my_proc = Proc.new{|item| item.even?}
- #[10,2,4].my_all?(&my_proc)
+# my_proc = Proc.new{|item| item.even?}
+# [1,2,4].my_all?(my_proc) #without &
 
 # my_proc = Proc.new{|item| item.even?}
-# [1,2,5].my_select(&my_proc)
+# [1,2,5].my_select(my_proc)
 
-# [1,2,5].my_map do |item|
-#   item ** 2
-# end
-
+# my_proc = Proc.new {|item| item ** 2}
+# [1,2,5].my_map (my_proc)
 #[1,2,5].my_each {|item| puts item}
+<<<<<<< HEAD
 my_proc = Proc.new {|item| puts item**2}
 [1,2,5].my_each(&my_proc)
+=======
+ #my_proc = Proc.new {|item| puts item**2}
+ ##[1,2,5].my_each(my_proc)
+>>>>>>> ec45dec59217a8d27dce452baf8898e90973f791
 
 
 
