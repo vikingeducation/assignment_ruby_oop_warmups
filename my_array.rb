@@ -1,14 +1,13 @@
 class Array
 
 
-
-  def my_each 
+  def my_each (proc)
 
     i = 0
 
     while i < self.length
 
-      yield (self[i])
+      proc.call(self[i])
 
       i+=1
 
@@ -20,7 +19,7 @@ class Array
 
 
 
-  def my_map
+  def my_map (proc)
 
     i = 0
 
@@ -28,7 +27,7 @@ class Array
 
     while i < self.length
 
-      new_array << (yield self[i])
+      new_array << proc.call(self[i])
 
       i+=1
 
@@ -40,13 +39,13 @@ class Array
 
 
 
-  def my_select
+  def my_select(proc)
 
     new_array = []
 
-    self.my_each do |x|
+    self.my_each(proc) do |x|
 
-      if yield x
+      if x
 
         new_array << x
 
@@ -61,7 +60,6 @@ class Array
 
 
   def my_all?
-
 
     self.my_each do |x|
 
@@ -78,8 +76,37 @@ class Array
   end
 
 
+  # def my_inject(initial)
+
+  #   sum = initial
+
+  #   self.my_each do |x|
+
+  #     yield (sum,x)
+
+  #   end
+
+  #   sum
+
+  # end
+
+
 
 end
 
-puts [6, 8, 16, 4, 22].my_all? {|item| item.even?}
+# Each Test
+# my_proc_each = Proc.new {|item| puts item**2}
+# [1, 2, 3].my_each(my_proc_each)
+
+# Map Test
+# my_proc_each = Proc.new {|item| item*2}
+# print [1, 2, 3].my_map(my_proc_each)
+
+# Select Test
+my_proc_each = Proc.new {|item| item.even?}
+print [1, 2, 3].my_select(my_proc_each)
+
+
+
+# puts [1,2,5].my_inject(&my_proc)
 
