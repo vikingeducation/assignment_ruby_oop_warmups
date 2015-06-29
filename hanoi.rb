@@ -48,7 +48,7 @@ class GameState
 
 end
 
-
+# This player class controls accepting and validating inputs.
 class Player
 
   def initialize(gamestate)
