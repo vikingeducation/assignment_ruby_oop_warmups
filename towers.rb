@@ -23,7 +23,22 @@ class TowersOfHanoi
 
   def render
     puts "Current board:"
-    puts @board
+    level = 1
+    while level <= @disks
+      print_tier(@board[:left], level)
+      print_tier(@board[:center], level)
+      print_tier(@board[:right], level)
+      print "\n"
+      level += 1
+    end
+
+
+  end
+
+  def print_tier(column, row)
+    disks_in_this_position = column[@disks-row].to_i
+    print "o" * disks_in_this_position
+    print " " * (@disks - disks_in_this_position)
   end
 
   #Print visual render of the board
