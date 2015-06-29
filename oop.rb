@@ -36,34 +36,49 @@ def my_benchmark(number_of_times, &block)
 end
 
 class Array
-	
+
 	def my_each(&block)
 	   for i in 0...self.length
          yield(self[i])
       end
       return self
-    
 	end
 
   def my_map
-      new_arr = []
-     
-     self.my_each do |item|
+    new_arr = []
+    self.my_each do |item|
        new_arr << yield(item)
-     end
-      return new_arr 
+    end
+    return new_arr
   end
 
   def my_select(&block)
-    
     new_arr = []
-
     self.my_each do |item|
-
-     new_arr << item  if  block.call(item)
-
+    	new_arr << item  if  block.call(item)
     end
-
+    return new_arr
   end
+
+ 	def my_all?(&block)
+	 	result = false
+	 	self.my_each do |item|
+	 		if block.call(item)
+	 			result = true
+	 		else
+	 			return false
+	 		end
+	 	end
+	 	return result
+ 	end
+
+
+ 	def my_inject(var = 0, &block)
+ 		result = var
+ 		self.my_each do |item|
+ 			result = block.call(result, item)
+ 		end
+ 		return result
+ 	end
 
 end
