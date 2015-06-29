@@ -8,30 +8,51 @@
 
 class RockPaperScissors
   def main
-    @player = PlayerChoice.new
-    @computer = ComputerChoice.new
-    compare(@player.choice, @computer.choice)
+    @opponent = SelectOpponent.new
+
+    if @opponent.choice == "1" 
+      @player = PlayerChoice.new
+      @player2 = ComputerChoice.new
+    else 
+      @player = PlayerChoice.new
+      @player2 = PlayerChoice.new
+    end
+
+    winner = compare(@player.choice, @player2.choice)
+    arr = ["Tie wins","Player 1 wins", "Player 2 wins"]
+
+    arr[winner]
   end
 
-  def compare(player, computer)
-    puts "The computer picked: #{computer}"
-    if (player == computer)
-      puts "tie"
-    elsif (player == "rock") && (computer == "paper")
-      puts "computer wins"
-    elsif (player == "rock") && (computer == "scissors")
-      puts "player wins"
-    elsif (player == "paper") && (computer == "rock")
-      puts "player wins"
-    elsif (player == "paper") && (computer == "scissors")
-      puts "computer wins"
-    elsif (player == "scissors") && (computer == "rock")
-      puts "computer wins"
-    elsif (player == "scissors") && (computer == "paper")
-      puts "computer wins"
+  def compare(player, player2)
+    puts "The second player picked: #{player2}"
+    if (player == player2)
+      return 0
+    elsif (player == "rock") && (player2 == "paper")
+      return 1
+    elsif (player == "rock") && (player2 == "scissors")
+      return 1
+    elsif (player == "paper") && (player2 == "rock")
+      return 1
+    elsif (player == "paper") && (player2 == "scissors")
+      return 2
+    elsif (player == "scissors") && (player2 == "rock")
+      return 2
+    elsif (player == "scissors") && (player2 == "paper")
+      return 2
     end
   end
 end
+
+class SelectOpponent
+  attr_accessor :choice
+
+  def initialize
+    puts "Player 2 is : a human (enter: 0) or a computer (enter: 1)"
+    @choice = gets.chomp
+  end
+end
+
 
 class PlayerChoice
   attr_accessor :choice
