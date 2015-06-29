@@ -61,25 +61,35 @@ class Array
       end
     end
     p return_array
-  end 
+  end
 
   def my_all?
     self.my_each do |item|
       if !yield(item)
         false
         break
-      else
-        true
       end
     end
+    true
   end
 
-  
+  def my_inject(sum = 0)
+    memo = sum
+    self.my_each do |item|
+      memo = yield(memo, item)
+    end
+    puts memo
+  end
+
 
 end
 
-# my_proc = Proc.new{|item| item.even?}
-# [1,2,5].my_all?(&my_proc)
+[1,2,5].my_inject(2) do |memo, item|
+  memo + item
+end
+
+ #my_proc = Proc.new{|item| item.even?}
+ #[10,2,4].my_all?(&my_proc)
 
 # my_proc = Proc.new{|item| item.even?}
 # [1,2,5].my_select(&my_proc)
