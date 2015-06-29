@@ -1,12 +1,18 @@
+require 'pry-byebug'
+
 class Tower
 
   def initialize(height = 0)
     if height > 0
-      tower = (1..height).to_a.reverse
+      @tower = (1..height).to_a.reverse
     else
-      tower = []
+      @tower = []
     end
-    tower
+    # return @tower
+  end
+
+  def tower
+    @tower
   end
 
 end
@@ -18,15 +24,17 @@ class Player
 
   def get_input
     input = gets.chomp
-    from_tower = input[1]
-    to_tower = input[3]
+    from_tower = input[1].to_i
+    to_tower = input[3].to_i
+    puts from_tower
+    puts to_tower
 
     unless input_valid?(from_tower, to_tower)
       input = gets.chomp
     end
 
-    from_tower = input[1]
-    to_tower = input[3]
+    from_tower = input[1].to_i
+    to_tower = input[3].to_i
 
     return_array = [from_tower, to_tower]
     return_array
@@ -47,18 +55,20 @@ end
 class Game
 
   def initialize
+    # binding.pry
     #rules
-    puts "Welcome to Tower of Hanoi"
-    puts "Please Enter moves [1, 3]"
-    puts "Enter how many disks you want to play"
-    print ">>"
+    # puts "Welcome to Tower of Hanoi"
+    # puts "Please Enter moves [1, 3]"
+    # puts "Enter how many disks you want to play"
+    # print ">>"
     input = gets.chomp.to_i
     @left_tower = Tower.new(input)
+    # puts @left_tower.tower
     @mid_tower = Tower.new
     @right_tower = Tower.new
     @goal_tower_amount = Tower.new(input)
     @player = Player.new
-    @board = [@left_tower, @mid_tower, @right_tower]
+    @board = [@left_tower.tower, @mid_tower.tower, @right_tower.tower]
 
     play
   end
@@ -86,22 +96,26 @@ class Game
   end
 
   def render
-    # space = @goal_tower_amount.length * 2
 
-    # (@goal_tower_amount.length - 1).downto (0) do |row|
+    space = @goal_tower_amount.tower.length * 2
 
-    #   @board.each do |tower|
-    #     if tower[row].nil?
-    #       print " " * (space)
-    #     else
-    #       print ("+" * tower[row]).ljust(space , " ")
-    #     end
-    #   end
+    (@goal_tower_amount.tower.length - 1).downto (0) do |row|
 
-    #   print "\n"
+      @board.each do |tower|
+        if tower[row].nil?
+          print " " * (space)
+        else
+          print ("+" * tower[row]).ljust(space , " ")
+        end
+      end
+
+      print "\n"
+    end
+    puts "1".ljust(space, " ") + "2".ljust(space, " ") + "3"
+    # @board.each do |tower|
+    #   puts @board[tower]
     # end
-    # puts "1".ljust(space, " ") + "2".ljust(space, " ") + "3"
-    print @board
+    print "#{@board}"
   end
 
 
