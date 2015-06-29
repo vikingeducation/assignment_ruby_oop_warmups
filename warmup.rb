@@ -18,47 +18,53 @@ def my_benchmark(ntimes)
 end
 
 class Array
-  def my_each
+  def my_each(proc = nil)
+    if block_given?
       for i in 0..self.size-1 do
         yield(self[i])   
       end
+    else
+      for i in 0..self.size-1 do
+        proc.call(self[i])   
+      end
+    end
   end
 
-  def my_map
+  def my_map(proc = nil)
     arr=[]
     #Do it with my_each also
     #for i in 0..self.size-1 do
     #  arr<<yield(self[i]) 
     #end
-    self.my_each {|item| arr<<yield(item)}
+    block_given? ? self.my_each {|item| arr<<yield(item)} : self.my_each {|item| arr<<proc.call(item)}
     arr
   end
 
-  def select
+  def my_select(proc = nil)
     arr=[]
     #for i in 0..self.size-1 do
     #  yield(self[i]) ? arr<<self[i] : next
     #end
-    self.my_each {|item| arr<<item if yield(item)}
+    block_given? ?  self.my_each {|item| arr<<item if yield(item)} : self.my_each {|item| arr<<item if proc.call(item)}
     arr
   end
 
-  def my_all?
+  def my_all?(proc = nil)
     #for i in 0..self.size-1 do
     #  return false unless yield(self[i])
     #end
     #return true
-    self.my_each {|item| return false unless yield(item) }
+    block_given? ?  self.my_each {|item| return false unless yield(item) } : self.my_each {|item| return false unless proc.call(item) }
     return true
   end
 
-  def my_inject(start)
+  def my_inject(start, proc = nil)
     total=start
     #for i in 0..self.size-1 do
     #  total += self[i]
     #end
     #total
-    self.my_each{|item| total = yield(total,item)}
+    block_given? ? self.my_each{|item| total = yield(total,item)} : self.my_each{|item| total = proc.call(total,item)} 
     total
   end
 end
