@@ -6,12 +6,7 @@ def fibs(int)
 
 		return_array << 0
 
-	elsif int == 2
-
-		return_array << 0
-		return_array << 1
-
-	elsif int > 2
+	elsif int > 1
 
 		return_array << 0
 		return_array << 1
@@ -28,4 +23,4 @@ def fibs(int)
 
 end
 
-print fibs(8)
+print fibs(2)
