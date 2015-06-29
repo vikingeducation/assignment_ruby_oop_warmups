@@ -1,15 +1,29 @@
 class Array
 
 
-  def my_each (proc)
+  def my_each (proc = false)
 
     i = 0
 
-    while i < self.length
+    if proc == false
 
-      proc.call(self[i])
+      while i < self.length
 
-      i+=1
+        yield self[i]
+
+        i+=1
+
+      end
+
+    else
+
+      while i < self.length
+
+        proc.call(self[i])
+
+        i+=1
+
+      end
 
     end
 
@@ -43,9 +57,9 @@ class Array
 
     new_array = []
 
-    self.my_each(proc) do |x|
+    self.my_each() do |x|
 
-      if x
+      if proc.call(x)
 
         new_array << x
 
@@ -96,7 +110,7 @@ end
 
 # Each Test
 # my_proc_each = Proc.new {|item| puts item**2}
-# [1, 2, 3].my_each(my_proc_each)
+# puts [1, 2, 3].my_each()
 
 # Map Test
 # my_proc_each = Proc.new {|item| item*2}
@@ -104,7 +118,7 @@ end
 
 # Select Test
 my_proc_each = Proc.new {|item| item.even?}
-print [1, 2, 3].my_select(my_proc_each)
+puts [1, 2, 3].my_select(my_proc_each)
 
 
 
