@@ -23,7 +23,6 @@ class TowerOfHanoi
   def play
 
     p "Let's play Tower of Hanoi"
-    p "To quit type 'q'"
     render
 
     while true
