@@ -15,7 +15,7 @@ class Player
   def result
     aces = @set.select {|item| item == 1} 
     total = @set.inject(0){|sum,item| sum+item}
-    aces.inject(total) {|sum, item| sum if sum+10<21}
+    aces.inject(total) {|sum, item| 10 if sum+10<21}
   end
 
   def check
