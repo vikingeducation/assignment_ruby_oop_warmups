@@ -11,18 +11,22 @@
 
 class Toh
 	def main
-		height = HeightOfTower.new
+		height = Tower.new
 		tower = height.tower
 		show = Display.new
 		show.create_display(tower)
-    	move = Validate.new(tower)
-      	
-      	move.move_choice
+    valid = Validate.new(tower)
+    make_move = Move.new
 
+    loop do  	
+     to_move = valid.move_choice
+     tower =  make_move.move_disk(to_move, tower)
+     show(tower)
+    end  
 	end
 end
 
-class HeightOfTower
+class Tower
 	attr_accessor :tower
 	def initialize
 		puts "What is the height of your tower?"
@@ -51,27 +55,27 @@ class Validate
 
    def move_choice
    	@entered = []
+    valid_entry = false
    	valid_move = false
-    until (valid_entry? && valid_move)
+    until valid_move
       puts "Please enter your move in [from , to]"
       @entered = gets.chomp.split(",").map{|x| x.to_i}
-      valid_move = valid_move?
-      # puts @entered
-      # puts valid_entry?
-      # puts valid_move?
+      
+      if  valid_entry = @entered.all?{|x| (1..3).include?(x)}
+         valid_move = valid_move?
+      end
+      
     end
+    return @entered
    end
 
-    def valid_entry?
-      @entered.all?{|x| (1..3).include?(x)}
-    end
+    #def valid_entry?
+      
+      
+   # end
 
     def valid_move?
-    	# p @tower["t1"].empty?
-    	# puts @tower["t2"]
-    	# p @tower["t3"].empty?
-    	# p @tower["t#{@entered[0]}"]
-    	# p @entered
+    	
       if @tower["t#{@entered[0]}"].empty?
       	return false
       elsif @tower["t#{@entered[1]}"].empty?
@@ -87,5 +91,15 @@ class Validate
 end
 
 class Move
+
+    def move_disk(move, tow)
+      p tow["t#{move[1]}"]
+      p tow["t#{move[0]}"][0] 
+
+       tow["t#{move[1]}"] << tow["t#{move[0]}"][0]
+       tow["t#{move[0]}"].shift
+       return tow
+    end
+
 
 end
