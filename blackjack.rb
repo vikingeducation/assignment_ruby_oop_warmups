@@ -34,42 +34,6 @@ class Dealer < Player
 
 =end
 
-
-deck = []
-
-suits = ["hearts", "clubs", "spades", "diamonds"]
-
-values = (1..13).to_a
-
-# 52.times do |i|
-
-  
-#   deck[(i+1)] = (i%13 + 1).to_s
-  
-#   end
-
-# p deck
-
-# 52.times do |i|
-
-#   if deck[%4] == 0
-#     deck[i] += suits[]
-
-# [
-#   {suit: hearts, value: ace},
-#   {suit: hearts, value: two}
-# ]
-
-
-
-# p deck.select{|card| card[:value] == 1}.length
-# p deck.select{|card| card[:suit] == "hearts"}.length
-# p deck.select{|card| card[:suit] == "spades"}.length
-# p deck.select{|card| card[:suit] == "clubs"}.length
-
-p deck.shuffle!
-
-
 class Deck
 
   def initialize
@@ -86,7 +50,7 @@ class Deck
     values = (1..13).to_a
 
     52.times do |i|
-      deck << {suit: suits[i%4], value: values[i%13]} 
+      deck << {suit: suits[i%4], value: values[i%13]}
     end
 
     return deck
@@ -100,29 +64,34 @@ class Deck
 
 end
 
-class Hand
-
-  def initialize
-
-    @hand = []
-
-  end
-
-  def get_card(card)
-
-    @hand.push(card)
-
-  end
-
-end
-
 
 class Blackjack
 
   def initialize
     @deck = Deck.new
-    @player1 = Bettor.new
+    @bettor1 = Bettor.new
     @dealer = Dealer.new
+    @players = [@bettor1, @dealer]
+  end
+
+  def deal_card_to_player(player)
+    player.get_card(@deck.deal_card)
+  end
+
+  def play
+    deal_initial_cards
+    @players.each do |player|
+      player.pretty_print
+    end
+
+  end
+
+  def deal_initial_cards
+    2.times do
+      @players.each do |player|
+        deal_card_to_player(player)
+      end
+    end
   end
 
 end
@@ -130,16 +99,33 @@ end
 
 class Player
 
-
-
   def initialize
-    @hand = Hand.new
+    @hand = []
   end
 
   def hand
-
     @hand
-    
+  end
+
+  def get_card(card)
+    @hand << card
+  end
+
+  def pretty_print
+    special_names = {1 => "Ace", 11 => "Jack", 12 => "Queen", 13 => "King"}
+    current_hand = @hand
+
+    current_hand = current_hand.sort{|x,y| y[:value] <=> x[:value]}
+
+    puts "Your Cards:"
+
+    current_hand.each do |card|
+      if special_names[card[:value]]
+        puts "#{special_names[card[:value]]} of #{card[:suit]}"
+      else
+        puts "#{card[:value]} of #{card[:suit]}"
+      end
+    end
   end
 
 end
@@ -152,9 +138,31 @@ end
 
 class Dealer < Player
 
+  def pretty_print
+
+    special_names = {1 => "Ace", 11 => "Jack", 12 => "Queen", 13 => "King"}
+    current_hand = @hand
+
+    current_hand = current_hand.sort{|x,y| y[:value] <=> x[:value]}
+
+    puts "Dealer's Cards:"
+
+    1.times do
+      if special_names[current_hand[0][:value]]
+        puts "#{special_names[current_hand[0][:value]]} of #{current_hand[0][:suit]}"
+      else
+        puts "#{current_hand[0][:value]} of #{current_hand[0][:suit]}"
+      end
+    end
+
+    puts "And an unknown card."
+  end
+
 end
 
+blackjack = Blackjack.new
 
+blackjack.play
 
 
 
