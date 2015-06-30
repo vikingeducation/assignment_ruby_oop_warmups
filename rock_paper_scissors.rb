@@ -3,12 +3,13 @@ class RockPaperScissors
   def initialize
     puts "Welcome to Rock Paper Scissors game"
 
+    @player_1 = Player.new("Player 1")
+
     if one_player?
       @player_2 = AIGameplay.new
     else
       @player_2 = Player.new("Player 2")
     end
-    @player_1 = Player.new("Player 1")
     keep_playing = true
       while keep_playing
         take_turn
@@ -81,6 +82,8 @@ class RockPaperScissors
 
 end
 
+
+
 class Player
 
   def initialize(name)
@@ -103,6 +106,8 @@ class Player
   end
 
 end
+
+
 
 class AIGameplay
   def turn
