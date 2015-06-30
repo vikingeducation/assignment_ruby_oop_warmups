@@ -15,11 +15,9 @@ class Toh
 		tower = height.tower
 		show = Display.new
 		show.create_display(tower)
-    move = Validate.new(tower)
-
-    
-      move.move_choice
-
+    	move = Validate.new(tower)
+      	
+      	move.move_choice
 
 	end
 end
@@ -46,29 +44,44 @@ class Display
 end
 
 class Validate
-   
+
    def initialize(tower)
       @tower = tower
    end
 
    def move_choice
-    #until valid_entry && valid_move
+   	@entered = []
+   	valid_move = false
+    until (valid_entry? && valid_move)
       puts "Please enter your move in [from , to]"
       @entered = gets.chomp.split(",").map{|x| x.to_i}
-      
-       valid_move
-    #end
+      valid_move = valid_move?
+      # puts @entered
+      # puts valid_entry?
+      # puts valid_move?
+    end
    end
 
-    def valid_entry
+    def valid_entry?
       @entered.all?{|x| (1..3).include?(x)}
     end
 
-  #
-    def valid_move
-    
-      puts @tower["t#{@entered[0]}"]
-    end 
+    def valid_move?
+    	# p @tower["t1"].empty?
+    	# puts @tower["t2"]
+    	# p @tower["t3"].empty?
+    	# p @tower["t#{@entered[0]}"]
+    	# p @entered
+      if @tower["t#{@entered[0]}"].empty?
+      	return false
+      elsif @tower["t#{@entered[1]}"].empty?
+      	return true
+      elsif @tower["t#{@entered[0]}"][0] > @tower["t#{@entered[1]}"][0]
+      	return false
+      else
+      	return true
+      end
+    end
 
 
 end
