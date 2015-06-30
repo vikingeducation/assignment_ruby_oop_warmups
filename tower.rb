@@ -8,7 +8,6 @@ class Tower
     else
       @tower = []
     end
-    # return @tower
   end
 
   def tower
@@ -26,8 +25,7 @@ class Player
     input = gets.chomp
     from_tower = input[1].to_i
     to_tower = input[3].to_i
-    puts from_tower
-    puts to_tower
+
 
     until input_valid?(from_tower, to_tower)
       input = gets.chomp
@@ -42,7 +40,6 @@ class Player
 
   def input_valid?(from_tower, to_tower)
     if (1..3).include?(from_tower) && (1..3).include?(to_tower)
-      print "its valid"
       return true
     else
       print "Invalid input. Please enter move again:"
@@ -57,13 +54,12 @@ class Game
   def initialize
  #    binding.pry
     #rules
-    # puts "Welcome to Tower of Hanoi"
-    # puts "Please Enter moves [1, 3]"
-    # puts "Enter how many disks you want to play"
-    # print ">>"
+    puts "Welcome to Tower of Hanoi"
+    puts "Please Enter moves [1, 3]"
+    puts "Enter how many disks you want to play"
+    print ">>"
     input = gets.chomp.to_i
     @left_tower = Tower.new(input)
-    # puts @left_tower.tower
     @mid_tower = Tower.new
     @right_tower = Tower.new
     @goal_tower_amount = Tower.new(input)
@@ -98,12 +94,6 @@ class Game
       false
     end
 
-    # if @right_tower.inject == @goal_tower_amount.inject || (@mid_tower.inject == @goal_tower_amount.inject)
-    #   return true
-    # else
-    #   false
-    # end
-
   end
 
   def move_disk (from, to)
@@ -127,10 +117,7 @@ class Game
       print "\n"
     end
     puts "1".ljust(space, " ") + "2".ljust(space, " ") + "3"
-    # @board.each do |tower|
-    #   puts @board[tower]
-    # end
-    print "#{@board}"
+
   end
 
 
