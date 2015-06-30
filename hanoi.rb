@@ -18,11 +18,11 @@ class Toh
     valid = Validate.new(tower)
     make_move = Move.new
 
-    loop do  	
-     to_move = valid.move_choice
-     tower =  make_move.move_disk(to_move, tower)
-     show(tower)
-    end  
+    loop do
+      to_move = valid.move_choice
+      tower =  make_move.move_disk(to_move, tower)
+      show.create_display(tower)
+    end
 	end
 end
 
@@ -48,7 +48,6 @@ class Display
 end
 
 class Validate
-
    def initialize(tower)
       @tower = tower
    end
@@ -60,22 +59,14 @@ class Validate
     until valid_move
       puts "Please enter your move in [from , to]"
       @entered = gets.chomp.split(",").map{|x| x.to_i}
-      
       if  valid_entry = @entered.all?{|x| (1..3).include?(x)}
          valid_move = valid_move?
       end
-      
     end
     return @entered
    end
 
-    #def valid_entry?
-      
-      
-   # end
-
     def valid_move?
-    	
       if @tower["t#{@entered[0]}"].empty?
       	return false
       elsif @tower["t#{@entered[1]}"].empty?
@@ -86,20 +77,14 @@ class Validate
       	return true
       end
     end
-
-
 end
 
 class Move
-
     def move_disk(move, tow)
-      p tow["t#{move[1]}"]
-      p tow["t#{move[0]}"][0] 
-
-       tow["t#{move[1]}"] << tow["t#{move[0]}"][0]
-       tow["t#{move[0]}"].shift
-       return tow
+      # p tow["t#{move[1]}"]
+      # p tow["t#{move[0]}"][0]
+      tow["t#{move[1]}"].unshift(tow["t#{move[0]}"][0])
+      tow["t#{move[0]}"].shift
+      return tow
     end
-
-
 end
