@@ -45,7 +45,7 @@ class Deck
   def generate_deck
     deck = []
 
-    suits = ["hearts", "clubs", "spades", "diamonds"]
+    suits = ["Hearts", "Clubs", "Spades", "Diamonds"]
 
     values = (1..13).to_a
 
