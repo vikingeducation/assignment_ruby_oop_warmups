@@ -1,26 +1,31 @@
-class Player (name)
+class Player 
   attr_accessor :set
 
-  def initialize
+  def initialize(name)
     @name=name
     @cards=[1,2,3,4,5,6,7,8,9,10,10,10,10]
     @set=[@cards[rand(0..@cards.length-1)],@cards[rand(0..@cards.length-1)]]
   end
 
   def add_card
-    @set<<@cards[rand(0..@cards.length-1)]
+    @set << @cards[rand(0..@cards.length-1)]
+
   end
 
   def result
-    @set.inject(0){|sum,item| sum+item}
+    aces = @set.select {|item| item == 1} 
+    total = @set.inject(0){|sum,item| sum+item}
+    aces.inject(total) {|sum, item| sum if sum+10<21}
   end
 
   def check
     if result == 21 
-      puts "#{@name} won!"
+      puts "#{@name} won! #{@name} got 21."
+      exit
     elsif 
       result > 21
-      puts "#{@name} lose!"
+      puts "#{@name} lose! #{@name} got #{result}."
+      exit
     end
   end
 
@@ -35,31 +40,37 @@ class Game
     player=Player.new("Player")
     player.check
 
-    
-    puts "More cards?"
-    answer=gets.chomp #y
+    answer="y"
 
-    if answer=="y"
+    while answer=="y" 
+      puts "More cards?"
+      answer=gets.chomp #y
       player.add_card
+
+
+      puts player.result
       player.check
 
-      puts player.set
-      puts player.result
-    else
-      puts player.result
     end
+      
+    puts player.result
 
     computer=Player.new("Computer")
     computer.check
-    
-    winner
+
+    while computer.result <= 16
+      computer.add_card
+    end
+    computer.check
+
+    winner(player, computer)
   end
 
-  def winner
+  def winner(player, computer)
     if player.result > computer.result
-      puts "You won!"
+      puts "You won! You got #{player.result}."
     else
-      puts "Computer won!"
+      puts "Computer won! Computer  got #{computer.result}"
     end
   end
 
