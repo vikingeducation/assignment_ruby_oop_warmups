@@ -1,4 +1,11 @@
 class Hand
+	def compare(hand)
+	end
+
+	def <=>(other)
+		self.compare(other) <=> other.compare(self)
+	end
+
 	def ties?(hand)
 		(self <=> hand) == 0
 	end
@@ -6,18 +13,11 @@ class Hand
 	def beats?(hand)
 		(self <=> hand) == 1
 	end
-
-	def <=>(other)
-		self.compare(other) <=> other.compare(self)
-	end
-
-	def compare(hand)
-	end
 end
 
 class Rock < Hand
 	def compare(hand)
-		case hand.class
+		case hand
 		when Rock
 			return 0
 		when Paper
@@ -25,12 +25,16 @@ class Rock < Hand
 		when Scissors
 			return 1
 		end
+	end
+
+	def to_s
+		'rock'
 	end
 end
 
 class Paper < Hand
 	def compare(hand)
-		case hand.class
+		case hand
 		when Rock
 			return 1
 		when Paper
@@ -39,11 +43,15 @@ class Paper < Hand
 			return -1
 		end
 	end
+
+	def to_s
+		'paper'
+	end
 end
 
 class Scissors < Hand
 	def compare(hand)
-		case hand.class
+		case hand
 		when Rock
 			return -1
 		when Paper
@@ -51,5 +59,9 @@ class Scissors < Hand
 		when Scissors
 			return 0
 		end
+	end
+
+	def to_s
+		'scissors'
 	end
 end
