@@ -5,6 +5,8 @@ class AppError < StandardError
 end
 
 class Model
+	attr_reader :auth
+
 	def initialize(options={})
 		@auth = options[:auth] ? options[:auth] : Auth.new
 		clear

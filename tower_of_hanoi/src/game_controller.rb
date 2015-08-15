@@ -12,7 +12,7 @@ class GameController < Controller
 	def game
 		@view.render('game')
 		@view.render('play',
-			:game => @model.to_s,
+			:game => @model,
 			:moves => @model.moves,
 			:move_type => @model.from ? 'to' : 'from',
 			:from => @model.from ? @model.from : '-'
@@ -25,7 +25,7 @@ class GameController < Controller
 	def game_over
 		@view.render('game')
 		@view.render('over',
-			:game => @model.to_s,
+			:game => @model,
 			:moves => @model.moves
 		)
 		@view.render('form')
@@ -34,37 +34,34 @@ class GameController < Controller
 	end
 
 	def select_difficulty
-		begin
+		if @model.auth.valid_difficulty?(Input.data)
 			@model.difficulty = Input.data
-		rescue AppError => e
-			@router.notice = e
-			@router.action = :menu
-		else
 			@router.action = :game
+		else
+			@router.notice = @model.auth.error
+			@router.action = :menu
 		end
 	end
 
 	def select_from
-		begin
+		if @model.auth.valid_from?(Input.data)
 			@model.from = Input.data
-		rescue AppError => e
-			@router.notice = e
+		else
+			@router.notice = @model.auth.error
 		end
-		@router.action = :game
+		@router.action = :game		
 	end
 
 	def select_to
-		begin
-			if ['c', 'clear'].include?(Input.data)
-				@model.oops
-			else
-				@model.to = Input.data
-			end
-		rescue AppError => e
-			@router.notice = e
+		if ['c', 'clear'].include?(Input.data)
+			@model.oops
 			@router.action = :game
-		else
+		elsif @model.auth.valid_to?(Input.data)
+			@model.to = Input.data
 			@router.action = @model.win? ? :game_over : :game
+		else
+			@router.notice = @model.auth.error
+			@router.action = :game
 		end
 	end
 end

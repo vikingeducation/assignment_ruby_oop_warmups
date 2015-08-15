@@ -54,37 +54,34 @@ class GameController < Controller
 	end
 
 	def select_players
-		begin
+		if @model.auth.valid_number_of_players?(Input.data)
 			@model.num_players = Input.data
-		rescue AppError => e
-			@router.notice = e
-			@router.action = :menu
-		else
 			@router.action = :game
+		else
+			@router.notice = @model.auth.error
+			@router.action = :menu
 		end
 	end
 
 	def one_player
-		begin
+		if @model.auth.valid_hand?(Input.data)
 			@model.player_one = Input.data
 			@model.player_two = ['1', '2', '3'].shuffle.first
-		rescue AppError => e
-			@router.notice = e
-			@router.action = :game
-		else
 			@router.action = :over
+		else
+			@router.notice = @model.auth.error
+			@router.action = :game
 		end
 	end
 
 	def two_player
-		begin
+		if @model.auth.valid_hand?(Input.data)
 			@model.player_two = Input.data if @model.turn == '2'
 			@model.player_one = Input.data if @model.turn == '1'
-		rescue AppError => e
-			@router.notice = e
-			@router.action = :game
-		else
 			@router.action = @model.player_one && @model.player_two ? :over : :game
+		else
+			@router.notice = @model.auth.error
+			@router.action = :game
 		end
 	end
 end

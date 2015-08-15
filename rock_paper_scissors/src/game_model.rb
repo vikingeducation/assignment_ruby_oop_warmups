@@ -15,27 +15,15 @@ class GameModel < Model
 	end
 
 	def num_players=(value)
-		if @auth.valid_number_of_players?(value)
-			@num_players = value
-		else
-			raise AppError.new(@auth.error)
-		end
+		@num_players = value
 	end
 
 	def player_one=(value)
-		if @auth.valid_hand?(value)
-			@player_one = select_hand(value)
-		else
-			raise AppError.new(@auth.error)
-		end
+		@player_one = select_hand(value)
 	end
 
 	def player_two=(value)
-		if @auth.valid_hand?(value)
-			@player_two = select_hand(value)
-		else
-			raise AppError.new(@auth.error)
-		end
+		@player_two = select_hand(value)
 	end
 
 	def turn

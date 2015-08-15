@@ -4,10 +4,10 @@ class GameModel < Model
 	@@min_disks = 3
 	@@max_disks = 10
 
-	attr_accessor :difficulty, :from, :to, :moves
+	attr_accessor :game, :difficulty, :from, :to, :moves
 
 	def initialize
-		super(:auth => GameAuth.new)
+		super(:auth => GameAuth.new(self))
 	end
 
 	def clear
@@ -24,59 +24,23 @@ class GameModel < Model
 	end
 
 	def difficulty=(value)
-		if @auth.valid_difficulty?(value)
-			@difficulty = value
-			create
-		else
-			raise AppError.new(@auth.error)
-		end
+		@difficulty = value
+		create
+		@difficulty
 	end
 
 	def from=(value)
-		if @auth.valid_from?(@game, value)
-			@from = value
-		else
-			raise AppError.new(@auth.error)
-		end
+		@from = value
 	end
 
 	def to=(value)
-		if @auth.valid_to?(@game, @from, value)
-			@to = value
-			move!
-		else
-			raise AppError.new(@auth.error)
-		end
-	end
-
-	def create
-		first_tower = []
-		@difficulty.to_i.times do |i|
-			first_tower << i
-		end
-		@game = [first_tower, [], []]
+		@to = value
+		move!
+		@to
 	end
 
 	def win?
 		@game[2].join == (0...@difficulty.to_i).to_a.join
-	end
-
-	def move!
-		@moves += 1
-		@from = @from.to_i - 1
-		@to = @to.to_i - 1
-		disk = @game[from].shift
-		@game[@to].unshift(disk)
-		@from = nil
-		@to = nil
-		@game
-	end
-
-	def color(number, string)
-		code = ((number % 15) + 1).to_s
-		bg = "\e[48;5;#{code}m"
-		close = "\e[0m"
-		"#{bg}#{string}#{close}"
 	end
 
 	def to_s
@@ -113,4 +77,31 @@ class GameModel < Model
 	def self.max_disks
 		@@max_disks
 	end
+
+	private
+		def move!
+			@moves += 1
+			@from = @from.to_i - 1
+			@to = @to.to_i - 1
+			disk = @game[from].shift
+			@game[@to].unshift(disk)
+			@from = nil
+			@to = nil
+			@game
+		end
+
+		def color(number, string)
+			code = ((number % 15) + 1).to_s
+			bg = "\e[48;5;#{code}m"
+			close = "\e[0m"
+			"#{bg}#{string}#{close}"
+		end
+
+		def create
+			first_tower = []
+			@difficulty.to_i.times do |i|
+				first_tower << i
+			end
+			@game = [first_tower, [], []]
+		end
 end
