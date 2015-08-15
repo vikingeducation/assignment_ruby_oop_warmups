@@ -28,15 +28,31 @@ class Controller
 		@view.render('game')
 		if @model.tie?
 			@view.render('tie',
-				:hand_player_one => @view.render(@model.player_one, {}, false),
-				:hand_player_two => @view.render(@model.player_two, {}, false)
+				:hand_player_one => @view.render(
+					@model.player_one,
+					{},
+					false
+				),
+				:hand_player_two => @view.render(
+					@model.player_two,
+					{},
+					false
+				)
 			)
 		else
 			shoot = @model.shoot
 			@view.render('winner',
 				:winner => shoot[:winner],
-				:winning_hand => @view.render(shoot[:winning_hand], {}, false),
-				:losing_hand => @view.render(shoot[:losing_hand], {}, false)
+				:winning_hand => @view.render(
+					shoot[:winning_hand],
+					{},
+					false
+				),
+				:losing_hand => @view.render(
+					shoot[:losing_hand],
+					{},
+					false
+				)
 			)
 		end
 		@view.render('over')

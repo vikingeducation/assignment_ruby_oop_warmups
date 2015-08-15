@@ -18,27 +18,23 @@ class Model
 		if @auth.valid_number_of_players?(value)
 			@num_players = value
 		else
-			raise "Invalid number of players: #{value.to_i.to_s}"
+			raise @auth.error
 		end
 	end
 
 	def player_one=(value)
 		if @auth.valid_hand?(value)
 			@player_one = select_hand(value)
-			puts "Player one: #{@player_one}"
-			puts "Player two: #{@player_two}"
 		else
-			raise "Invalid hand player 1: #{value.to_i.to_s}"
+			raise @auth.error
 		end
 	end
 
 	def player_two=(value)
 		if @auth.valid_hand?(value)
 			@player_two = select_hand(value)
-			puts "Player one: #{@player_one}"
-			puts "Player two: #{@player_two}"
 		else
-			raise "Invalid hand player 2: #{value.to_i.to_s}"
+			raise @auth.error
 		end
 	end
 
