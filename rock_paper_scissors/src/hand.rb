@@ -2,6 +2,26 @@ class Hand
 	def compare(hand)
 	end
 
+	def >(other)
+		beats?(other)
+	end
+
+	def <(other)
+		! beats?(other)
+	end
+
+	def >=(other)
+		beats?(other) || ties?(other)
+	end
+
+	def <=(other)
+		! beats?(other) || ties?(other)
+	end
+
+	def ==(other)
+		ties?(other)
+	end
+
 	def <=>(other)
 		self.compare(other) <=> other.compare(self)
 	end
