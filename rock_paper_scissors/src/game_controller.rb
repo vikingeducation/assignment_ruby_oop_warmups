@@ -1,12 +1,4 @@
-class Controller
-	attr_accessor :model, :view
-
-	def initialize(options={})
-		@model = options[:model]
-		@view = options[:view]
-		@router = options[:router]
-	end
-	
+class GameController < Controller
 	def menu
 		@view.render('game')
 		@view.render('menu')
@@ -64,7 +56,7 @@ class Controller
 	def select_players
 		begin
 			@model.num_players = Input.data
-		rescue Exception => e
+		rescue AppError => e
 			@router.notice = e
 			@router.action = :menu
 		else
@@ -76,7 +68,7 @@ class Controller
 		begin
 			@model.player_one = Input.data
 			@model.player_two = ['1', '2', '3'].shuffle.first
-		rescue Exception => e
+		rescue AppError => e
 			@router.notice = e
 			@router.action = :game
 		else
@@ -88,7 +80,7 @@ class Controller
 		begin
 			@model.player_two = Input.data if @model.turn == '2'
 			@model.player_one = Input.data if @model.turn == '1'
-		rescue Exception => e
+		rescue AppError => e
 			@router.notice = e
 			@router.action = :game
 		else

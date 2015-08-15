@@ -7,19 +7,20 @@ class Router
 	attr_accessor :controller, :action, :notice
 
 	def initialize(options={})
+		@controller = options[:controller]
+		@model = Object.const_get(options[:model]).new
 		@action = options[:action]
-		@model = Model.new
-		@view = View.new(:dir => 'views')
+		@view = View.new(:dir => options[:views])
 	end
 
 	def route
 		@view.notice = @notice
 		@notice = nil
-		@controller = Controller.new(
+		controller = Object.const_get(@controller).new(
 			:view => @view,
 			:model => @model,
 			:router => self
 		)
-		@controller.send(@action) if ! Input.quit?
+		controller.send(@action) if ! Input.quit?
 	end
 end

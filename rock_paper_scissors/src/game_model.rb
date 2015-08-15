@@ -1,11 +1,11 @@
+require_relative 'game_auth.rb'
 require_relative 'hand.rb'
 
-class Model
+class GameModel < Model
 	attr_accessor :num_players, :player_one, :player_two
 
 	def initialize
-		@auth = Auth.new
-		clear
+		super(:auth => GameAuth.new)
 	end
 
 	def clear
@@ -18,7 +18,7 @@ class Model
 		if @auth.valid_number_of_players?(value)
 			@num_players = value
 		else
-			raise Exception.new(@auth.error)
+			raise AppError.new(@auth.error)
 		end
 	end
 
@@ -26,7 +26,7 @@ class Model
 		if @auth.valid_hand?(value)
 			@player_one = select_hand(value)
 		else
-			raise Exception.new(@auth.error)
+			raise AppError.new(@auth.error)
 		end
 	end
 
@@ -34,7 +34,7 @@ class Model
 		if @auth.valid_hand?(value)
 			@player_two = select_hand(value)
 		else
-			raise Exception.new(@auth.error)
+			raise AppError.new(@auth.error)
 		end
 	end
 

@@ -3,7 +3,7 @@ require_relative 'game_controller.rb'
 require_relative 'game_model.rb'
 require_relative 'game_auth.rb'
 
-class RockPaperScissors < App
+class TowerOfHanoi < App
 	def initialize
 		super(
 			:controller => 'GameController',

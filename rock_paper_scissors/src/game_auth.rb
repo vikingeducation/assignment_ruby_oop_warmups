@@ -1,6 +1,4 @@
-class Auth
-	attr_reader :error
-
+class GameAuth < Auth
 	def valid_number_of_players?(n)
 		if ! ['1', '2'].include?(n)
 			@error = "Invalid number of players: #{n.to_i.to_s}"
