@@ -10,7 +10,7 @@ class GameAuth < Auth
 	end
 
 	def valid_from?(game, from)
-		if from == ''
+		if ! ['1', '2', '3'].include?(from)
 			@error = "Invalid stack origin number: #{from.to_i.to_s}"
 			return false
 		elsif ! game[from.to_i - 1] || game[from.to_i - 1].empty?
@@ -21,7 +21,7 @@ class GameAuth < Auth
 	end
 
 	def valid_to?(game, from, to)
-		if to == ''
+		if ! ['1', '2', '3'].include?(from)
 			@error = "Invalid stack destination number: #{to.to_i.to_s}"
 			return false
 		elsif ! game[from.to_i - 1] || ! game[to.to_i - 1]
