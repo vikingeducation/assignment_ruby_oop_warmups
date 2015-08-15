@@ -18,7 +18,7 @@ class Model
 		if @auth.valid_number_of_players?(value)
 			@num_players = value
 		else
-			raise @auth.error
+			raise Exception.new(@auth.error)
 		end
 	end
 
@@ -26,7 +26,7 @@ class Model
 		if @auth.valid_hand?(value)
 			@player_one = select_hand(value)
 		else
-			raise @auth.error
+			raise Exception.new(@auth.error)
 		end
 	end
 
@@ -34,7 +34,7 @@ class Model
 		if @auth.valid_hand?(value)
 			@player_two = select_hand(value)
 		else
-			raise @auth.error
+			raise Exception.new(@auth.error)
 		end
 	end
 
