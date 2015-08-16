@@ -6,7 +6,7 @@ class GameController < Controller
 		@router.action = :select_players
 	end
 
-	def game
+	def play
 		@view.render('game')
 		@view.render('play',
 			:turn => @model.turn
@@ -56,7 +56,7 @@ class GameController < Controller
 	def select_players
 		if @model.auth.valid_number_of_players?(Input.data)
 			@model.num_players = Input.data
-			@router.action = :game
+			@router.action = :play
 		else
 			@router.notice = @model.auth.error
 			@router.action = :menu
@@ -70,7 +70,7 @@ class GameController < Controller
 			@router.action = :over
 		else
 			@router.notice = @model.auth.error
-			@router.action = :game
+			@router.action = :play
 		end
 	end
 
@@ -78,10 +78,10 @@ class GameController < Controller
 		if @model.auth.valid_hand?(Input.data)
 			@model.player_two = Input.data if @model.turn == '2'
 			@model.player_one = Input.data if @model.turn == '1'
-			@router.action = @model.player_one && @model.player_two ? :over : :game
+			@router.action = @model.player_one && @model.player_two ? :over : :play
 		else
 			@router.notice = @model.auth.error
-			@router.action = :game
+			@router.action = :play
 		end
 	end
 end

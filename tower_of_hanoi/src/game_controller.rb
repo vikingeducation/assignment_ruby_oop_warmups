@@ -9,7 +9,7 @@ class GameController < Controller
 		@router.action = :select_difficulty
 	end
 
-	def game
+	def play
 		@view.render('game')
 		@view.render('play',
 			:game => @model,
@@ -36,7 +36,7 @@ class GameController < Controller
 	def select_difficulty
 		if @model.auth.valid_difficulty?(Input.data)
 			@model.difficulty = Input.data
-			@router.action = :game
+			@router.action = :play
 		else
 			@router.notice = @model.auth.error
 			@router.action = :menu
@@ -49,19 +49,19 @@ class GameController < Controller
 		else
 			@router.notice = @model.auth.error
 		end
-		@router.action = :game		
+		@router.action = :play		
 	end
 
 	def select_to
 		if ['c', 'clear'].include?(Input.data)
 			@model.oops
-			@router.action = :game
+			@router.action = :play
 		elsif @model.auth.valid_to?(Input.data)
 			@model.to = Input.data
-			@router.action = @model.win? ? :game_over : :game
+			@router.action = @model.win? ? :game_over : :play
 		else
 			@router.notice = @model.auth.error
-			@router.action = :game
+			@router.action = :play
 		end
 	end
 end
