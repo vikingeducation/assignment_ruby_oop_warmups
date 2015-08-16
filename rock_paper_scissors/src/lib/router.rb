@@ -1,4 +1,3 @@
-require_relative 'auth.rb'
 require_relative 'controller.rb'
 require_relative 'model.rb'
 require_relative 'view.rb'

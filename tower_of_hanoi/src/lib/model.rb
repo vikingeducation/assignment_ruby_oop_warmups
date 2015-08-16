@@ -1,3 +1,5 @@
+require_relative 'auth.rb'
+
 class AppError < StandardError
 	def initialize(message)
 		super(message)
