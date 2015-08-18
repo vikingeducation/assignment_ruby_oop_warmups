@@ -21,4 +21,8 @@ class Input
 	def self.quit?
 		['q', 'quit', 'exit'].include?(@@data)
 	end
+
+	def self.clear?
+		['c', 'clear'].include?(@data)
+	end
 end

@@ -53,7 +53,7 @@ class GameController < Controller
 	end
 
 	def select_to
-		if ['c', 'clear'].include?(Input.data)
+		if Input.clear?
 			@model.oops
 			@router.action = :play
 		elsif @model.auth.valid_to?(Input.data)
