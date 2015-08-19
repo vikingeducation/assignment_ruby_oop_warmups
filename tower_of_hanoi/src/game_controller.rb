@@ -34,33 +34,33 @@ class GameController < Controller
 	end
 
 	def select_difficulty
-		if @model.auth.valid_difficulty?(Input.data)
-			@model.difficulty = Input.data
+		@model.difficulty = Input.data
+		if @model.difficulty
 			@router.action = :play
 		else
-			@router.notice = @model.auth.error
+			Input.notice = @model.validation.error
 			@router.action = :menu
 		end
 	end
 
 	def select_from
-		if @model.auth.valid_from?(Input.data)
-			@model.from = Input.data
-		else
-			@router.notice = @model.auth.error
+		@model.from = Input.data
+		unless @model.from
+			Input.notice = @model.validation.error
 		end
 		@router.action = :play		
 	end
 
 	def select_to
+		byebug
+		@model.to = Input.data
 		if Input.clear?
 			@model.oops
 			@router.action = :play
-		elsif @model.auth.valid_to?(Input.data)
-			@model.to = Input.data
+		elsif @model.to
 			@router.action = @model.win? ? :game_over : :play
 		else
-			@router.notice = @model.auth.error
+			Input.notice = @model.validation.error
 			@router.action = :play
 		end
 	end

@@ -1,4 +1,4 @@
-require_relative 'game_auth.rb'
+require_relative 'game_validation.rb'
 
 class GameModel < Model
 	@@min_disks = 3
@@ -7,12 +7,12 @@ class GameModel < Model
 	attr_accessor :game, :difficulty, :from, :to, :moves
 
 	def initialize
-		super(:auth => GameAuth.new(self))
+		super(:validation => GameValidation.new(self))
 	end
 
 	def clear
 		@game = []
-		@difficulty = 3
+		@difficulty = nil
 		@from = nil
 		@to = nil
 		@moves = 0
@@ -24,18 +24,22 @@ class GameModel < Model
 	end
 
 	def difficulty=(value)
-		@difficulty = value
-		create
+		if @validation.valid_difficulty?(value)
+			@difficulty = value
+			create
+		end
 		@difficulty
 	end
 
 	def from=(value)
-		@from = value
+		@from = value if @validation.valid_from?(value)
 	end
 
 	def to=(value)
-		@to = value
-		move!
+		if @validation.valid_to?(value)
+			@to = value
+			move!
+		end
 		@to
 	end
 

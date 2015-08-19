@@ -6,4 +6,4 @@ Where would you like to move <%= @move_type %>?
 Type 'c' to clear your last entry
 
 <%= @game %>
-<% if @notice %><%= "\n#{@notice}" %><% end %>
+<% if Input.notice? %><%= "\n#{Input.notice}" %><% Input.clear(:notice) %><% end %>

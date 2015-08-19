@@ -1,4 +1,4 @@
-class GameAuth < Auth
+class GameValidation < Validation
 	def initialize(model)
 		@model = model
 	end
