@@ -1,5 +1,5 @@
 class Input
-	@notice = nil
+	@@notice = nil
 	@@data = nil
 
 	def self.clear(*args)
@@ -45,7 +45,7 @@ class Input
 	end
 
 	def self.clear?
-		['c', 'clear'].include?(@data)
+		['c', 'clear'].include?(@@data)
 	end
 
 	clear
