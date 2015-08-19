@@ -36,11 +36,7 @@ class GameModel < Model
 	end
 
 	def to=(value)
-		if @validation.valid_to?(value)
-			@to = value
-			move!
-		end
-		@to
+		@to = value if @validation.valid_to?(value)
 	end
 
 	def win?
@@ -82,17 +78,18 @@ class GameModel < Model
 		@@max_disks
 	end
 
+	def move!
+		@moves += 1
+		@from = @from.to_i - 1
+		@to = @to.to_i - 1
+		disk = @game[from].shift
+		@game[@to].unshift(disk)
+		@from = nil
+		@to = nil
+		@game
+	end
+
 	private
-		def move!
-			@moves += 1
-			@from = @from.to_i - 1
-			@to = @to.to_i - 1
-			disk = @game[from].shift
-			@game[@to].unshift(disk)
-			@from = nil
-			@to = nil
-			@game
-		end
 
 		def color(number, string)
 			code = ((number % 15) + 1).to_s

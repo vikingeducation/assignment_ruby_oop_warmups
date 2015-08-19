@@ -52,12 +52,12 @@ class GameController < Controller
 	end
 
 	def select_to
-		byebug
 		@model.to = Input.data
 		if Input.clear?
 			@model.oops
 			@router.action = :play
 		elsif @model.to
+			@model.move!
 			@router.action = @model.win? ? :game_over : :play
 		else
 			Input.notice = @model.validation.error
