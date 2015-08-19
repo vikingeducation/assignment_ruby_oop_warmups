@@ -4,4 +4,4 @@ Player <%= @turn %> select a hand:
 1. Rock
 2. Paper
 3. Scissors
-<% if @notice %><%= "\n#{@notice}" %><% end %>
+<% if Input.notice? %><%= "\n#{Input.notice}" %><% Input.clear(:notice) %><% end %>
