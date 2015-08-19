@@ -54,33 +54,33 @@ class GameController < Controller
 	end
 
 	def select_players
-		if @model.auth.valid_number_of_players?(Input.data)
-			@model.num_players = Input.data
+		@model.num_players = Input.data
+		if @model.num_players
 			@router.action = :play
 		else
-			@router.notice = @model.auth.error
+			Input.notice = @model.validation.error
 			@router.action = :menu
 		end
 	end
 
 	def one_player
-		if @model.auth.valid_hand?(Input.data)
-			@model.player_one = Input.data
+		@model.player_one = Input.data
+		if @model.player_one
 			@model.player_two = ['1', '2', '3'].shuffle.first
 			@router.action = :over
 		else
-			@router.notice = @model.auth.error
+			Input.notice = @model.validation.error
 			@router.action = :play
 		end
 	end
 
 	def two_player
-		if @model.auth.valid_hand?(Input.data)
-			@model.player_two = Input.data if @model.turn == '2'
-			@model.player_one = Input.data if @model.turn == '1'
-			@router.action = @model.player_one && @model.player_two ? :over : :play
+		current_player = @model.current_player
+		@model.current_player = Input.data
+		if @model.send(current_player)
+			@router.action = @model.shoot_ready? ? :over : :play
 		else
-			@router.notice = @model.auth.error
+			Input.notice = @model.validation.error
 			@router.action = :play
 		end
 	end
