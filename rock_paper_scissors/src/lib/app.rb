@@ -26,6 +26,6 @@ class App
 			@router.route
 			reset if Input.reset?
 		end while ! Input.quit?
-		Input.data = nil
+		Input.clear
 	end
 end
