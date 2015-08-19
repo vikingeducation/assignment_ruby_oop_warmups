@@ -1,29 +1,44 @@
-require_relative 'game_auth.rb'
+require_relative 'game_validation.rb'
 require_relative 'hand.rb'
 
 class GameModel < Model
 	attr_accessor :num_players, :player_one, :player_two
 
 	def initialize
-		super(:auth => GameAuth.new)
+		super(:validation => GameValidation.new)
 	end
 
 	def clear
-		@num_players = 0
+		@num_players = nil
 		@player_one = nil
 		@player_two = nil
 	end
 
+	def current_player
+		player = :player_one if turn == '1'
+		player = :player_two if turn == '2'
+		player
+	end
+
+	def current_player=(value)
+		player = nil
+		if @validation.valid_hand?(value)
+			player = @player_two = select_hand(value) if turn == '2'
+			player = @player_one = select_hand(value) if turn == '1'
+		end
+		player
+	end
+
 	def num_players=(value)
-		@num_players = value
+		@num_players = value if @validation.valid_num_players?(value)
 	end
 
 	def player_one=(value)
-		@player_one = select_hand(value)
+		@player_one = select_hand(value) if @validation.valid_hand?(value)
 	end
 
 	def player_two=(value)
-		@player_two = select_hand(value)
+		@player_two = select_hand(value) if @validation.valid_hand?(value)
 	end
 
 	def turn
@@ -57,6 +72,10 @@ class GameModel < Model
 
 	def two_player?
 		@num_players == '2'
+	end
+
+	def shoot_ready?
+		@player_one && @player_two
 	end
 
 	private
