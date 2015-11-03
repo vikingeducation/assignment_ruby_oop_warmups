@@ -27,6 +27,26 @@ module ArrayExtention
     end
     result
   end
+
+  def my_all? proc = nil
+    result = []
+    if block_given?
+      self.my_each { |item| result << item if (yield item) }
+    else
+      self.my_each { |item| result << item if (proc.call item) }
+    end
+    result.length == self.length
+  end
+
+  def my_inject initial_value=self.first, proc=nil
+    memo = initial_value
+    if block_given?
+      self.my_each { |item| memo = yield(memo, item) }
+    else
+      self.my_each { |item| memo = proc.call(memo, item) }
+    end
+    memo
+  end
 end
 
 class Array
@@ -44,3 +64,8 @@ end
 # puts [1,2,5].my_select(my_proc).to_s
 # puts [1,2,5].my_select{|item| item.even?}.to_s
 
+# my_proc = Proc.new{|item| item.even?}
+# puts [1,2,5].my_all?(my_proc)
+
+puts [1,2,5,3].my_inject(0){ |memo, item|  memo + item }.to_s
+puts [1,2,5,3].my_inject(1){ |memo, item|  memo * item }.to_s
