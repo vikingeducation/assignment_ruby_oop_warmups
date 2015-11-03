@@ -1,6 +1,4 @@
 class RockPaperScissor
-  # attr_accessor :player_move
-
   @@valid_answers = ['r', 'p', 's']
 
   def initialize mode="AI"
