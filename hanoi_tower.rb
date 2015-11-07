@@ -1,7 +1,8 @@
+# Maintains game "board" state
 class HanoiTower
   attr_accessor :addresses
 
-  def initialize disks
+  def initialize disks = 3
     @disks = disks
     # initializing an address hash for each disk.
     @addresses = {1 => nil, 2 => [], 3 => []}
@@ -31,5 +32,31 @@ class HanoiTower
     labels = ''
     3.times { |i| labels += "#{' ' * (@disks - 1)}#{i + 1}#{' ' * (@disks - 1)}"}
     puts labels
+  end
+
+  def place_disk move
+    if disk_move_valid?(move)
+      @addresses[move.last] << @addresses[move.first].pop
+      true
+    else
+      false
+    end
+      # if user_won?
+      #   puts "YOU WON!!"
+      #   quit
+  end
+
+  def disk_move_valid? move
+    if @addresses[move.last].empty?
+      true
+    elsif @addresses[move.last].last > @addresses[move.first].last
+      true
+    else
+      puts "Invalid move.  You are trying to put a larger disk on top of a smaller one.  Try again..."
+    end
+  end
+
+  def winning_board?
+    @addresses[3] == Array.new(@disks) { |i| @disks - i }
   end
 end
