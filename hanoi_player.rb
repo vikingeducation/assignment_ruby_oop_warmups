@@ -14,11 +14,10 @@ class Player
       # if player_quit?(move)
       #   quit
       # else
-      if current_move = parse_move(move)
+      current_move = parse_move(move)
 
-        if valid_move_format?(current_move)
-          break if @towers.place_disk(current_move)
-        end
+      if valid_move_format?(current_move)
+        break if @towers.place_disk(current_move)
       end
     end
   end
