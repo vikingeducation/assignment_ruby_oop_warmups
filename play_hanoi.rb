@@ -34,6 +34,7 @@ class PlayHanoi
 
   def game_over?
     if @towers.winning_board?
+      @towers.render
       puts "Congrats, #{@player.name}!! You WIN!!!"
       true
     else
