@@ -47,7 +47,9 @@ class HanoiTower
   end
 
   def disk_move_valid? move
-    if @addresses[move.last].empty?
+    if @addresses[move.first].empty?
+        puts "No disk present! Try again..."
+    elsif @addresses[move.last].empty?
       true
     elsif @addresses[move.last].last > @addresses[move.first].last
       true
