@@ -24,7 +24,6 @@ class RockPaperScissor
       puts "I'm sorry I didn't recognize your input. Try again..."
       select_mode
     end
-    play
   end
 
   def play
@@ -49,3 +48,4 @@ class RockPaperScissor
 end
 
 game = RockPaperScissor.new
+game.play
