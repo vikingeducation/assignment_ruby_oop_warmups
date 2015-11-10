@@ -11,6 +11,25 @@ class RockPaperScissor
     select_mode
   end
 
+  def play
+    loop do
+      @player1.select_move
+      @player2.select_move
+
+      if @player1.move == @player2.move
+        puts "It's a draw!  Let's try again!"
+        play
+      elsif player1_win?
+        puts "#{@player1.name} WINS with #{@@move_lookup[@player1.move].upcase} beating #{@player2.name}'s #{@@move_lookup[@player2.move].upcase}!"
+      else
+        puts "#{@player2.name} WINS with #{@@move_lookup[@player2.move].upcase} beating #{@player1.name}'s #{@@move_lookup[@player1.move].upcase}."
+      end
+      break if quit?
+    end
+  end
+
+  private
+
   def select_mode
     puts "Type 1 for 1 player or 2 for 2 players"
     print " > "
@@ -26,26 +45,17 @@ class RockPaperScissor
     end
   end
 
-  def play
-    @player1.select_move
-    @player2.select_move
-
-    if @player1.move == @player2.move
-      puts "It's a draw!  Let's try again!"
-      play
-    elsif player1_win?
-      puts "#{@player1.name} WINS!!  Your #{@@move_lookup[@player1.move]} beat #{@player2.name}'s #{@@move_lookup[@player2.move]}."
-    else
-      puts "#{@player2.name} WINS!!  Your #{@@move_lookup[@player2.move]} beat #{@player1.name}'s #{@@move_lookup[@player1.move]}."
-    end
-  end
-
   def player1_win?
     winners = [['r', 's'], ['p', 'r'], ['s', 'p']]
     winners.include? [@player1.move, @player2.move]
   end
 
+  def quit?
+    puts "Would you like to play again? (y/n)"
+    gets.chomp.downcase != 'y'
+  end
+
 end
 
-game = RockPaperScissor.new
-game.play
+# game = RockPaperScissor.new
+# game.play
