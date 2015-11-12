@@ -1,10 +1,10 @@
-class RPSComputer < RPSPlayer
+class Computer < Player
 
   def initialize
-    @name = "Oopy Rooby"
+    @name = "Skynet"
   end
 
   def select_move
-    @move = @@valid_answers.shuffle.first
+    @move = VALID_ANSWERS.shuffle.first
   end
 end
