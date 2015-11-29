@@ -1,9 +1,9 @@
 =begin
-  - Create a method my_inject
-  - which extends the Array class
-  - and works the same as Ruby's native inject method.
-  - You can use your my_each method to implement this. 
-  - Make it take either a block or a proc.
+  - Create a method my_inject (Done)
+  - which extends the Array class (Done)
+  - and works the same as Ruby's native inject method. (Done)
+  - You can use your my_each method to implement this. (Done)
+  - Make it take either a block or a proc. (Done)
 
 > [1,2,5].my_inject(0) do |memo, item|
 >   memo + item
