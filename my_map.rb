@@ -1,10 +1,10 @@
 =begin
 
-- Create a method my_map
-- which extends the Array class
-- and has identical functionality to Ruby's native map method.
-- You can use your my_each method to implement this.
-- Make it take either a block or a proc.
+- Create a method my_map (Done)
+- which extends the Array class (Done)
+- and has identical functionality to Ruby's native map method. (Done)
+- You can use your my_each method to implement this. (Done)
+- Make it take either a block or a proc. (Done)
 
 e.g.
 > [1,2,5].my_map do |item|
