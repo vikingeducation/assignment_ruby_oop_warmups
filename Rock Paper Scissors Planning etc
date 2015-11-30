@@ -1,0 +1,26 @@
+Set up the game initially [RockPaperScissors]
+  Find out if its one player or two player mode. [RockPaperScissors]
+
+  make a method for one player mode that creates a computer object and a player object. [RockPaperScissors]
+
+  make a method for two player mode that creates two player objects. [RockPaperScissors]
+
+Start the game loop - loop depends on 1 player or 2 player mode. [RockPaperScissors]
+
+2 player mode
+  Ask player 1 for and validate their decision. [Player]
+  Ask player 2 for and validate their decision. [Player]
+  if decision of either player is to quit, end loop [RockPaperScissors]
+  else
+    compare decisions and [RockPaperScissors]
+    Display the proper victory / draw message.
+    keep looping until they quit.
+
+1 player mode
+  Ask player 1 for and validate their decision. [Player]
+  Ask computer for their random decision. [Computer]
+  if decision of player is to quit, end loop
+  else
+    compare decisions and
+    Display the proper victory / draw message.
+    keep looping until they quit.
