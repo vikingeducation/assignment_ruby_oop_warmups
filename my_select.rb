@@ -1,9 +1,9 @@
 =begin
   - Create a method my_select (Done)
   - which extends the Array class (Done)
-  - and has identical functionality to Ruby's native select method.
-  - You can use your my_each method to implement this.
-  - Make it take either a block or a proc.
+  - and has identical functionality to Ruby's native select method. (Done)
+  - You can use your my_each method to implement this. (Done)
+  - Make it take either a block or a proc. (Done)
 
   > my_proc = Proc.new{|item| item.even?}
   #=> #<Proc:0x007fbb6b9c1ff8@(irb):2>

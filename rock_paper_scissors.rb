@@ -14,58 +14,105 @@ class RockPaperScissors
   Moves = ["r","p","s","q"]
 
   def initialize
-    @players_decision = nil
-    @computers_decision = nil
-  end
-
-  def computers_turn
-    @computers_decision = Moves[rand(3)]
+    @player1 = Player.new
+    @player2 = Player.new
+    @computer = Computer.new
+    @@mode = nil
   end
 
   def game_start
     puts "ROCK PAPER SCISSORS"
     puts "By Steven Chang"
-    puts "-----------------------------------------"
-    round
+    puts "-------------------------------------"
+    mode
   end
 
-  def players_turn
-    decision = nil
-    puts "Your Turn"
-    until valid_entry?(decision)
-      print "Enter 'r' for rock, 'p' for paper, 's' for scissors or 'q' to quit: "
-      decision = gets.chomp
+  def mode
+    until @@mode == '1' || @@mode == '2'
+      print "ONE or TWO player mode? (Type '1' or '2' and enter): "
+      @@mode = gets.chomp
     end
-    @players_decision = decision
+
+    one_player_mode if @@mode == '1'
+    two_player_mode if @@mode == '2'
   end
 
-  def round
-    until @players_decision == 'q'
-      players_turn
-      computers_turn
-      if @players_decision == @computers_decision
+  def one_player_mode
+    until @player1.decision == 'q'
+      puts "Your Turn!"
+      @player1.players_turn
+      @computer.computers_turn
+      if @player1.decision == @computer.decision
         puts "it's a draw"
-      elsif @players_decision == 'r'
-        if @computers_decision == 's'
+      elsif @player1.decision == 'r'
+        if @computer.decision == 's'
           puts "You Win!"
         else
-          puts "You lose"
+          puts "You Lose"
         end
-      elsif @players_decision == 's'
-        if @computers_decision == 'r'
-          puts "You lose"
+      elsif @player1.decision == 's'
+        if @computer.decision == 'r'
+          puts "You Lose"
         else
           puts "You Win!"
         end
-      elsif @players_decision == 'p'
-        if @computers_decision == 'r'
+      elsif @player1.decision == 'p'
+        if @computer.decision == 'r'
           puts "You Win!"
         else
           puts "You Lose!"
         end
       end
-      round
     end
+  end
+
+  def two_player_mode
+    until @player1.decision == 'q' || @player2.decision == 'q'
+      puts "Player ONE's Turn!"
+      @player1.players_turn
+      puts "Player TWO's Turn!"
+      @player2.players_turn
+      if @player1.decision == @player2.decision
+        puts "it's a draw"
+      elsif @player1.decision == 'r'
+        if @player2.decision == 's'
+          puts "Player ONE Wins!"
+        else
+          puts "Player TWO Wins!"
+        end
+      elsif @player1.decision == 's'
+        if @player2.decision == 'r'
+          puts "Player TWO Wins!"
+        else
+          puts "Player ONE Wins!"
+        end
+      elsif @player1.decision == 'p'
+        if @player2.decision == 'r'
+          puts "Player ONE Wins!"
+        else
+          puts "Player TWO Wins!"
+        end
+      end
+    end
+  end
+
+end
+
+class Player < RockPaperScissors
+
+  attr_reader :decision
+
+  def initialize
+    @decision = nil
+  end
+
+  def players_turn
+    decision = nil
+    until valid_entry?(decision)
+      print "Enter 'r' for rock, 'p' for paper, 's' for scissors or 'q' to quit: "
+      decision = gets.chomp
+    end
+    @decision = decision
   end
 
   def valid_entry?(decision)
@@ -78,4 +125,18 @@ class RockPaperScissors
 
 end
 
-puts RockPaperScissors.new.game_start
+class Computer < RockPaperScissors
+
+  attr_reader :decision
+
+  def initialize
+    @decision = nil
+  end
+
+  def computers_turn
+    @decision = Moves[rand(3)]
+  end
+
+end
+
+RockPaperScissors.new.game_start
