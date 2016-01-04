@@ -85,6 +85,4 @@ class Array
 
 end
 
-my_proc = Proc.new{|item| item.even?}
-[4,2,8].my_all?(&my_proc)
 
