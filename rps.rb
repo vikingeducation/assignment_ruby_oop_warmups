@@ -29,6 +29,7 @@ class Player
 			@move = user_input
 		else
 			print "Not a valid input!\n"
+			get_move
 		end
 	end
 end
@@ -58,7 +59,6 @@ class Game
 
 	#runs game logic
 	def game_loop
-
 		print_welcome
 		print_instructions
 
@@ -75,16 +75,45 @@ class Game
 				@turn = true
 			end
 
+			if @player1.move && @player2.move
+				compare_moves(@player1.move, @player2.move)
+			end
+
 		end
 
 	end
 
 	#compares moves between players
 	def compare_moves(p1_move, p2_move)
-		case
-		when p1_move
-		when
-		when
+		if p1_move[0] == p2_move[0]
+			puts "It's a tie, try again..."
+			@player1.move = nil
+			@player2.move = nil
+		elsif p1_move[0] == "R"
+			if p2_move[0] == "S"
+				puts "Player 1 wins!"
+				@win = true
+			else
+				puts "Player 2 wins!"
+				@win = true
+			end
+
+		elsif p1_move[0] == "P"
+			if p2_move[0] == "S"
+				puts "Player 2 wins!"
+				@win = true
+			else
+				puts "Player 1 wins!"
+				@win = true
+			end
+		else p1_move[0] == "S"
+			if p2_move[0] == "R"
+				puts "Player 2 wins!"
+				@win = true
+			else
+				puts "Player 1 wins!"
+				@win = true
+			end
 		end
 	end
 end
@@ -94,6 +123,6 @@ class Computer
 
 end
 
-class
+g = Game.new
 
-end
+g.game_loop
