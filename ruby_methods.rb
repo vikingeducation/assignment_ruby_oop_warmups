@@ -74,6 +74,17 @@ class Array
     return result
   end
 
-
+  def my_all?
+    self.my_each do |item|
+      unless yield(item)
+        return false
+      end
+    end
+    true
+  end
 
 end
+
+my_proc = Proc.new{|item| item.even?}
+[4,2,8].my_all?(&my_proc)
+
