@@ -1,4 +1,5 @@
 def my_reverse(string)
+
   new_string = ""
 
   index = string.length-1
@@ -8,3 +9,6 @@ def my_reverse(string)
   end
   new_string
 end
+
+
+  
