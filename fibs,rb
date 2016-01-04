@@ -1,0 +1,15 @@
+def fibs(no_of_terms,arr)
+	if no_of_terms == 1 
+	    arr.push(0)
+		return 0
+	elif no_of_tems == 2
+	    arr.push(1)
+		return 1
+	end
+
+	arr.push(fibs(no_of_terms - 1,arr) + fibs(no_of_terms - 2))
+end	
+	
+arr = Array.new
+fibs(7,arr)
+		
