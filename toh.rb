@@ -139,7 +139,7 @@ class TowersOfHanoi
 
       # Check input to make sure it is valid
       if input_array.size == 2 and input_array.all?{ |element| element.class == Fixnum }
-        if input_array.all?{ |num| num > 0 and num < 4 }
+        if input_array.all?{ |tower_no| tower_no > 0 and tower_no < 4 }
           valid = true
           return input_array
         else
@@ -166,20 +166,14 @@ class TowersOfHanoi
       
       # Prompt for new input 
       # If input is valid, change game state accordingly
-      new_input = input
-      if new_input
-        move(@towers, new_input)
+      from_to_towers = input()
+      
+      if from_to_towers
+         move(@towers[from_to_towers[0]], @towers[from_to_towers[1])
       end
 
       # Check to see if the player has won
-      check_win(@towers,tower_size)
-
-      #break when user quits or wins
-      if @game_state == -1 # if user has quit
-        #quit message
-        puts "Bye, thanks for playing!"
-        break
-      elsif @game_state == 1 # if user has won
+      if check_win(@towers,tower_size)
         # render the board one last time
         render(@towers,tower_size)
         # win message
@@ -189,10 +183,21 @@ class TowersOfHanoi
     end
   end
 
+  def check_win (towers,tower_size)
+    # Check for victory - player wins if entire tower is on a peg other than peg 0 (column 1)
+    if towers[2].tower_size == tower_size or towers[3].tower_size == tower_size
+        return true   
+    else
+        return false
+    end    
+  end
+  
   def play
     welcome
     game_loop
   end
+
+
 end
 
 
