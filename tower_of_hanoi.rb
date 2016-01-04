@@ -15,7 +15,52 @@ class TowerOfHanoi
         @peg_hash = { 1 =>@peg1, 2=>@peg2, 3=>@peg3 }
     end
 
-    def move(from, to)
+    def play_game
+        display_game_state
+
+        loop do
+            illegal_move = false
+
+            input_hash = get_input
+
+            break if input_hash[:quit]
+
+            p input_hash
+            if invalid_inputs?(input_hash[:from], input_hash[:to])
+                puts "Bad input, try again."
+                next
+            end
+
+            illegal_move = move(input_hash[:from],input_hash[:to])
+
+            if check_winner?
+                puts "Congratulations! You win!"
+                break
+            end
+
+            puts "Illegal Move, try again." if illegal_move
+        end
+    end
+
+    def get_input
+        input_hash = {from: 0, to: 0, quit: false}
+        puts "Enter move ('from, to' or 'q' to quit)"
+        print "> "
+
+        move_string = gets.chomp
+        if move_string == "q"
+            input_hash[:quit] = true
+        else
+            input_hash[:from], input_hash[:to] = move_string.split(',').map(&:to_i)
+        end
+        input_hash
+    end
+
+    def invalid_inputs?(from, to)
+         from < 1 || from > 3 || to < 1 || to > 3
+     end
+
+     def move(from, to)
         from_peg = @peg_hash[from]
         to_peg = @peg_hash[to]
 
@@ -30,11 +75,11 @@ class TowerOfHanoi
 
     def check_winner?
        @peg3 == @winner_peg && @peg1 == [] && @peg2 == []
-   end
+    end
 
     def display_game_state
         @peg_hash.values
-        
+
         output  = []
         (@height - 1).downto 0 do | i |
             line = []
@@ -49,38 +94,8 @@ class TowerOfHanoi
         end
         puts output.join("\n")
     end
-end
-
-def play_game
-    puts "How many discs?"
-    print "> "
-    height = gets.chomp.to_i
-    game = TowerOfHanoi.new(height)
-    game.display_game_state
-
-    loop do
-        illegal_move = false
-        puts "Enter move ('from, to' or 'q' to quit)"
-        print "> "
-
-        move_string = gets.chomp
-        break if move_string == "q"
-        from, to = move_string.split(',').map(&:to_i)
-        if from < 1 || from > 3 || to < 1 || to > 3
-            puts "Bad input, try again."
-            next
-        end
-
-        illegal_move = game.move(from,to)
-
-        if game.check_winner?
-            puts "Congratulations! You win!"
-            break
-        end
-
-        puts "Illegal Move, try again." if illegal_move
     end
-end
 
 
-play_game
+tower = TowerOfHanoi.new(3)
+tower.play_game
