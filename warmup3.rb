@@ -51,11 +51,26 @@ class Array
 
 		return result_array
 	end
+
+	def my_all?(theproc = nil)
+
+		if block_given?
+			self.my_each do |num|
+				return false unless yield(num)
+			end
+		else
+			self.my_each do |num|
+				return false unless theproc.call(num)
+			end
+		end
+
+		return true
+	end
 end
 
 my_proc = Proc.new { |item| item.even? }
 # puts [1,2,5].my_select(my_proc).inspect
-puts [1,2,5,9,8].my_select{ |item| item.even? }.inspect
+puts [8,2,6,12].my_all?{ |item| item.even? }.inspect
 #[1,2,5].my_each(my_proc)
 #[1,2,5].my_each{|item| puts item**2}
 # print [1,2,5].my_map{|item| item**2}
