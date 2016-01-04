@@ -91,8 +91,9 @@ end
 # print [1,2,5].my_map(my_proc)
 # puts [1,2,5].my_select(my_proc).inspect
 # puts [8,2,6,12].my_all?{ |item| item.even? }.inspect
-my_proc = Proc.new { |memo, item| memo + item }
+#my_proc = Proc.new { |memo, item| memo + item }
 #puts [1,2,5].my_inject(my_proc)
 #puts [1,2,5].my_inject(my_proc, 0)
 #puts [1,2,5].my_inject(0) { |memo, item| memo + item }
-puts [1,2,5].inject(0, &my_proc)
+#puts [1,2,5].my_inject(0, my_proc)
+#puts [1,2,5].inject(0, my_proc)
