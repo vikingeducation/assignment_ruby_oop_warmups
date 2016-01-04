@@ -41,6 +41,9 @@ my_benchmark(1) { "hi" }
 my_benchmark(10000) { "hi" }
 my_benchmark(1000000) { "hi" }
 
+
+
+
 class Array
   def my_each
     i = 0
@@ -49,6 +52,28 @@ class Array
       i += 1    
     end
   end
-end
-[1,2,5].my_each{ |item| puts item }
 
+
+
+  def my_map
+    result = []
+    self.my_each do |item|
+      result << yield(item)
+    end
+    result
+  end
+
+
+  def my_select
+    result = []
+    self.my_each do |item|
+      if yield(item) == true
+        result << item
+      end
+    end
+    return result
+  end
+
+
+
+end
