@@ -53,6 +53,21 @@ Array.class_eval do
 		end
 		new_array
 	end
+
+	def my_all
+		my_each do |item|
+			return false unless yield item
+		end
+		true
+	end
+
+	def my_inject ( cumulation = 0 )
+
+		my_each do |item|
+			cumulation = yield(cumulation, item)
+		end
+		cumulation
+	end
 end
 
 [1,3,5].my_each do |i|
@@ -60,10 +75,15 @@ end
 end
 
 mapped_array = [1,3,5].my_map { |i| i ** 2 }
-
 p mapped_array
-
 selected_array = [1,2,5].my_select { |i| i.even? }
-
 p selected_array
+
+puts [1, 2, 5].my_all { |i| i.even? }
+puts [1, 2, 5].my_all { |i| i < 100 }
+
+puts [1,2, 3].my_inject (0) {  | memo, item  |  memo + item  } 
+
+
+
 
