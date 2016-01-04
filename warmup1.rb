@@ -11,4 +11,16 @@ def my_reverse(word)
   return reversed.join('')
 end
 
-puts my_reverse("Blah")
+# puts my_reverse("Blah")
+
+def fibs(num)
+  sequence = [0, 1]
+
+  (num-2).times do
+    sequence << sequence[-1] + sequence[-2]
+  end
+
+  return sequence
+end
+
+print fibs(8)
