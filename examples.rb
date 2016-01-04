@@ -32,39 +32,38 @@ end
 # p my_benchmark(10000) { puts "hi" }
 
 Array.class_eval do
-	def my_each
+	def my_each (proc = nil)
 		for i in 0...self.length
-			yield(self[i])
+			block_given? ? yield(self[i]) : proc.call( self[i] )
 		end
 	end
 
-	def my_map
+	def my_map (proc = nil)
 		new_array = []
 		my_each do |item|
-			new_array << yield(item)
+			new_array << (block_given? ? yield(item) : proc.call( item ))
 		end
 		new_array
 	end
 
-	def my_select
+	def my_select (proc = nil)
 		new_array = []
 		my_each do |item|
-			new_array << item if yield(item)
+			new_array << item if (block_given? ? yield(item) : proc.call( item ))
 		end
 		new_array
 	end
 
-	def my_all
+	def my_all (proc = nil)
 		my_each do |item|
-			return false unless yield item
+			return false unless (block_given? ? yield(item) : proc.call( item ))
 		end
 		true
 	end
 
-	def my_inject ( cumulation = 0 )
-
+	def my_inject ( cumulation, proc = nil )
 		my_each do |item|
-			cumulation = yield(cumulation, item)
+			cumulation = (block_given? ? yield( cumulation, item) : proc.call( cumulation, item ))
 		end
 		cumulation
 	end
@@ -82,8 +81,9 @@ p selected_array
 puts [1, 2, 5].my_all { |i| i.even? }
 puts [1, 2, 5].my_all { |i| i < 100 }
 
-puts [1,2, 3].my_inject (0) {  | memo, item  |  memo + item  } 
+puts [1,2, 3].my_inject (5) { | memo, item |  memo + item  }
+the_proc = Proc.new { | memo, item |  memo + item }
 
-
+puts [1,2, 3].my_inject 0, the_proc
 
 
