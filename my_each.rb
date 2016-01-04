@@ -26,19 +26,18 @@ class Array
   def my_all
     self.my_each do |item|
       if !yield(item)
-         return false
+        return false
       end   
     end
     true
   end
 
-  def my_inject(cumm=0)
+  def my_inject(acc=0)
     self.my_each do |item|
-      cumm = yield(cumm,item)
+      acc = yield(acc,item)
     end
-    cumm
+    acc
   end
-
 end
 
 # [3,4,5].my_each do |num|

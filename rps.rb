@@ -32,9 +32,9 @@ class RPSGame
     move = gets.chomp.to_sym
     if ![:rock,:paper,:scissors].include?(move)
       self.ask_move(player)
-    else
-      return move
     end
+
+    return move
   end
 
   def self.message(str)
@@ -58,18 +58,21 @@ class RPSGame
   end
 
   def game_loop()
-     player1 = @players[player_index]
-     move1 = player1.play
+    player1 = @players[player_index]
+    move1 = player1.play
      
-     switch_player
+    switch_player
      
-     player2 = @players[player_index]
-     move2 = player2.play
+    player2 = @players[player_index]
+    move2 = player2.play
 
-     puts winner(player1,move1,player2,move2)
+    puts "#{player1.name} chose #{move1}"
+    puts "#{player2.name} chose #{move2}"
+    puts winner(player1,move1,player2,move2)
 
-     print "Do you want to play again? (y or n): "
-     answer = gets.chomp
+    print "Do you want to play again? (y or n): "
+    answer = gets.chomp
+    
     if answer == "y"
       setup()
       game_loop
@@ -77,7 +80,7 @@ class RPSGame
   end
 
   def switch_player
-      player_index == 0? (self.player_index = 1):(self.player_index = 0)
+    player_index == 0? (self.player_index = 1):(self.player_index = 0)
   end
 end
 
@@ -97,7 +100,6 @@ class Player
   def play
     if type == "ai"
       move = [:rock,:paper,:scissors].sample
-      RPSGame.message("Computer has selected its move: #{move}")
     else 
       move = RPSGame.ask_move(self)
     end
