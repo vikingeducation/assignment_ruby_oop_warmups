@@ -1,9 +1,8 @@
 def my_reverse(s)
-	s2 = ""
-	for i in (s.length - 1).downto(0)
-		s2 << s[i]
+    (s.length / 2).times do |i|
+		s[-i-1], s[i] = s[i], s[-i-1]
 	end
-	s2
+	s
 end
 
 puts my_reverse('Blah!')
