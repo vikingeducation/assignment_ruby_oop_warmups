@@ -1,11 +1,12 @@
 class Player
 	@@move_list = ["Rock", "Paper", "Scissors"]
 
-	def initialize
+	def initialize(name)
 		@move = nil
+		@name = name
 	end
 
-	attr_accessor :move
+	attr_accessor :move, :name
 	#process player input (take text and make it the selection)
 	#define all possible moves
 
@@ -37,8 +38,8 @@ end
 class Game
 
 	def initialize
-		@player1 = Player.new
-		@player2 = Player.new
+		@player1 = Player.new("Player 1")
+		@player2 = Player.new("Player 2")
 		@turn = true
 		@win = false
 	end
@@ -57,10 +58,25 @@ class Game
 		print "Type your selection (ie., 'rock' or 'r'). Options include: (R)ock, (P)aper, (S)cissors\n"
 	end
 
+	#determine human player vs computer
+	def options
+		puts "To choose your opponent, type 'human' or 'computer': "
+		input = gets.chomp.upcase
+
+		if input == 'COMPUTER'
+			@player2 = Computer.new("Computer")
+		elsif input == "HUMAN"
+		else
+			puts "Input is invalid."
+			options
+		end
+	end
+
 	#runs game logic
 	def game_loop
 		print_welcome
 		print_instructions
+		options
 
 		until @win
 
@@ -70,7 +86,7 @@ class Game
 
 				@turn = false
 			else
-				puts "Player 2's Turn: "
+				puts "#{@player2.name}'s Turn: "
 				@player2.get_move
 				@turn = true
 			end
@@ -94,13 +110,13 @@ class Game
 				puts "Player 1 wins!"
 				@win = true
 			else
-				puts "Player 2 wins!"
+				puts "#{@player2.name} wins!"
 				@win = true
 			end
 
 		elsif p1_move[0] == "P"
 			if p2_move[0] == "S"
-				puts "Player 2 wins!"
+				puts "#{@player2.name} wins!"
 				@win = true
 			else
 				puts "Player 1 wins!"
@@ -108,7 +124,7 @@ class Game
 			end
 		else p1_move[0] == "S"
 			if p2_move[0] == "R"
-				puts "Player 2 wins!"
+				puts "#{@player2.name} wins!"
 				@win = true
 			else
 				puts "Player 1 wins!"
@@ -118,9 +134,15 @@ class Game
 	end
 end
 
-class Computer
+class Computer < Player
 #calculate computer move
-
+#generate random number from 1-3
+#use random number as index to generate random move
+	
+	def get_move
+		@move = @@move_list[rand(3)]
+		puts "Computer selects #{@move}"
+	end
 end
 
 g = Game.new
