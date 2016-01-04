@@ -74,6 +74,7 @@ class Array
     return result
   end
 
+
   def my_all?
     self.my_each do |item|
       unless yield(item)
@@ -83,6 +84,18 @@ class Array
     true
   end
 
+
+
+  def my_inject(memo)
+    sum = memo
+    self.my_each do |item|
+      sum += yield(memo, item)
+    end
+    return sum
+  end
+
 end
 
-
+[1,2,5].my_inject(7) do |memo, item|
+  memo + item
+end
