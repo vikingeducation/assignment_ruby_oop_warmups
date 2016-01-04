@@ -1,3 +1,5 @@
+
+=begin
 def fibs(number)
   fibonacci_array = Array.new
   if number == 0
@@ -10,23 +12,34 @@ def fibs(number)
   end
   fibonacci_array
 end
+=end
+
+
+
+
+# Think about splitting the recursive into its own method
+
+def generate_next(number)
+  if number == 0
+    return 0
+  elsif number == 1
+    return 1
+  else
+    next_element = generate_next(number-1) + generate_next(number-2)
+  end
+  return next_element
+end
+
+def fibs(number)
+  fibonacci_array = []
+  number.times do |number|
+    fibonacci_array << generate_next(number)
+  end
+  fibonacci_array
+end
 
 print fibs(1)
 print fibs(2)
 print fibs(3)
-
-# Think about splitting the recursive into its own method
-
-def fibs(number)
-fibonacci_array = [0,1]
-  
-    def generate_next(array, number) 
-      next_element = array[number-1]+array[number-2]
-      return next_element
-    end
-
-    (length-2).times do |element|
-      fibonacci_array << next_element(fibonacci_array)
-    end
-
-end
+print fibs(4)
+print fibs(5)
