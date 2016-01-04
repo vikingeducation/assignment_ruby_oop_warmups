@@ -1,20 +1,17 @@
 class Array
-    def my_each(theproc = nil)
+	
+  def my_each(theproc = nil)
 
-	  	counter = 0
+  	pos = 0
 
-	  	if block_given?
-			while counter < self.count
-		      yield(self[counter])
-		      counter += 1
-		    end
-		else
-		    while counter < self.count
-		      theproc.call(self[counter])
-		      counter += 1
-		    end
+		while pos < self.count
+			if block_given?
+				yield(self[pos])
+			else
+				theproc.call(self[pos])
+			end
+			pos +=1
 		end
-
 		return self
 	end
 
@@ -22,14 +19,8 @@ class Array
 
 		result_array = []
 
-		if block_given?
-			self.my_each do |num|
-				result_array << yield(num)
-			end
-		else
-			self.my_each do |num|
-				result_array << theproc.call(num)
-			end
+		self.my_each do |num|
+			block_given? ? result_array << yield(num) : result_array << theproc.call(num)
 		end
 
 		return result_array
@@ -39,12 +30,10 @@ class Array
 
 		result_array = []
 
-		if block_given?
-			self.my_each do |num|
+		self.my_each do |num|
+			if block_given?
 				result_array << num if yield(num)
-			end
-		else
-			self.my_each do |num|
+			else
 				result_array << num if theproc.call(num)
 			end
 		end
@@ -54,12 +43,10 @@ class Array
 
 	def my_all?(theproc = nil)
 
-		if block_given?
-			self.my_each do |num|
+		self.my_each do |num|
+			if block_given?
 				return false unless yield(num)
-			end
-		else
-			self.my_each do |num|
+			else
 				return false unless theproc.call(num)
 			end
 		end
@@ -67,33 +54,24 @@ class Array
 		return true
 	end
 
-	def my_inject(theproc = nil, init = nil)
-		init ? total = init : total = 0
-		if block_given?
-			self.my_each do |num|
-				total = yield(total, num)
-			end
-		else
-			self.my_each do |num|
-        total = theproc.call(total, num)
-			end
-		end
-    total
-	end
+	def my_inject(theproc = nil)
+		total = 0
 
+		self.my_each do |num|
+			block_given? ? total = yield(total, num) : total = theproc.call(total, num)
+		end
+
+		return total
+	end
 end
 
-#my_proc = Proc.new { |item| item.even? }
+my_proc = Proc.new { |item| item.even? }
 
-#[1,2,5].my_each(my_proc)
+# puts [1,2,5].my_each(my_proc).inspect
 #[1,2,5].my_each{|item| puts item**2}
-# print [1,2,5].my_map{|item| item**2}
-# print [1,2,5].my_map(my_proc)
-# puts [1,2,5].my_select(my_proc).inspect
-# puts [8,2,6,12].my_all?{ |item| item.even? }.inspect
-#my_proc = Proc.new { |memo, item| memo + item }
-#puts [1,2,5].my_inject(my_proc)
-#puts [1,2,5].my_inject(my_proc, 0)
-#puts [1,2,5].my_inject(0) { |memo, item| memo + item }
-#puts [1,2,5].my_inject(0, my_proc)
-#puts [1,2,5].inject(0, my_proc)
+# puts [1,2,5].my_map{|item| item**2}.inspect
+# puts [1,2,5].my_map(my_proc).inspect
+puts [1,2,5].my_select(my_proc).inspect
+puts [1,2,5].my_select{ |item| item.even? }.inspect
+puts [8,2,6,12].my_all?{ |item| item.even? }.inspect
+puts [1,2,5].my_inject(0) { |memo, item| memo + item }

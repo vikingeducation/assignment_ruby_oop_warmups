@@ -16,11 +16,19 @@ end
 def fibs(num)
   sequence = [0, 1]
 
-  (num-2).times do
-    sequence << sequence[-1] + sequence[-2]
+  if num == 0
+    sequence = [0]
+  elsif num == 1
+    sequence
+  else
+    (num-2).times do
+      sequence << sequence[-1] + sequence[-2]
+    end
   end
 
   return sequence
 end
 
-print fibs(8)
+puts fibs(8).inspect
+puts fibs(0).inspect
+puts fibs(1).inspect
