@@ -45,40 +45,52 @@ my_benchmark(1000000) { "hi" }
 
 
 class Array
-  def my_each
+  def my_each(proc=nil)
     i = 0
     while i < self.length
-      yield(self[i])
+      block_given? ? yield(self[i]) : proc.call(self[i])
       i += 1    
     end
   end
 
 
-
-  def my_map
+  def my_map(proc=nil)
     result = []
     self.my_each do |item|
-      result << yield(item)
+      block_given? ? (result << yield(item)) : (result << proc.call(item))
     end
     result
   end
 
 
-  def my_select
+  # this one isn't working?
+  def my_select(proc=nil)
     result = []
     self.my_each do |item|
-      if yield(item) == true
-        result << item
+      if block_given?
+        if yield(item) == true
+          result << item
+        end
+      else 
+        if proc.call(item) == true
+          result << item
+        end
       end
     end
     return result
   end
 
-
-  def my_all?
+  # not quite working yet
+  def my_all?(proc=nil)
     self.my_each do |item|
-      unless yield(item)
-        return false
+      if block_given?
+        unless yield(item)
+          return false
+        end
+      else
+        unless proc.call(item)
+          return false
+        end
       end
     end
     true
@@ -95,5 +107,7 @@ class Array
   end
 
 end
+
+
 
 
