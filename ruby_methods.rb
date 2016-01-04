@@ -96,6 +96,4 @@ class Array
 
 end
 
-[1,2,5].my_inject(7) do |memo, item|
-  memo + item
-end
+
