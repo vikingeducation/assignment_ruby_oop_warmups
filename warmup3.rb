@@ -66,6 +66,19 @@ class Array
 
 		return true
 	end
+
+	def my_inject(theproc = nil)
+		total = 0
+		if block_given?
+			self.my_each do |num|
+				yield(total, num)
+			end
+		else
+			self.my_each do |num|
+
+			end
+		end
+	end
 end
 
 my_proc = Proc.new { |item| item.even? }
