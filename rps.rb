@@ -1,36 +1,79 @@
 class RPSGame
-  attr_accessor :player_index
+  attr_accessor :players, :player_index, :choices
 
   def initialize()
-    @players = [Player.new("ai", "AI"),Player.new("human", "Josh")]
+    self.choices = [:rock,:paper,:scissors]
+    setup()
+  end
+
+  def setup
     self.player_index = [0,1].sample
+    
+    print "How many players? (1 or 2): "
+    num_players = gets.chomp.to_i
+    self.players = [Player.new("human")]
+    if num_players == 1
+      self.players << Player.new("ai")
+    elsif num_players == 2
+      self.players << Player.new("human")
+    else
+      puts "Must be 1 or 2."
+      setup
+    end
+  end
+
+  def self.ask_name
+    print "Please enter your name: "
+    return gets.chomp
+  end
+  
+  def self.ask_move(name)
+    print "#{name} enter your move (rock,paper or scissors):"
+    move = gets.chomp.to_sym
+    if !@@choices.include?(move)
+      self.play
+    else
+      self.ask_move
+    end
+  end
+
+  def self.message(str)
+    puts str
   end
 
   def winner(player1, move1, player2, move2)
     if move1 == :rock && move2 == :scissors ||
         move1 == :scissors && move2 == :paper ||
         move1 == :paper && move2 == :rock
-      return player1
+      result = "The winner is: #{player1.name}"
     elsif move2 == :rock && move1 == :scissors ||
         move2 == :scissors && move1 == :paper ||
         move2 == :paper && move1 == :rock
-      return player2
+      result = "The winner is: #{player2.name}"
     else
-      return "draw"
+      result = "The game ends in a draw"
     end
+
+    return result
   end
 
   def game_loop()
-       player1 = @players[player_index]
-       move1 = player1.play
-       
-       switch_player
-       
-       player2 = @players[player_index]
-       move2 = player2.play
+     player1 = @players[player_index]
+     move1 = player1.play
+     
+     switch_player
+     
+     player2 = @players[player_index]
+     move2 = player2.play
 
-       puts winner(player1,move1,player2,move2)
-       
+     puts winner(player1,move1,player2,move2)
+
+     print "Do you want to play again? (y or n): "
+     answer = gets.chomp
+    if answer == "y"
+      setup()
+      game_loop
+    end
   end
 
   def switch_player
@@ -42,27 +85,26 @@ end
 class Player
   attr_accessor :type, :name
   
-  def initialize(type,name)
+  def initialize(type)
     @type = type
-    @name = name
+
+    if type == "ai"
+      @name = "AI"
+    else
+      @name = RPSGame.ask_name
+    end
   end
 
   def play
-    choices =  [:rock,:paper,:scissors]
     if @type == "ai"
-       move = choices.sample
-       puts "Computer has selected its move: #{move}"
+      move = RPSGame.choices.sample
+      RPSGame.message("Computer has selected its move: #{move}")
     else 
-
-       puts "Enter your move (rock,paper or scissors):"
-       move = gets.chomp.to_sym
-       if !choices.include?(move)
-          self.play
-       end
+      move = RPSGame.ask_move(@name)
     end
     move   
   end
 end
 
-game = RPSGame.new
+game = RPSGame.new()
 game.game_loop
