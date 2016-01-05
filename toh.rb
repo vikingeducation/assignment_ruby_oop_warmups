@@ -1,131 +1,110 @@
 class TowerOfHanoi
 
-  #initialize initial stack height
-  def initialize(num_disks)
-    @disk = num_disks
+
+
+  #get user's input
+  def get_input
+    puts "Please enter move: "
+    @input = gets.chomp
+    
+    quit if @input == 'q'
+    input1, input2 = @input.split.map(&:to_i)
+    #check input
+    input_valid?(input1, input2)
   end
 
-  def play
-    #Prints intro
-    puts
-    puts "Welcome to Tower of Hanoi!"
-    puts
-    puts "Instructions:"
-    puts "Enter where you'd like to move from and to"
-    puts "in the format [1,3]. Enter 'quit' to end."
-    puts
-
-    #initialize first tower
-    board = []
-    #Fill left column with disk numbers
-    (1..@disk).each do |x|
-      board.push(@disk - x + 1)
+  #check if input is valid
+  def input_valid?(input1, input2)
+    if(1..3).include?(input1 && input2)
+      @from = input1 -1
+      @to = input2 -1
+    else
+      puts "Please make sure you entered in format 'num1, num2' between ranges 1 & 3"
+      get_input
     end
-    #initialize other towers
-    board = [board, [], []]
+    #run additional test to see if move is legal
+    move_valid?
+  end
 
-    catch(:quit) do
-      #game loop
-      until win?(board)
-        #print current state
-        render(board)
-        #check valid user inputs
-        is_valid = false
-        until is_valid
-          print "Make a move:"
-          move = gets.chomp
-          puts
-          if "quit" == move
-            throw(:quit)
-          elsif valid_input?(move)
-            is_valid = true
-          else
-            puts "NOT VALID INPUT"
-          end
-        end
-        #moves the disk and update board
-        board = process_move(move, board)
+  #check to see if move is legal in accordance to the rules
+  def move_valid?
+    @current_disk = 0
+
+    #determine disk piece to be moved
+    @board.each do |row, arr|
+      if arr[@from] != 0
+        @current_disk = arr[@from]
+        break
       end
     end
 
-    #Print out victory condition
-    puts "you won!" if win?(board)
-  end
+    #determine the highest disk available in that column
+    @board.each do |row, arr|
+            if arr[@to] != 0
+                @top_disk = arr[@to]
+                break
+            else
+                @top_disk = arr[@to]
+            end
+        end
 
-  #checks for win condition
-  def win?(state)
-    #initialize win 2D array state
-    win_board = []
-    #Fill right column with disk numbers
-    (1..@disk).each do |x|
-      win_board.push(@disk - x + 1)
-    end
-    win_board = [[], [], win_board]
-    return state == win_board
-  end
-
-  #checks for valid user inputs
-  def valid_input?(user_input)
-    #use REGEX to check for proper inputs
-    proper_input = /\[[123],[123]\]/
-    if proper_input.match(user_input.to_s)
-      return true
-    else
-      return false
-    end
-  end
-
-  #prints board state
-  def render(state)
-    puts "Current Board:"
-    puts
-    #prints disks
-    (2.downto(0)).each do |x|
-      disp_column = state.map { |row| row[x] }
-      disp_column.each do |y|
-        if y.is_a? Integer
-          disk_print = "o" * y
+        #conditional test to see if move is valid
+        if @current_disk == 0
+            puts "No disks in this column, try again"
+            get_input
+        elsif @top_disk == 0 || @current_disk < @top_disk
+            move_disk
         else
-          disk_print = ""
+            puts "Move is invalid"
+            puts "Please check the rules and input a new move"
+            get_input
         end
-
-        print disk_print.ljust(@disk + 2, " ")
-      end
-      puts
-    end
-    puts
-
-    #prints tower numbers
-    state.each_with_index do |value, index|
-      print (index + 1).to_s.ljust(@disk + 2, " ")
-    end
-    print "\n\n"
   end
 
-  #processes disk user move
-  def process_move(move, state)
-    from = move[1].to_i - 1
-    to = move[3].to_i - 1
+  #make move
+  def move_disk
+        @disks.downto(1).each do |idx|
+            if @board[idx][@to] == 0
+                @board[idx][@to] = @current_disk
+                @board.each do |row, arr|
+                    if arr[@from] != 0
+                        arr[@from] = 0
+                        break
+                    end
+                end
+                break
+            end
+        end
+  end
 
-    #check if there's a disk to move
-    if state[from].first == nil
-      puts "There's no disk in tower #{from + 1}!"
-    #check if destination tower has space
-    elsif state[to].length == @disk
-      puts "Tower #{to + 1} is at full capacity!"
-    #check if "from" disk is smaller than "to" disk
-    elsif state[to].last != nil && state[from].last > state[to].last
-      puts "This disk is larger than the destination disk! Illegal move!"
-    #otherwise proceed to move the plates
-    else
-      state[to].push(state[from].last)
-      state[from].pop
+  #User quits game
+  def quit
+    puts "Thanks for playing"
+    puts "Better luck next time!"
+    exit
+  end
+
+  #check if answer is correct
+  def win?
+    while true
+      render(false)
+      get_input
+      if @board == @winningboard
+        render(true)
+        puts "Congratulations!"
+        exit
+      end
     end
+  end
 
-    return state
+  #starter method
+  def start
+    greetings
+    num_disks?
+    board_init
+    win?
   end
 end
 
-#Run the game for test purposes
-t = TowerOfHanoi.new(3)
-t.play
+toh = TowerOfHanoi.new
+toh.start
