@@ -2,6 +2,7 @@
 # instructions are printed
 # game board is printed with height specified by user
 # user is prompted to enter a move 
+# user is prompted to enter a move
 # check for valid user input
 # move a disk according to user input
 # `render` method prints the current game board
@@ -10,6 +11,32 @@
 # game exits when user enters `quit` or wins
 
 require 'pry'
+
+
+class Player
+
+  def initialize
+    @input_array = []
+  end
+
+  def user_input
+    puts "\nEnter move >"
+    input = gets.chomp
+    if input == "q"
+      puts "Okay, bye!"
+      exit
+    # regex for user input, accepts an array with 1, 2, or 3 only
+    elsif input !~ /\[[123].[123]\]/
+      print "Please enter a valid array"
+      # prompt user for another input
+      user_input
+    else
+      # `gets` returns a string, need to chop it into an array
+      @input_array = input[1..3].split(',').collect! {|n| n.to_i}
+    end
+  end
+
+end
 
 
 class TowerofHanoi
@@ -38,26 +65,6 @@ class TowerofHanoi
     gameboard = [towera, towerb, towerc]
     print gameboard
     return gameboard
-  end
-
-
-
-  def user_input
-    input_array = nil
-    puts "\nEnter move >"
-    input = gets.chomp
-    if input == "q"
-      puts "Okay, bye!"
-      exit
-    # regex for user input, accepts an array with 1, 2, or 3 only
-    elsif input !~ /\[[123].[123]\]/
-      print "Please enter a valid array"
-      # prompt user for another input
-      user_input
-    else
-      # `gets` returns a string, need to chop it into an array
-      input_array = input[1..3].split(',').collect! {|n| n.to_i}
-    end
   end
 
 
@@ -119,3 +126,4 @@ end
 
 # t = TowerofHanoi.new(2)
 # t.play
+
