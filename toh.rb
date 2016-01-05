@@ -32,6 +32,7 @@ class TowersOfHanoi
   end
 
   def move(from_tower,to_tower)
+    p "Debug ** Towers #{@towers}, From: #{from_tower}, To:#{to_tower}"
     if @towers[to_tower].add_disk(@towers[from_tower].top_disc)
       @towers[from_tower].remove_disk
     end
@@ -172,9 +173,9 @@ class TowersOfHanoi
       # Prompt for new input 
       # If input is valid, change game state accordingly
       from_to_towers = input()
-      
+      p "Debug *** #{from_to_towers}"
       if from_to_towers
-         move(@towers[from_to_towers[0]], @towers[from_to_towers[1]])
+         move(from_to_towers[0], from_to_towers[1])
       end
 
       # Check to see if the player has won
