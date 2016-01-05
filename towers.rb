@@ -32,11 +32,13 @@ class Player
       user_input
     else
       # `gets` returns a string, need to chop it into an array
-      @input_array = input[1..3].split(',').collect! {|n| n.to_i}
+      return @input_array = input[1..3].split(',').collect! {|n| n.to_i}
     end
   end
 
 end
+
+
 
 
 class TowerofHanoi
@@ -47,7 +49,9 @@ class TowerofHanoi
 
   def initialize(height)
     @height = height
+    @player = Player.new
   end
+
 
 
   def print_instructions
@@ -74,7 +78,16 @@ class TowerofHanoi
     # condition 1: from_column ring is empty
     if gameboard[from_column].empty?
       print "You cannot move disks from empty towers. Try again."
-      return false
+      false
+    # condition 2: can't stack a larger disk on a smaller disk
+    elsif ! gameboard[to_column].empty? && (gameboard[from_column].last > gameboard[to_column].last)
+      print "to_column.last:", gameboard[to_column].last
+      print "from_column.last:", gameboard[from_column].last
+
+      print "You cannot stack larger disks on smaller disks. Try again."
+      false
+    else
+      true
     end
   end
 
@@ -89,7 +102,7 @@ class TowerofHanoi
   end
 
 
-  def user_has_won?(gameboard)
+  def winning_tower?(gameboard)
     winning_tower = (1..@height).to_a.reverse
     gameboard.include? winning_tower
   end
@@ -100,17 +113,28 @@ class TowerofHanoi
   def play
     print_instructions
     gameboard = make_gameboard(@height)
+    # player_move = @player.user_input
+
+    # TODO: go into player.user_input, don't make it recursive?
 
     loop do
-      input_array = user_input
-      new_gameboard = move_disk(gameboard, input_array)
 
-      if user_has_won?(new_gameboard) == true
-        print "\nCongratulations, you win!"
-        return
+      if valid_move?(gameboard, @player.user_input)
+        player_move = @player.user_input
+
+        new_gameboard = move_disk(gameboard, player_move)
+
+        if winning_tower?(new_gameboard) == true
+          print "\nCongratulations, you win!"
+          return
+        else
+          gameboard = new_gameboard
+        end
+
       else
-        gameboard = new_gameboard
+        player_move = @player.user_input
       end
+
 
     end
 
