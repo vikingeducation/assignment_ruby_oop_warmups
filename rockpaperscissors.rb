@@ -1,9 +1,13 @@
 class RockPaperScissors
+
+
+	OPTIONS = ["rock", "paper", "scissors"]
 	
+
 	def play_game
 		start
-		game_type
-		if @type == 'c'
+		type = game_type
+		if type == 'c'
 			player_input
 			computer_input
 			match(@player, @computer)
@@ -14,25 +18,36 @@ class RockPaperScissors
 		end
 	end
 
+
 	def start
 		puts "Welcome to Rock, Paper, Scissors!"
 		puts "Rock beats Scissors, Scissors beats Paper, and Paper beats Rock"
 	end
 
+
 	def game_type
 		puts "Do you want to play against the computer(c) or another player(p)?"
-		@type = gets.chomp
+		type = gets.chomp
 	end
+
 
 	def player_input
 		puts "What is your choice?"
 		@player = gets.chomp
+
+		until OPTIONS.include? @player
+      puts "Please enter one of the following: rock, paper, scissors"
+      @player = gets.chomp
+    end
 	end
+
 
 	def computer_input
 		@computer = ["rock", "paper", "scissors"].sample
 		puts "Computer: #{@computer}"
 	end
+
+
 
 	def match(player, computer)
 		if player == computer
