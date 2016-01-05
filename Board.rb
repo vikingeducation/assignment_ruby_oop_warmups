@@ -4,8 +4,11 @@ class Board
     @board = Hash.new(0)
     @winningboard = Hash.new(0)
     @disks = nil
+    @first_disc = nil
+    @second_disc = nil
   end
 
+  attr_accessor :first_disc, :second_disc, :disks, :board, :winningboard
   #set difficulty level
   def num_disks?
     puts "Please enter number of disks, has to be 3 or above."
