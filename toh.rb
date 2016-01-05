@@ -4,11 +4,12 @@ require './toh_player.rb'
 
 class TowersOfHanoi
 
-  attr_accessor :quit, :no_of_discs
+  attr_accessor :quit, :no_of_discs, :player
 
   def initialize()
     # Ask for the size of the tower from the player
     @no_of_discs = ask_tower_size()
+    @player = Player.new(ask_name())
    	@towers = {1=>Tower.new(@no_of_discs), 2=>Tower.new(0), 3=>Tower.new(0)}
   end
 
@@ -16,7 +17,7 @@ class TowersOfHanoi
   # Display welcome message and instructions.
   def welcome
     puts "\n"
-    puts "Welcome to Tower of Hanoi!"
+    puts "Welcome to Tower of Hanoi, #{@player.name}!"
     puts "\n"
     puts "Goal: Move the entire stack of disks from the starting post to one of the other posts."
     puts "\n"
@@ -32,9 +33,15 @@ class TowersOfHanoi
   end
 
   def move(from_tower,to_tower)
-    p "Debug ** Towers #{@towers}, From: #{from_tower}, To:#{to_tower}"
-    if @towers[to_tower].add_disk(@towers[from_tower].top_disc)
-      @towers[from_tower].remove_disk
+    # p "Debug ** Towers #{@towers}, From: #{from_tower}, To:#{to_tower}"
+    if @towers[from_tower].tower_size > 0 
+      if @towers[to_tower].add_disc(@towers[from_tower].top_disc)
+        @towers[from_tower].remove_disc
+      else
+        puts "Cannot place a larger disc on a smaller one."
+      end
+    else
+      puts "Cannot move from empty tower."
     end
   end
 
@@ -64,6 +71,11 @@ class TowersOfHanoi
 
     # Return the valid value
     return tower_size
+  end
+
+  def ask_name
+    puts "What is your name?"
+    return gets.chomp
   end
 
   def tower_piece(piece_size, max_piece_size)
@@ -173,7 +185,7 @@ class TowersOfHanoi
       # Prompt for new input 
       # If input is valid, change game state accordingly
       from_to_towers = input()
-      p "Debug *** #{from_to_towers}"
+      # p "Debug *** #{from_to_towers}"
       if from_to_towers
          move(from_to_towers[0], from_to_towers[1])
       end
@@ -181,12 +193,12 @@ class TowersOfHanoi
       # Check to see if the player has won
       if check_win(@towers,@no_of_discs)
         # render the board one last time
-        render(@towers,@no_of_discs)
+        render()
         # win message
-        puts "You won! Congratulations!"
+        puts "You won! Congratulations, #{@player.name}!"
         break
       elsif quit
-        puts "Thanks for playing. Bye!"
+        puts "Thanks for playing. Bye, #{@player.name}!"
         break
       end
     end

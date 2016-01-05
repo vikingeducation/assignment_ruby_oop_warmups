@@ -5,7 +5,7 @@ class Tower
     @num_discs = num_discs
     @tower = []
 
-    num_discs.times do |index|
+    @num_discs.times do |index|
       @tower << Disc.new(num_discs - index)
     end
   end
@@ -13,7 +13,7 @@ class Tower
   def tower_size
      @tower.size
   end
-  
+
   def top_disc
     @tower.last
   end
@@ -35,5 +35,5 @@ class Tower
       false
     end
   end
-end	
+end
 
