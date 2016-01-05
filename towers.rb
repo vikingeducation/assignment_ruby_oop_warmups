@@ -1,7 +1,7 @@
 # player starts the game (script), provides the initial height of the tower
 # instructions are printed
 # game board is printed with height specified by user
-# user is prompted to enter a move 
+# user is prompted to enter a move
 # check for valid user input
 # move a disk according to user input
 # `render` method prints the current game board
@@ -11,6 +11,30 @@
 
 require 'pry'
 
+class Player
+
+  def initialize
+    @input_array = []
+  end
+
+  def user_input
+    puts "\nEnter move >"
+    input = gets.chomp
+    if input == "q"
+      puts "Okay, bye!"
+      exit
+    # regex for user input, accepts an array with 1, 2, or 3 only
+    elsif input !~ /\[[123].[123]\]/
+      print "Please enter a valid array"
+      # prompt user for another input
+      user_input
+    else
+      # `gets` returns a string, need to chop it into an array
+      @input_array = input[1..3].split(',').collect! {|n| n.to_i}
+    end
+  end
+
+end
 
 class TowerofHanoi
 
@@ -39,27 +63,7 @@ class TowerofHanoi
     print gameboard
     return gameboard
   end
-
-
-
-  def user_input
-    input_array = nil
-    puts "\nEnter move >"
-    input = gets.chomp
-    if input == "q"
-      puts "Okay, bye!"
-      exit
-    # regex for user input, accepts an array with 1, 2, or 3 only
-    elsif input !~ /\[[123].[123]\]/
-      print "Please enter a valid array"
-      # prompt user for another input
-      user_input
-    else
-      # `gets` returns a string, need to chop it into an array
-      input_array = input[1..3].split(',').collect! {|n| n.to_i}
-    end
-  end
-
+  
 
   def valid_move?(gameboard, input_array)
     from_column = (input_array[0]-1)
