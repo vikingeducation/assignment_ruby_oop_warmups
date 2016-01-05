@@ -15,9 +15,11 @@ require 'pry'
 
 class Player
 
+
   def initialize
     @input_array = []
   end
+
 
   def user_input
     puts "\nEnter move >"
@@ -113,15 +115,13 @@ class TowerofHanoi
   def play
     print_instructions
     gameboard = make_gameboard(@height)
-    # player_move = @player.user_input
+    player_move = @player.user_input
 
-    # TODO: go into player.user_input, don't make it recursive?
 
     loop do
-
-      if valid_move?(gameboard, @player.user_input)
-        player_move = @player.user_input
-
+      # this is still buggy, user has to type correct moves twice
+      if valid_move?(gameboard, player_move)
+        
         new_gameboard = move_disk(gameboard, player_move)
 
         if winning_tower?(new_gameboard) == true
