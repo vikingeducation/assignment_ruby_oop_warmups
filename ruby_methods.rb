@@ -63,34 +63,25 @@ class Array
   end
 
 
-  # this one isn't working?
   def my_select(proc=nil)
     result = []
     self.my_each do |item|
       if block_given?
-        if yield(item) == true
-          result << item
-        end
+        result << item if yield(item)
       else 
-        if proc.call(item) == true
-          result << item
-        end
+        result << item if proc.call(item)
       end
     end
-    return result
+    result
   end
 
   # not quite working yet
   def my_all?(proc=nil)
     self.my_each do |item|
       if block_given?
-        unless yield(item)
-          return false
-        end
+        return false if !yield(item)
       else
-        unless proc.call(item)
-          return false
-        end
+        return false if !proc.call(item)
       end
     end
     true
@@ -101,7 +92,7 @@ class Array
   def my_inject(memo)
     sum = memo
     self.my_each do |item|
-      sum += yield(memo, item)
+      block_given? ? sum += yield(memo, item) : sum += proc.call(memo, item)
     end
     return sum
   end
