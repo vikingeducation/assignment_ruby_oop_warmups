@@ -12,7 +12,8 @@ class Tower
 
   def tower_size
      @tower.size
-  end  
+  end
+  
   def top_disc
     @tower.last
   end

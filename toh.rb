@@ -1,7 +1,15 @@
+require './toh_tower.rb'
+require './toh_disc.rb'
+require './toh_player.rb'
+
 class TowersOfHanoi
 
-  def initialize(no_of_discs)
-   	@towers = {1=>Tower.new(no_of_discs), 2=>Tower.new(0), 3=>Tower.new(0)}
+  attr_accessor :quit, :no_of_discs
+
+  def initialize()
+    # Ask for the size of the tower from the player
+    @no_of_discs = ask_tower_size()
+   	@towers = {1=>Tower.new(@no_of_discs), 2=>Tower.new(0), 3=>Tower.new(0)}
   end
 
   # Set up
@@ -24,8 +32,8 @@ class TowersOfHanoi
   end
 
   def move(from_tower,to_tower)
-    if towers[to_tower].add_disk(towers[from_tower].top_disc)
-      towers[from_tower].remove_disk
+    if @towers[to_tower].add_disk(@towers[from_tower].top_disc)
+      @towers[from_tower].remove_disk
     end
   end
 
@@ -79,7 +87,7 @@ class TowersOfHanoi
   end
    
   # Method which prints out the current state of the game board in between turns
-  def render(no_of_discs)
+  def render()
     # Display text 
     puts "Current Board: "
 
@@ -89,17 +97,17 @@ class TowersOfHanoi
     # Loop through to build the rows to render
     # Display number of rows corresponding to tower height
     # Display a column for each tower (split into rows for rendering)
-    0.upto(tower_size) do |row|
-      0.upto(2) do |column|
+    0.upto(@no_of_discs) do |row|
+      1.upto(3) do |column|
         # Display a blank area for "nil" "tower spots"
-        if current_game_board[column] == nil or current_game_board[column][row] == nil
+        if @towers[column].tower_size <= row
           # Shovel a blank piece into the render row
-          render_rows[row] << tower_piece(0,tower_size)
+          render_rows[row] << tower_piece(0,no_of_discs)
         else
           # Set piece size to the corresponding board value
-          piece_size = current_game_board[column][row]
+          piece_size = @towers[column].tower[row].size
           # Shovel the corresponding piece into the render row
-          render_rows[row] << tower_piece(piece_size,tower_size)
+          render_rows[row] << tower_piece(piece_size,no_of_discs)
         end
       end
     end
@@ -127,7 +135,7 @@ class TowersOfHanoi
 
       #Check to see if user quit... if so return
       if user_input == "q"
-        @game_state = -1
+        @quit = true
         break;
       end
 
@@ -156,28 +164,28 @@ class TowersOfHanoi
   end
 
   def game_loop
-    # Ask for the size of the tower from the player
-    tower_size = ask_tower_size
-
     #Loop until the player wins or quits
     loop do
       # Render game state
-      render(@towers, tower_size)
+      render()
       
       # Prompt for new input 
       # If input is valid, change game state accordingly
       from_to_towers = input()
       
       if from_to_towers
-         move(@towers[from_to_towers[0]], @towers[from_to_towers[1])
+         move(@towers[from_to_towers[0]], @towers[from_to_towers[1]])
       end
 
       # Check to see if the player has won
-      if check_win(@towers,tower_size)
+      if check_win(@towers,@no_of_discs)
         # render the board one last time
-        render(@towers,tower_size)
+        render(@towers,@no_of_discs)
         # win message
         puts "You won! Congratulations!"
+        break
+      elsif quit
+        puts "Thanks for playing. Bye!"
         break
       end
     end
@@ -186,9 +194,9 @@ class TowersOfHanoi
   def check_win (towers,tower_size)
     # Check for victory - player wins if entire tower is on a peg other than peg 0 (column 1)
     if towers[2].tower_size == tower_size or towers[3].tower_size == tower_size
-        return true   
+      return true   
     else
-        return false
+      return false
     end    
   end
   
@@ -196,9 +204,7 @@ class TowersOfHanoi
     welcome
     game_loop
   end
-
-
 end
 
-
-
+game = TowersOfHanoi.new
+game.play

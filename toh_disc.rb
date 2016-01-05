@@ -3,7 +3,7 @@ class Disc
    include Comparable
 
    def initialize(size)
-   	 @size = size
+   	@size = size
    end
 
    def <=>(other_disc)
