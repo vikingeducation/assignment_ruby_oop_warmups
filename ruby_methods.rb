@@ -89,16 +89,25 @@ class Array
 
 
 
-  def my_inject(memo)
+  def my_inject(memo, proc=nil)
     sum = memo
     self.my_each do |item|
       block_given? ? sum += yield(memo, item) : sum += proc.call(memo, item)
+      #sum += yield(memo, item)
     end
     return sum
   end
 
 end
 
+# Blocks and Procs both work for my_inject:
+# example = Proc.new { |memo, item| memo + item }
+# [1,2,5].my_inject(0, example) 
 
-
-
+# [1,2,5].my_inject(0) do |memo, item|
+#   memo + item
+# end
+#
+# &block as a parameter will keep blocks the same but will convert procs into blocks.
+# In my_inject, proc=nil must be the parameter otherwise there will be an error when passing
+#       in a proc. Unless you add an '&' to the parameter you're passing through.
