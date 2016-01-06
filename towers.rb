@@ -1,7 +1,7 @@
 # player starts the game (script), provides the initial height of the tower
 # instructions are printed
 # game board is printed with height specified by user
-# user is prompted to enter a move 
+# user is prompted to enter a move
 # user is prompted to enter a move
 # check for valid user input
 # move a disk according to user input
@@ -115,13 +115,13 @@ class TowerofHanoi
   def play
     print_instructions
     gameboard = make_gameboard(@height)
-    player_move = @player.user_input
 
 
     loop do
+      player_move = @player.user_input
       # this is still buggy, user has to type correct moves twice
       if valid_move?(gameboard, player_move)
-        
+
         new_gameboard = move_disk(gameboard, player_move)
 
         if winning_tower?(new_gameboard) == true
@@ -148,6 +148,5 @@ end
 
 
 
-# t = TowerofHanoi.new(2)
-# t.play
-
+ t = TowerofHanoi.new(3)
+ t.play
