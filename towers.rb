@@ -115,11 +115,10 @@ class TowerofHanoi
   def play
     print_instructions
     gameboard = make_gameboard(@height)
-    player_move = @player.user_input
-
 
     loop do
-      # this is still buggy, user has to type correct moves twice
+      player_move = @player.user_input
+
       if valid_move?(gameboard, player_move)
         
         new_gameboard = move_disk(gameboard, player_move)
@@ -148,6 +147,6 @@ end
 
 
 
-# t = TowerofHanoi.new(2)
-# t.play
+t = TowerofHanoi.new(2)
+t.play
 
