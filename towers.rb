@@ -2,6 +2,7 @@
 # instructions are printed
 # game board is printed with height specified by user
 # user is prompted to enter a move 
+# user is prompted to enter a move
 # check for valid user input
 # move a disk according to user input
 # `render` method prints the current game board
@@ -12,6 +13,36 @@
 require 'pry'
 
 
+class Player
+
+
+  def initialize
+    @input_array = []
+  end
+
+
+  def user_input
+    puts "\nEnter move >"
+    input = gets.chomp
+    if input == "q"
+      puts "Okay, bye!"
+      exit
+    # regex for user input, accepts an array with 1, 2, or 3 only
+    elsif input !~ /\[[123].[123]\]/
+      print "Please enter a valid array"
+      # prompt user for another input
+      user_input
+    else
+      # `gets` returns a string, need to chop it into an array
+      return @input_array = input[1..3].split(',').collect! {|n| n.to_i}
+    end
+  end
+
+end
+
+
+
+
 class TowerofHanoi
 
 
@@ -20,7 +51,9 @@ class TowerofHanoi
 
   def initialize(height)
     @height = height
+    @player = Player.new
   end
+
 
 
   def print_instructions
@@ -41,33 +74,22 @@ class TowerofHanoi
   end
 
 
-
-  def user_input
-    input_array = nil
-    puts "\nEnter move >"
-    input = gets.chomp
-    if input == "q"
-      puts "Okay, bye!"
-      exit
-    # regex for user input, accepts an array with 1, 2, or 3 only
-    elsif input !~ /\[[123].[123]\]/
-      print "Please enter a valid array"
-      # prompt user for another input
-      user_input
-    else
-      # `gets` returns a string, need to chop it into an array
-      input_array = input[1..3].split(',').collect! {|n| n.to_i}
-    end
-  end
-
-
   def valid_move?(gameboard, input_array)
     from_column = (input_array[0]-1)
     to_column = (input_array[1]-1)
     # condition 1: from_column ring is empty
     if gameboard[from_column].empty?
       print "You cannot move disks from empty towers. Try again."
-      return false
+      false
+    # condition 2: can't stack a larger disk on a smaller disk
+    elsif ! gameboard[to_column].empty? && (gameboard[from_column].last > gameboard[to_column].last)
+      print "to_column.last:", gameboard[to_column].last
+      print "from_column.last:", gameboard[from_column].last
+
+      print "You cannot stack larger disks on smaller disks. Try again."
+      false
+    else
+      true
     end
   end
 
@@ -82,7 +104,7 @@ class TowerofHanoi
   end
 
 
-  def user_has_won?(gameboard)
+  def winning_tower?(gameboard)
     winning_tower = (1..@height).to_a.reverse
     gameboard.include? winning_tower
   end
@@ -93,17 +115,26 @@ class TowerofHanoi
   def play
     print_instructions
     gameboard = make_gameboard(@height)
+    player_move = @player.user_input
+
 
     loop do
-      input_array = user_input
-      new_gameboard = move_disk(gameboard, input_array)
+      # this is still buggy, user has to type correct moves twice
+      if valid_move?(gameboard, player_move)
+        
+        new_gameboard = move_disk(gameboard, player_move)
 
-      if user_has_won?(new_gameboard) == true
-        print "\nCongratulations, you win!"
-        return
+        if winning_tower?(new_gameboard) == true
+          print "\nCongratulations, you win!"
+          return
+        else
+          gameboard = new_gameboard
+        end
+
       else
-        gameboard = new_gameboard
+        player_move = @player.user_input
       end
+
 
     end
 
@@ -119,3 +150,4 @@ end
 
 # t = TowerofHanoi.new(2)
 # t.play
+
