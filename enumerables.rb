@@ -76,10 +76,33 @@ class Array
 			end
 		end
 
+		# returns true when all iterations pass
 		return true
 
 	end
 
+
+#Create a method my_inject which extends the Array class and works the same as Ruby's native inject method. You can use your my_each method to implement this. Make it take either a block or a proc.
+
+ def my_inject( num )
+
+ 	#method with iterate with my_each
+ 	#there needs to be a total and element - total tracked with variable, that can be passed into the method
+ 	result = num
+
+ 	my_each do | element |
+
+ 		# total will equal the number sent to my each
+ 		# pass the total
+ 		result = yield( result, element )
+
+ 	end
+
+ 	return result
+
+
+
+ end
 
 end
 
@@ -94,5 +117,7 @@ end
 [2,10,20,43].my_select { | e | e % 2 == 0 }
 
 ["me", "my", "ouch", "hello"].my_all? { | w | w.length >= 4}
+
+[2,4,2,5].my_inject(0) { | result, element | result + element }
 
 
