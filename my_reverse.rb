@@ -10,7 +10,7 @@ def my_reverse( string )
 	reversed_array = []
 
 	# store the parameter in a var after splitting into characters
-	split_array = 	string.chars
+	split_array = string.chars
 
 	( split_array.count ).times do
 		reversed_array << split_array.pop

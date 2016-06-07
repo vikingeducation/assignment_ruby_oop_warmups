@@ -9,12 +9,13 @@ require 'pry'
 
 
 # PROGRAM benchmark( times , &block )
-def benchmark ( num, &block )
+def benchmark ( num )
+
 	# create a start time
 	start_time = Time.now
 	# start the loop n.times
 		# and run the block
-	num.times { yield }
+	num.times { yield if block_given? }
 	# return the time.now - start time
 
 	puts Time.now - start_time
@@ -22,4 +23,4 @@ def benchmark ( num, &block )
 end
 # END
 
-benchmark( 100000 ) { print "hello"} # Proc?
+benchmark( 100000 ) { puts "Hi" }

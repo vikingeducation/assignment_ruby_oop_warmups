@@ -7,15 +7,16 @@ def fibs( num )
 
 	index = 0
 
+		if num == 1
+			print [0]
+			return [0]
+		end
+
 	# until the count of result is the given num
 	until fib_start.count >= num
 
 		# if the array is 1 or 2 we return [0] or [0,1]
-		if num == 1
-			print "[0]".to_i
-		elsif num == 2
-			print "[0,1]".to_i
-		end
+
 
 	fib_start << fib_start[ index ] + fib_start[ index + 1 ]
 
