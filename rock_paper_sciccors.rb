@@ -16,8 +16,8 @@ class RockPaperScissors
 	#end CPU
 
 	# checking for a tie
-	def tie? ( player_move )
-		if @cpu_move == player_move
+	def tie?
+		if @cpu_move == @player_move
 			puts "Tie! Both players had #{@cpu_move}"
 		end
 	end
@@ -37,21 +37,21 @@ class RockPaperScissors
 	end
 
 	# set up a method to check the player and CPU moves
-	def outcome( player_move )
+	def outcome
 		if @cpu_move == "rock"
-			if player_move == "paper"
+			if @player_move == "paper"
 				player_wins
-			elsif player_move == "scissors"
+			elsif @player_move == "scissors"
 				cpu_wins
 			end
 
 		elsif @cpu_move == "paper"
 
-			if player_move == "rock"
+			if @player_move == "rock"
 
 				cpu_wins
 
-			elsif player_move == "scissors"
+			elsif @player_move == "scissors"
 
 				player_wins
 
@@ -59,11 +59,11 @@ class RockPaperScissors
 
 		elsif @cpu_move == "scissors"
 
-			if player_move == "rock"
+			if @player_move == "rock"
 
 				player_wins
 
-			elsif player_move == "paper"
+			elsif @player_move == "paper"
 
 				cpu_wins
 
@@ -83,6 +83,6 @@ player_move = gets.strip.downcase
 
 new_game = RockPaperScissors.new( player_move )
 
-new_game.tie?(player_move)
-new_game.outcome(player_move)
+new_game.tie?
+new_game.outcome
 
