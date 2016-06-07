@@ -4,16 +4,19 @@
 require 'pry'
 #Class will be the whole game RPS
 class RockPaperScissors
-	#instance methods will be CPU and PLAYER
-	#attr_accessor :player_move
+
 
 	def initialize( player_move )
-		@cpu_move = ['rock', 'paper', 'scissors'].sample
-		@player_move = player_move
-	#def CPU
+
 		#the CPU will generate Rock Paper or Scissors stored into a variable - this can be intialized
+		@cpu_move = ['rock', 'paper', 'scissors'].sample
+
+		#player move stored in instance var
+		@player_move = player_move
+
+
 	end
-	#end CPU
+
 
 	# checking for a tie
 	def tie?
@@ -38,43 +41,61 @@ class RockPaperScissors
 
 	# set up a method to check the player and CPU moves
 	def outcome
-		if @cpu_move == "rock"
-			if @player_move == "paper"
-				player_wins
-			elsif @player_move == "scissors"
-				cpu_wins
+
+		unless tie?
+
+
+
+			if @cpu_move == "rock"
+
+				if @player_move == "paper"
+
+					player_wins
+
+				elsif @player_move == "scissors"
+
+					cpu_wins
+
+				end
+
+
+
+
+			elsif @cpu_move == "paper"
+
+				if @player_move == "rock"
+
+					cpu_wins
+
+				elsif @player_move == "scissors"
+
+					player_wins
+
+				end
+
+
+
+			elsif @cpu_move == "scissors"
+
+				if @player_move == "rock"
+
+					player_wins
+
+				elsif @player_move == "paper"
+
+					cpu_wins
+
+				end
+
 			end
 
-		elsif @cpu_move == "paper"
 
-			if @player_move == "rock"
 
-				cpu_wins
-
-			elsif @player_move == "scissors"
-
-				player_wins
-
-			end
-
-		elsif @cpu_move == "scissors"
-
-			if @player_move == "rock"
-
-				player_wins
-
-			elsif @player_move == "paper"
-
-				cpu_wins
-
-			end
-
-		end
-
-  end #/outcome
+		end #/.unless
+	end #/.outcome
 
 end
-#END /ROCKPAPERSCISSORS
+#END /.ROCKPAPERSCISSORS
 
 
 
@@ -83,6 +104,5 @@ player_move = gets.strip.downcase
 
 new_game = RockPaperScissors.new( player_move )
 
-new_game.tie?
 new_game.outcome
 
