@@ -61,9 +61,24 @@ class Array
 
     return select_array
 
-
 	end
 
+
+#Create a method my_all? which extends the Array class and works the same as Ruby's native all? method. You can use your my_each method to implement this. Make it take either a block or a proc.
+
+	def my_all?
+		#if any element is false return false
+		my_each do | element |
+			if yield( element )
+				next
+			else
+				return false
+			end
+		end
+
+		return true
+
+	end
 
 
 end
@@ -77,5 +92,7 @@ end
 
 
 [2,10,20,43].my_select { | e | e % 2 == 0 }
+
+["me", "my", "ouch", "hello"].my_all? { | w | w.length >= 4}
 
 
