@@ -1,19 +1,28 @@
 
 module Player
 
-	def prompt_from_tower
+
+
+	def get_player_move
+
+		num = gets.strip.to_i
+		return num
+
+	end
+
+
+	def prompt_from
 
 		puts "Please enter which tower to move from:"
 
 	end
 
+	def prompt_to
 
-	def get_player_move
+		puts "Please enter which tower to move to:"
 
-		return gets.strip
 
 	end
-
 
 
 

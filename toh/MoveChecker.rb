@@ -39,5 +39,50 @@ module MoveChecker
 	end
 
 
+	def valid_tower_choice?( tower_choice )
+
+		(1..3) === tower_choice
+
+	end
+
+
+	def check_if_empty
+
+			if @towers[ ( @player_move - 1 ) ].empty?
+
+				invalid_move( "empty" )
+				get_player_move
+
+			else
+
+					move("from")
+
+			end
+
+	end
+
+
+	def valid_move_to
+
+
+
+	end
+
+
+
+
+	def invalid_move( error )
+
+		system 'clear'
+		case error
+		when "empty"
+			puts "That tower is empty, please select another"
+		when "too small"
+			puts  "The disc must be bigger than the disc your moving"
+		end
+
+
+	end
+
 
 end # /MoveChecker Module

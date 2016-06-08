@@ -35,7 +35,20 @@ module Tower
 
 
 	#move discs
-	def move
+	def move( to_or_from )
+
+		case to_or_from
+
+		  when "from"
+
+				@disc_being_moved = @towers[ ( @player_move - 1 ) ].pop
+
+		  when "to"
+
+		  	@towers[ ( player_move - 1 ) ] << disc_being_moved
+
+		end
+
 	end
 
 
