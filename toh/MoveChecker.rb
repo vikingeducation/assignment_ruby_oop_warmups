@@ -46,16 +46,15 @@ module MoveChecker
 	end
 
 
-	def check_if_empty
+	def check_if_empty?
 
 			if @towers[ ( @player_move - 1 ) ].empty?
 
-				invalid_move( "empty" )
-				get_player_move
+				false
 
 			else
 
-					move("from")
+				true
 
 			end
 
@@ -63,6 +62,7 @@ module MoveChecker
 
 
 	def valid_move_to
+
 
 
 

@@ -49,6 +49,8 @@ module Tower
 
 		end
 
+		display_towers
+
 	end
 
 

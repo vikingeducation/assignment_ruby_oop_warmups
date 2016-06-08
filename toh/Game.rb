@@ -54,7 +54,12 @@ class TowerOfHanoi
 
 		  if valid_tower_choice?( @player_move )
 
-		  	check_if_empty
+		  	until check_if_empty?
+		  		invalid_move( "empty" )
+		  		@player_move = get_player_move
+		  	end
+
+		  	move( "from" )
 
 		  end
 
@@ -62,13 +67,12 @@ class TowerOfHanoi
 		  prompt_to
 		  @player_move = get_player_move
 
-		  if valid_tower_choice?( @player_move )
+		  if valid_tower_choice( @player_move )
 
-		  	if
-
-		  	valid_move_to
-
+		  	if check_if_empty?
+		  	end
 		  end
+
 
 
 		end
