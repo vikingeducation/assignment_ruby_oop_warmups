@@ -49,6 +49,7 @@ module Tower
 
 		end
 
+		system 'clear'
 		display_towers
 
 	end

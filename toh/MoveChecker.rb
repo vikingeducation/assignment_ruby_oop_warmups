@@ -50,31 +50,24 @@ module MoveChecker
 
 			if @towers[ ( @player_move - 1 ) ].empty?
 
-				false
+				true
 
 			else
 
-				true
+				false
 
 			end
 
 	end
 
 
-	def valid_move_to
-
-
-
-
-	end
-
-
-
 
 	def invalid_move( error )
 
-		system 'clear'
+
 		case error
+		when "default"
+			puts "Please make a valid choice"
 		when "empty"
 			puts "That tower is empty, please select another"
 		when "too small"

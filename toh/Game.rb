@@ -49,29 +49,62 @@ class TowerOfHanoi
 
 
 
-			prompt_from
-		  @player_move = get_player_move
 
-		  if valid_tower_choice?( @player_move )
 
-		  	until check_if_empty?
-		  		invalid_move( "empty" )
-		  		@player_move = get_player_move
-		  	end
+			valid_move = false
 
-		  	move( "from" )
 
-		  end
+			until valid_move do
+
+				# print tower hash so player can see status
+
+
+				prompt_from
+
+				# player inputs which tower they want to move from
+				@player_move = get_player_move
+
+
+				# call the valid? method to make sure the selection is in range of the number of towers available
+				if valid_tower_choice?( @player_move )
+
+					# if the tower they want to move from has discs in it they can make a move
+					if check_if_empty?
+
+						# change the variable to true to exit the while loop
+						valid_move = true
+
+						# with the correct tower selected the disc is removed from the corresponding tower stored in the disc_being_moved var and removed from the towers array with POP
+						move( "from" )
+					# otherwise they need to select the right tower
+					else
+
+						invalid_move( "empty" )
+
+					end
+
+				# otherwise they need to select the right tower
+				else
+
+					invalid_move( "default" )
+
+				end
+
+			end #/.While Loop for checking for a valid move from the tower
 
 		  #then ask which tower to move to
 		  prompt_to
 		  @player_move = get_player_move
 
-		  if valid_tower_choice( @player_move )
 
-		  	if check_if_empty?
-		  	end
-		  end
+
+
+		  if valid_tower_choice?( @player_move )
+
+
+
+
+		  end # /valid_tower_choice
 
 
 
