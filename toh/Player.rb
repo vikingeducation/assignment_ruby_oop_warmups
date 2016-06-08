@@ -1,28 +1,44 @@
 
-module Player
+class Player
+
+	attr_accessor :player_move
+
+	def initialize
+		@player_move = player_move
+	end
 
 
+	def get_input_or_exit
 
-	def get_player_move
+			num = gets.strip
 
-		num = gets.strip.to_i
-		return num
+			if num.downcase == "exit"
+				exit
+			else
+				return num.to_i
+			end
 
 	end
 
 
-	def prompt_from
+	def enter_valid_number
 
-		puts "Please enter which tower to move from:"
-
-	end
-
-	def prompt_to
-
-		puts "Please enter which tower to move to:"
-
+		puts "Enter a valid number"
 
 	end
+
+
+
+  def valid_input?( input )
+
+  	input > 0
+
+  end
+
+
+	def move_input
+	end
+
 
 
 
