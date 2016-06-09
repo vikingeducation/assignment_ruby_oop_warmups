@@ -7,6 +7,9 @@
 
 	include Player
 
+
+
+
 class TowerOfHanoi
 
 
@@ -92,10 +95,20 @@ class TowerOfHanoi
 
 	def destination_disc_bigger?
 
+		@disc_being_moved > @towers[ @player_move - 1 ].last
+
 	end
 
 
 end
+
+
+
+
+
+
+
+
 
 
 ### Start of the game ###
@@ -108,17 +121,19 @@ num_discs = get_input_or_exit
 
 	# loop and call method checks in Player class to get valid number
 	until valid_input?( num_discs )
-		enter_valid_number
+		enter_valid_number("disc")
 		num_discs = get_input_or_exit
 	end
 
 # create game and populate Tower with player selection
 tower = TowerOfHanoi.populate_tower( num_discs )
 
-# print out game field
-tower.display_towers
 
 until tower.victory == tower.towers
+
+	system 'clear'
+	# print out game field
+	tower.display_towers
 
 	# starting the input for removing the disc
 	valid_move = false
@@ -132,24 +147,80 @@ until tower.victory == tower.towers
 		until valid_tower_choice?( tower.player_move ) &&
 					tower.tower_has_discs?
 
-			enter_valid_number
+
+			system 'clear'
+			tower.display_towers
+
+			enter_valid_number("from")
 
 			tower.player_move = get_input_or_exit
 
 		end
 
 		tower.remove_disc_from_tower
+
+		system 'clear'
 		tower.display_towers
 
 		valid_move = true
 
 
+	end #/valid move removing disc
 
 
-	end
 
 
 
+	# loop to control the placing of the disc
+	valid_move = false
+
+	until valid_move
+
+		puts "Please enter tower to move to:"
+
+		tower.player_move = get_input_or_exit
+
+		# loop for picking a valid tower number
+		until valid_tower_choice?( tower.player_move )
+
+			system 'clear'
+			tower.display_towers
+
+			enter_valid_number( "to" )
+
+			tower.player_move = get_input_or_exit
+
+		end
+
+		# loop for valid placement
+		if tower.tower_has_discs? == false
+
+			tower.move_disc_to_tower
+			valid_move = true
+
+		elsif tower.destination_disc_bigger?
+
+			system 'clear'
+			tower.display_towers
+
+			disc_to_big
+
+		else
+
+			tower.move_disc_to_tower
+			valid_move = true
+
+		end
+
+
+	end #/valid move placing disc
+
+
+system 'clear'
+
+puts "You Win! Nice work!"
+
+tower.display_towers
 
 
 end

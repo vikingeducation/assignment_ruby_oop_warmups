@@ -15,9 +15,26 @@ module Player
 	end
 
 
-	def enter_valid_number
+	def enter_valid_number( error )
 
-		puts "Enter a valid number"
+		if error == "disc"
+
+			puts "Please enter a valid disc number:"
+
+		else
+
+			puts "Enter a valid number to move #{ error }:"
+
+		end
+
+	end
+
+
+
+
+	def disc_to_big
+
+		puts "Your disc is too big, please select another tower"
 
 	end
 
