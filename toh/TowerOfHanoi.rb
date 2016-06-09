@@ -1,19 +1,9 @@
-# This is the class for the main GAME
-
-	require 'pry'
-
+#Main Game - Tower of Hanoi
 
 	require_relative 'Player'
-
 	include Player
 
-
-
-
 class TowerOfHanoi
-
-
-
 
 	attr_accessor :disc_being_moved, :player_move
 	attr_reader :towers, :victory
@@ -26,12 +16,9 @@ class TowerOfHanoi
 		@number_of_discs = number_of_discs
 		@player_move = 3
 
-
 	end
 
-
-
-
+  #factory method populates the towers hash once given the number of discs
 	def self.populate_tower( num_discs )
 
 		towers = { 0 => ( ( 1..num_discs).to_a.reverse ), 1 => [], 2 => [] }
@@ -64,6 +51,7 @@ class TowerOfHanoi
 	end
 
 
+
 	def move_disc_to_tower
 
   	@towers[  player_move - 1  ] << @disc_being_moved
@@ -79,18 +67,13 @@ class TowerOfHanoi
 	end
 
 
+
 	def tower_has_discs?
 
-		if @towers[ @player_move - 1 ].empty?
-			return false
-		else
-			return true
-		end
+		@towers[ @player_move - 1 ].empty? ? false : true
+
 
 	end
-
-
-
 
 
 	def destination_disc_bigger?
@@ -100,18 +83,12 @@ class TowerOfHanoi
 	end
 
 
-end
+end #/Class TOH
 
-
-
-
-
-
-
-
-
-
+#########################
 ### Start of the game ###
+#########################
+
 puts "Welcome to Tower of Hanoi"
 
 puts "Please enter the number of discs to play with: "
@@ -121,8 +98,11 @@ num_discs = get_input_or_exit
 
 	# loop and call method checks in Player class to get valid number
 	until valid_input?( num_discs )
+
 		enter_valid_number("disc")
+
 		num_discs = get_input_or_exit
+
 	end
 
 # create game and populate Tower with player selection
@@ -147,7 +127,7 @@ until tower.victory == tower.towers
 		until valid_tower_choice?( tower.player_move ) &&
 					tower.tower_has_discs?
 
-
+			# reset the view
 			system 'clear'
 			tower.display_towers
 
@@ -159,6 +139,7 @@ until tower.victory == tower.towers
 
 		tower.remove_disc_from_tower
 
+    # reset the view
 		system 'clear'
 		tower.display_towers
 
@@ -169,9 +150,8 @@ until tower.victory == tower.towers
 
 
 
-
-
-	# loop to control the placing of the disc
+  ############################################
+  # loop to control the placing of the disc
 	valid_move = false
 
 	until valid_move
@@ -183,6 +163,7 @@ until tower.victory == tower.towers
 		# loop for picking a valid tower number
 		until valid_tower_choice?( tower.player_move )
 
+			# reset the view
 			system 'clear'
 			tower.display_towers
 
@@ -200,6 +181,7 @@ until tower.victory == tower.towers
 
 		elsif tower.destination_disc_bigger?
 
+			# reset the view
 			system 'clear'
 			tower.display_towers
 
@@ -215,7 +197,7 @@ until tower.victory == tower.towers
 
 	end #/valid move placing disc
 
-
+# reset the view
 system 'clear'
 
 puts "You Win! Nice work!"
