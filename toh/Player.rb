@@ -1,11 +1,5 @@
 
-class Player
-
-	attr_accessor :player_move
-
-	def initialize
-		@player_move = player_move
-	end
+module Player
 
 
 	def get_input_or_exit
@@ -36,8 +30,14 @@ class Player
   end
 
 
-	def move_input
-	end
+
+  def valid_tower_choice?( input )
+
+  	(1..3) === input
+
+  end
+
+
 
 
 
