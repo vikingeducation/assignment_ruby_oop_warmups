@@ -27,7 +27,7 @@ class Array
 		end
 
 		# return the array
-		self
+		return self
 
 	end
 
@@ -108,10 +108,10 @@ end
 
 
 
-[2,10,20,43].my_each { | e | e / 2 }
+print [2,10,20,43].my_each { | e | e + 2 }
 
 
-[2,10,20,43].my_map { | e | e * 2 }
+print [2,10,20,43].my_map { | e | e * 2 }
 
 
 [2,10,20,43].my_select { | e | e % 2 == 0 }

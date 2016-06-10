@@ -1,48 +1,44 @@
 #Main Game - Tower of Hanoi
+require 'pry'
 
-	require_relative 'Player'
-	include Player
 
 class TowerOfHanoi
 
-	attr_accessor :disc_being_moved, :player_move
-	attr_reader :towers, :victory
+  attr_accessor :disc_being_moved
+  attr_reader :number_of_discs
 
-	def initialize( towers, victory, number_of_discs )
+	def initialize( towers = nil, victory = nil, num_discs = 0 )
 
 		@towers = towers
 		@victory = victory
 		@disc_being_moved = disc_being_moved
 		@number_of_discs = number_of_discs
-		@player_move = 3
+
+		@player = Player.new
 
 	end
 
-  #factory method populates the towers hash once given the number of discs
-	def self.populate_tower( num_discs )
 
-		towers = { 0 => ( ( 1..num_discs).to_a.reverse ), 1 => [], 2 => [] }
+	def populate_tower( num_discs )
 
-		victory = { 0 => [], 1 => [], 2 => ( (1..num_discs ).to_a.reverse ) }
+		@number_of_discs = num_discs
 
-		TowerOfHanoi.new( towers, victory, num_discs )
+		@towers = { 0 => ( ( 1..@number_of_discs).to_a.reverse ), 1 => [], 2 => [] }
+
+		@victory = { 0 => [], 1 => [], 2 => ( (1..@number_of_discs ).to_a.reverse ) }
 
 	end
 
 
 	def display_towers
-			# runs through the hash to print a visual represenation of the towers
 			@towers.each do |k, v|
 
-					# lists the tower # and some space for readability
 					print "Tower #{k+1}"
 					puts  ""
 					puts  ""
 
-					# reverse the array to print smallest to largest and iterate through each array item in order to conver to treat each as an integer // otherwise it will treat as an array and ERROR
 					v.reverse.each { | n |	puts "#{'O' * n }" }
 
-					# prints a divider below each tower printout
 					print "#{'-' * @number_of_discs}"
 
 					puts  ""
@@ -54,7 +50,7 @@ class TowerOfHanoi
 
 	def move_disc_to_tower
 
-  	@towers[  player_move - 1  ] << @disc_being_moved
+  	@towers[  @player_move - 1  ] << @disc_being_moved
 
 	end
 
@@ -83,132 +79,220 @@ class TowerOfHanoi
 	end
 
 
-end #/Class TOH
 
-#########################
-### Start of the game ###
-#########################
+	def start
 
-puts "Welcome to Tower of Hanoi"
+		until @victory == @towers
 
-puts "Please enter the number of discs to play with: "
+			system 'clear'
+			display_towers
 
-# store player input to send to Player object
-num_discs = get_input_or_exit
 
-	# loop and call method checks in Player class to get valid number
-	until valid_input?( num_discs )
 
-		enter_valid_number("disc")
+			valid_move = false
 
-		num_discs = get_input_or_exit
+			until valid_move
+
+				puts "Please enter tower to move from:"
+
+				@player_move = get_input_or_exit
+
+				until valid_tower_choice?( @player_move ) &&
+							tower_has_discs?
+
+					system 'clear'
+					display_towers
+
+					enter_valid_number("from")
+
+					@player_move = get_input_or_exit
+
+				end
+
+				remove_disc_from_tower
+
+				system 'clear'
+				display_towers
+
+				valid_move = true
+
+
+			end #/valid move removing disc
+
+
+
+
+			valid_move = false
+
+			until valid_move
+
+				puts "Please enter tower to move to:"
+
+				@player_move = get_input_or_exit
+
+				until valid_tower_choice?( @player_move )
+
+					system 'clear'
+					display_towers
+
+					enter_valid_number( "to" )
+
+					@player_move = get_input_or_exit
+
+				end
+
+				if tower_has_discs? == false
+
+					move_disc_to_tower
+					valid_move = true
+
+				elsif destination_disc_bigger?
+
+					system 'clear'
+					display_towers
+
+					disc_to_big
+
+				else
+
+					move_disc_to_tower
+					valid_move = true
+
+				end
+
+
+			end #/valid move placing disc
+
+		# reset the view
+		system 'clear'
+
+		puts "You Win! Nice work!"
+
+		display_towers
+
+
+		end
+
 
 	end
 
-# create game and populate Tower with player selection
-tower = TowerOfHanoi.populate_tower( num_discs )
 
-
-until tower.victory == tower.towers
-
-	system 'clear'
-	# print out game field
-	tower.display_towers
-
-	# starting the input for removing the disc
-	valid_move = false
-
-	until valid_move
-
-		puts "Please enter tower to move from:"
-
-		tower.player_move = get_input_or_exit
-
-		until valid_tower_choice?( tower.player_move ) &&
-					tower.tower_has_discs?
-
-			# reset the view
-			system 'clear'
-			tower.display_towers
-
-			enter_valid_number("from")
-
-			tower.player_move = get_input_or_exit
-
-		end
-
-		tower.remove_disc_from_tower
-
-    # reset the view
-		system 'clear'
-		tower.display_towers
-
-		valid_move = true
-
-
-	end #/valid move removing disc
+end #/Class TOH
 
 
 
-  ############################################
-  # loop to control the placing of the disc
-	valid_move = false
+class Player < TowerOfHanoi
 
-	until valid_move
+	attr_accessor :player_move
+	attr_writer :number_of_discs
 
-		puts "Please enter tower to move to:"
+	def initialize
 
-		tower.player_move = get_input_or_exit
+		@player_move = 3
 
-		# loop for picking a valid tower number
-		until valid_tower_choice?( tower.player_move )
+		new_game
 
-			# reset the view
-			system 'clear'
-			tower.display_towers
+	end
 
-			enter_valid_number( "to" )
 
-			tower.player_move = get_input_or_exit
 
-		end
 
-		# loop for valid placement
-		if tower.tower_has_discs? == false
+	def new_game
 
-			tower.move_disc_to_tower
-			valid_move = true
 
-		elsif tower.destination_disc_bigger?
+		puts "Welcome to Tower of Hanoi"
 
-			# reset the view
-			system 'clear'
-			tower.display_towers
+		puts "Please enter the number of discs to play with: "
 
-			disc_to_big
+		num = get_input_or_exit
+
+			until valid_input?( num )
+
+				enter_valid_number("disc")
+
+				num = get_input_or_exit
+
+			end
+
+			populate_tower( num )
+			start
+
+	end
+
+
+
+
+
+	def get_input_or_exit
+
+			@player_move = gets.strip
+
+			if @player_move.downcase == "exit"
+				exit
+			else
+				return @player_move.to_i
+			end
+
+	end
+
+
+
+
+	def enter_valid_number( error )
+
+		if error == "disc"
+
+			puts "Please enter a valid disc number:"
 
 		else
 
-			tower.move_disc_to_tower
-			valid_move = true
+			puts "Enter a valid number to move #{ error }:"
 
 		end
 
+	end
 
-	end #/valid move placing disc
 
-# reset the view
-system 'clear'
 
-puts "You Win! Nice work!"
 
-tower.display_towers
+	def disc_to_big
+
+		puts "Your disc is too big, please select another tower"
+
+	end
+
+
+
+
+
+
+  def valid_input?( input )
+
+  	input > 0
+
+  end
+
+
+
+  def valid_tower_choice?( input )
+
+  	(1..3) === input
+
+  end
+
+
+
+
 
 
 end
 
 
 
+
+game = TowerOfHanoi.new
+
+game.start
 
 
 
