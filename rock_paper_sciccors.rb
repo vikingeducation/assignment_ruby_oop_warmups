@@ -1,45 +1,45 @@
 # ./rock_paper_scissors.rb
 
-#PROGRAM ROCKPAPERSCISSORS
 require 'pry'
-#Class will be the whole game RPS
 class RockPaperScissors
 
 
 	def initialize( player_move )
 
-		#the CPU will generate Rock Paper or Scissors stored into a variable - this can be intialized
 		@cpu_move = ['rock', 'paper', 'scissors'].sample
 
-		#player move stored in instance var
-		@player_move = player_move
 
 
 	end
 
 
-	# checking for a tie
 	def tie?
 		if @cpu_move == @player_move
+
 			puts "Tie! Both players had #{@cpu_move}"
+
 		end
+
 	end
 
-	#output upon player victory
+
+
 	def player_wins
 
 		puts "Player wins! #{@player_move} beats #{@cpu_move}"
 
 	end
 
-	#output upon CPU victory
+
+
 	def cpu_wins
 
 		puts "CPU wins! #{@cpu_move} beats #{@player_move}"
 
 	end
 
-	# set up a method to check the player and CPU moves
+
+
 	def outcome
 
 		unless tie?

@@ -7,27 +7,19 @@ class TowerOfHanoi
   attr_accessor :disc_being_moved
   attr_reader :number_of_discs
 
-	def initialize( towers = nil, victory = nil, num_discs = 0 )
+	def initialize
 
-		@towers = towers
-		@victory = victory
-		@disc_being_moved = disc_being_moved
-		@number_of_discs = number_of_discs
 
 		@player = Player.new
-
-	end
-
-
-	def populate_tower( num_discs )
-
-		@number_of_discs = num_discs
+		@number_of_discs = number_of_discs
 
 		@towers = { 0 => ( ( 1..@number_of_discs).to_a.reverse ), 1 => [], 2 => [] }
-
 		@victory = { 0 => [], 1 => [], 2 => ( (1..@number_of_discs ).to_a.reverse ) }
 
+
 	end
+
+
 
 
 	def display_towers
@@ -58,7 +50,7 @@ class TowerOfHanoi
 
 	def remove_disc_from_tower
 
-		@disc_being_moved = @towers[ @player_move - 1  ].pop
+		@towers[ @player_move - 1  ].pop
 
 	end
 
@@ -161,9 +153,9 @@ class TowerOfHanoi
 				end
 
 
-			end #/valid move placing disc
+			end
 
-		# reset the view
+
 		system 'clear'
 
 		puts "You Win! Nice work!"
@@ -177,7 +169,7 @@ class TowerOfHanoi
 	end
 
 
-end #/Class TOH
+end
 
 
 
@@ -263,9 +255,6 @@ class Player < TowerOfHanoi
 
 
 
-
-
-
   def valid_input?( input )
 
   	input > 0
@@ -279,10 +268,6 @@ class Player < TowerOfHanoi
   	(1..3) === input
 
   end
-
-
-
-
 
 
 end
