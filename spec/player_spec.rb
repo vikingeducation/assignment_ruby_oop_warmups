@@ -19,6 +19,27 @@ describe "Computer" do
 		expect(response[:message]).to eq("ITEM_CHANGED")
 	end
 
+	it "computers game stats should increament" do
+		expect(computer.total_wins).to eq(0)
+		expect(computer.total_losses).to eq(0)
+		expect(computer.total_ties).to eq(0)
+
+		computer.add_win
+		expect(computer.total_wins).to eq(1)
+		computer.add_win
+		computer.add_win
+		expect(computer.total_wins).to eq(3)
+		computer.add_loss
+		expect(computer.total_losses).to eq(1)
+		computer.add_loss
+		computer.add_loss
+		computer.add_loss
+		computer.add_tie
+		computer.add_tie
+		expect(computer.total_losses).to eq(4)
+		expect(computer.total_ties).to eq(2)
+	end
+
 end
 
 describe "Human" do
