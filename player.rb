@@ -2,6 +2,9 @@ class Player
 	@@item_list = {0 => 'rock',1 =>'paper',2 =>'scissors',3 => 'quit'}
 
 	def initialize()
+		@total_wins = 0
+		@total_losses = 0
+		@total_ties = 0
 	end
 
 	def choose_item(item=nil)
@@ -14,7 +17,6 @@ class Player
 			@item = @@item_list[item]
 
 			status = "SUCCESS"
-			data = item
 			message = "ITEM_CHANGED"
 		else
 			@item, message = "INVALID_ITEM"
@@ -24,6 +26,19 @@ class Player
 		response = { status: status, message: message, data: data }
 		response
 	end
+
+	def add_win
+		@total_wins += 1
+	end
+
+	def add_lose
+		@total_losses += 1
+	end
+
+	def add_tie
+		@total_ties += 1
+	end
+
 end
 
 class Computer < Player
