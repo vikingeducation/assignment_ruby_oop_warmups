@@ -1,5 +1,6 @@
 class Player
-	@@item_list = {0 => 'rock',1 =>'paper',2 =>'scissors',3 => 'quit'}
+	@@item_list = {0 => 'rock',1 =>'paper',2 =>'scissors'}
+	attr_reader :total_wins, :total_losses, :total_ties, :name, :item
 
 	def initialize()
 		@total_wins = 0
@@ -31,7 +32,7 @@ class Player
 		@total_wins += 1
 	end
 
-	def add_lose
+	def add_loss
 		@total_losses += 1
 	end
 
@@ -43,10 +44,11 @@ end
 
 class Computer < Player
 	def initialize()
+		super()
 		@name = "Computer"
 	end
 
-	def choose_item
+	def choose_item()
 		item = rand(0..2)
 		super(item)
 	end
@@ -54,12 +56,8 @@ end
 
 class Human < Player
 	def initialize(name)
+		super()
 		@name = "Player #{name}"
-	end
-
-	def choose_item
-		item = rand(0..2)
-		super(item)
 	end
 end
 
