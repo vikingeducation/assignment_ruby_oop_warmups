@@ -5,4 +5,8 @@ class Disk
 		@size = disk_size
 	end
 
+	def compare_size(compared_size)
+		return size - compared_size
+	end
+
 end
