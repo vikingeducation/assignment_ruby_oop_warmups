@@ -1,4 +1,4 @@
-require "toh"
+require_relative "../lib/toh.rb"
 
 describe Disk do
 	it "is a disk" do
@@ -20,8 +20,8 @@ describe Disk do
 		end
 
 		it "returns false if self is larger than campared disk" do
-			small_disk = Disk.new(1)
-			large_disk = Disk.new(4)
+			small_disk = Disk.new(2)
+			large_disk = Disk.new(3)
 
 			expect(large_disk.is_smaller?(small_disk)).to eq(false)
 		end
@@ -29,13 +29,12 @@ describe Disk do
 
 	describe "#render" do
 		it "displays empty disk width at the begining" do
-			expect(subject.render).to output("").to_stdout
+			expect(subject.render).to eq("")
 		end
 
 		it "displays disk width" do
 			large_disk = Disk.new(4)
-			expect(large_disk.render).to output("****").to_stdout
+			expect(large_disk.render).to eq("****")
 		end
 	end
-
 end
