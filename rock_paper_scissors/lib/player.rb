@@ -25,7 +25,6 @@ class Player
 
 		data = @item
 		response = { status: status, message: message, data: data }
-		response
 	end
 
 	def add_win

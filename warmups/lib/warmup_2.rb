@@ -4,5 +4,5 @@ def my_benchmark(number_of_times, &block)
 		block
 	end
 	ellasped_time = Time.now - start_time
-	puts "#{ellasped_time}"
+	return ellasped_time
 end

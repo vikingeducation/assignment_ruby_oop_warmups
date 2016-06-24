@@ -5,7 +5,7 @@ class Game
 	end
 
 	def run
-		display_intro
+		puts display_intro
 		mode_selection = gets.chomp
 		if mode_selection == 'PVC'
 			pvc_mode
@@ -71,6 +71,7 @@ class Game
 	def pvc_mode
 		player_1 = Human.new('1')
 		computer = Computer.new()
+		player_1_selection = nil
 		begin
 			puts "0. Rock || 1. Paper || 2. Paper || Q. Quits"
 			player_1_selection = gets.chomp
