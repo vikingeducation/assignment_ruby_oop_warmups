@@ -1,0 +1,25 @@
+Set Up Puzzle Intitially
+	CREATE 3 towers
+	CREATE 4 disks on tower A
+Start Puzzle --loop
+	RENDER puzzle board
+	PROMPT user to move any top disk to another tower
+	IF users move in not valid (moving a larger disk onto a smaller):
+		DISPLAY ERROR message to rechoose move
+	END game if all disks are a single tower other than Tower:A
+	ELSE continue looping
+
+Classes - Tower, Disk, Puzzle
+
+Tower:
+	get_rows
+	move_disk
+	display_tower
+
+Disk:
+	size
+	compare_size
+
+Puzzle:
+	Run
+	validate_move
