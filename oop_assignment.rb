@@ -194,7 +194,7 @@ class Tower
   end
 
   def valid_move?(to_tower)
-    return !empty? && (to_tower.empty?||((to_tower.last) > last))
+    !empty? && (to_tower.empty? || to_tower.top_disc > top_disc)
   end
 
   def win?
@@ -202,9 +202,35 @@ class Tower
   end
 
   def print_tower
-    print @database
+    @database.to_s
   end
-  
+
+  def make_visuals
+    out = ""
+    @database.each_with_index do |v,i|
+      spaces = make_spaces(i)
+      ring = make_ring(v)
+      out = spaces + ring + out 
+    end
+    out
+  end
+
+  def make_spaces(idx)
+    out = ''
+    idx.times do
+      out += ' '
+    end
+    out
+  end
+
+  def make_ring(v)
+    out = ''
+    v.times do
+      out += '#'
+    end
+    out + "\n"
+  end
+
 end
 
 #disks (data)
@@ -244,6 +270,7 @@ class Tower_Game
           retry
         end
       end
+      render
       puts "Congratulations, #{@name}!"
     end
 
@@ -269,11 +296,19 @@ class Tower_Game
 
     def render
       @towers.each do |k,v| 
-        puts "#{k}: #{v.print_tower}"
+        visuals = v.make_visuals
+        puts "||||#{k}||||\n#{visuals}"
       end
     end
 
+# ' #####\n'  
+# '#######'
+
 end
+
+  ###      [2,3]
+ #####     [1,5]
+#######    [0,7]
 
 def test_toh
   app=Tower_Game.new
