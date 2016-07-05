@@ -16,16 +16,3 @@ def my_reverse(string)
 end
 
 #p my_reverse "foo"
-
-def fibs(nth_index)
-
-  fibs = [0, 1]
-
-
-
-  return fibs[0..nth_index]
-
-
-end
-
-p fibs 1
