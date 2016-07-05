@@ -66,3 +66,6 @@ class TOH
 
   end
 end
+
+toh = TOH.new(2)
+toh.render_board
