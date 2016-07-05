@@ -18,7 +18,7 @@ class Array
 
   def my_select(&block)
     temp_arr = []
-    self.my_each {|num| yield(num) ? temp_arr << num : next}
+    self.my_each {|num| temp_arr << num if yield(num)}
     print temp_arr, "\n"
   end
 
