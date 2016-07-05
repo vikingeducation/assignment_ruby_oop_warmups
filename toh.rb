@@ -7,13 +7,12 @@
   #valid_move?
 
 class TOH
-  attr_reader :board 
+  attr_reader :board
 
   def initialize(height)
     @height = height
     @board = Array.new
-    @board.push((1..height).to_a)
-    (height-1).times {|x| @board.push([nil]*height) }
+    @board.
   end
 
   def play
@@ -56,7 +55,7 @@ class TOH
 
   def change_board
     moving_piece = @board[@from_move].shift
-    @board[@from_move] << nil
+    @board[@from_move].unshift(nil)
     nil_index = @board[@to_move].index(nil)
     @board[@to_move][nil_index] = moving_piece
 
@@ -71,6 +70,25 @@ class TOH
     end
 
   end
+end
+
+class Tower
+  def initialize(n)
+    arr = [nil]*n
+    @tower = Array.new(3, arr)
+  end
+  def fill_tower
+    @tower[0] = ((1..height).to_a)
+  end
+
+  def add
+    
+  end
+
+  def remove
+  end
+
+
 end
 
 
