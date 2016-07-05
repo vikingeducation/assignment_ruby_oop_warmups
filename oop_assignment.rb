@@ -171,11 +171,55 @@ def test_rps
   app.play
 end
 
-def test_toh
-  
+
+class Tower_Game
+  def initialize
+    @towers={first: [7,5,3], second:[],third:[]}
+    @playing=true
+    welcome
+  end
+
+  private
+    def welcome
+      puts "Welcome to the Tower of Hanoi game."
+      puts "Please enter your name:"
+      @name=gets.chomp
+      play
+    end
+
+    def play
+      while @playing
+        puts "Please enter your tower of choice:"
+        choice=gets.chomp
+        @buffer=@towers[choice.to_sym].pop
+        puts "Please enter your tower of choice:"
+        choice=gets.chomp
+        @towers[choice.to_sym] << @buffer
+        check_win
+      end
+      puts "Congratulations, #{@name}!"
+    end
+
+    def check_win
+      win_state=
+    end
 end
 
+def test_toh
+  app=Tower_Game.new
+end
 
+test_toh
+
+
+#prompt user for "from tower"
+#store that choice in a buffer
+#remove topmost ring from tower of choice
+#prompt user for "to tower"
+#check if destination is empty
+#if not empty, check if topmost ring in destination tower 
+#is greater than the ring being held in the buffer
+#if it is, place the buffer on the tower of choice
 
 
 
