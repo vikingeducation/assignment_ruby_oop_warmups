@@ -4,7 +4,7 @@ class Game
 
   def initialize(num)
     @difficulty = num
-    @@player_move = []
+    @player_move = []
   end
 
   def get_move
@@ -56,11 +56,7 @@ class Board
   def display
     @tower_size.downto 0 do |h|
       3.times do |n|
-        if @board[n][h]
-          print spaced('o' * @board[n][h])
-        else
-          print spaced(' ')
-        end
+        print @board[n][h] ? spaced('o' * @board[n][h]) : spaced(' ')
       end
       puts
     end
