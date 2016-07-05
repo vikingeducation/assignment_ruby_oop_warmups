@@ -90,4 +90,118 @@ def test
   puts [1,2,5].my_inject(0) { |memo, item| memo + item }
 end
 
-test
+#test
+
+class Game
+  def initialize
+    @playing=true
+    welcome
+  end
+
+  MOVES={rock: :scissors, paper: :rock, scissors: :paper}
+
+  def welcome
+    puts "Welcome to the game. Enter your name:"
+    @player_1=Player.new(gets.chomp)
+    puts "How many players?"
+    input=gets.chomp.to_i
+    if input== 1
+      @player_2=Player.new(:computer)
+    else
+      puts "Enter Player 2's name:"
+      @player_2=Player.new(gets.chomp)
+    end
+  end
+
+  def play
+    while @playing   
+      player_1_move=@player_1.move
+      player_2_move=@player_2.move
+      @playing=!win_check(player_1_move,player_2_move)
+    end
+    puts "#{@winner} won!"
+  end
+
+  def win_check(a,b)
+    if b.to_sym==MOVES[a.to_sym]
+      @winner=@player_1.name
+      return true
+    elsif a.to_sym==MOVES[b.to_sym]
+      @winner=@player_2.name
+      return true
+    else
+      puts "It's a tie!"
+      return false
+    end
+  end
+end
+
+class Player
+  attr_reader :name
+  def initialize(input)
+    case input
+      when String
+        @mode=:human
+        @name=input
+      when Symbol
+        @mode=:computer
+        @name="Computron"
+    end 
+  end
+
+  def move
+    case @mode
+      when :human
+        begin 
+          puts "#{@name}, enter your move:"
+          @move=gets.chomp
+          raise if !validate
+        rescue StandardError
+          puts "Invalid Entry"
+          retry
+        end
+      when :computer
+        @move=["rock","paper","scissors"].sample
+        puts "Computron chooses #{@move}"
+    end 
+    return @move
+  end
+
+  def validate
+    !!/\A(rock|paper|scissors)/i.match(@move)
+  end
+end
+
+
+def test_rps
+  app=Game.new
+  app.play
+end
+test_rps
+#ask player for input
+#validate input
+#if correct, store it in a variable
+#player instance computer makes a move
+#compare player input with computer move
+#compare player input with hash 
+#pass computer move as a key
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
