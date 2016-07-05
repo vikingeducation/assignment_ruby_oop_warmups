@@ -9,8 +9,9 @@
 class TOH
   def initialize(height)
     @height = height
-    @board = Array.new(height,[])
-    @board[0] = (0..height).to_a
+    @board = Array.new
+    @board.push((1..height).to_a)
+    (height-1).times {|x| @board.push([nil]*height) }
   end
 
   def play
@@ -41,7 +42,7 @@ class TOH
   def valid_move?
     if !@board[@from_move][0]
       return false
-    elsif @board[@to_move].empty? || @board[@from_move][0] < @board[@to_move][0]
+    elsif @board[@to_move].all?{|i| !i} || @board[@from_move][0] < @board[@to_move][0]
       return true
     end
   end
@@ -58,10 +59,10 @@ class TOH
   def render_board
     puts "Game Board"
     puts "------------"
-
-    @board.each do |tower|
-      
+    @board.transpose.each do |tower|
+      tower.each {|spot| spot ? (print "x"*spot) : (print " "*@height)}
+      print "\n"
     end
-    puts "--- " * @height
+
   end
 end
