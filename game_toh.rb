@@ -1,6 +1,6 @@
 
-require_rlative 'platform.rb'
-require_rlative 'disk.rb'
+require_relative 'platform.rb'
+require_relative 'disk.rb'
 
 class Game
 
@@ -17,6 +17,8 @@ class Game
 		platform.validate_number_disks
 
 		platform.add_disks
+
+		platform.render
 
 	end
 
