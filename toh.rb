@@ -7,6 +7,8 @@
   #valid_move?
 
 class TOH
+  attr_reader :board 
+
   def initialize(height)
     @height = height
     @board = Array.new
@@ -19,6 +21,7 @@ class TOH
       get_move
       if valid_move?
         change_board
+        p @board
         render_board
       else
         puts "That was not a valid move"
@@ -53,7 +56,10 @@ class TOH
 
   def change_board
     moving_piece = @board[@from_move].shift
-    @board[@to_move].push(moving_piece)
+    @board[@from_move] << nil
+    nil_index = @board[@to_move].index(nil)
+    @board[@to_move][nil_index] = moving_piece
+
   end
 
   def render_board
@@ -67,5 +73,10 @@ class TOH
   end
 end
 
-toh = TOH.new(2)
-toh.render_board
+
+game = TOH.new(4)
+
+game.play
+puts game.board
+
+game.render_board
