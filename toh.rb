@@ -10,7 +10,7 @@ class TOH
   attr_reader :board
 
   def initialize(height)
-    @board = Tower.new
+    @board = [Tower.new(height, true), Tower.new(height), Tower.new(height)]
   end
 
   def play
@@ -34,15 +34,17 @@ class TOH
     @from_move = gets.chomp.to_i - 1
 
     puts "Where would you like to move to?"
-    @to_move = gets.chomp.to_i - 1 
+    @to_move = gets.chomp.to_i - 1
 
-    [@from_move, @to_move]   
+    [@from_move, @to_move]
   end
 
   def valid_move?
-    if !@board[@from_move][0]
+    if @board[@from_move].tower.all?{ |i| i == nil }
+      puts "invalid move!"
       return false
-    elsif @board[@to_move].all?{ |i| i == nil } || @board[@from_move][0] < @board[@to_move][0]
+    elsif @board[@to_move].tower.all?{ |i| i == nil } || @board[@from_move].get_top_piece < @board[@to_move].get_top_piece
+      puts "moved from #{@from_move+1} to #{@to_move+1}"
       return true
     end
   end
@@ -70,12 +72,11 @@ class TOH
 end
 
 class Tower < Array
+  attr_reader :tower
 
-
-  def initialize(height)
-
+  def initialize(height, start = nil)
     @height = height
-    @tower = [nil] * @height
+    start ? start_tower : @tower = [nil] * @height
   end
 
   def start_tower
@@ -100,9 +101,9 @@ class Tower < Array
 end
 
 
-game = TOH.new(4)
+# game = TOH.new(4)
 
-game.play
-puts game.board
+# game.play
+# puts game.board
 
-game.render_board
+# game.render_board
