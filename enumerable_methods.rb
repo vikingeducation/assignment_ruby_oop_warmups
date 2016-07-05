@@ -57,11 +57,32 @@ class Array
 
   def my_inject(*args, &block)
     if args.length == 0
-      start = self.first
+      total = nil
       method = block
     elsif args.length == 1
       if args.first.is_a? Symbol
-        start = self.first
+        total = nil
         method = args.first.to_proc
+      else
+        total = args.first
+        method = block
+      end
+    elsif args.length == 2
+      total = args.first
+      method = args[1].to_proc
+    else
+      raise ArgumentError, "wrong number of arguments"
+    end
+
+    self.my_each do |item|
+      if total == nil
+        total = item
+      else
+        total = method.call(total, item)
+      end
+    end
+
+    total
   end
 end
+
