@@ -171,14 +171,52 @@ def test_rps
   app.play
 end
 
+class Tower
+
+  def initialize(data)
+    @database=data
+  end
+
+  def empty?
+    @database.empty?
+  end
+
+  def top_disc
+    @database.last unless empty?
+  end
+
+  def remove_disk
+    @database.pop
+  end
+
+  def add_disk(disk)
+    @database << disk
+  end
+
+  def valid_move?(to_tower)
+   !empty?&&to_tower.last>self.last
+  end
+
+  def win?
+    @database==[7,5,3]
+  end
+  
+end
+
+#disks (data)
+#empty?
+#top_disc
+#valid_move?
+#remove disk
+#add disk
 
 class Tower_Game
   
   def initialize
     @towers={
-      first: [7,5,3], 
-      second:[],
-      third:[]
+      first: Tower.new([7,5,3]), 
+      second:Tower.new([]),
+      third:Tower.new([])
     }
     welcome
   end
@@ -195,20 +233,18 @@ class Tower_Game
       until check_win
         puts "Grab which one?"
         from=gets.chomp
+        #validate
         puts "Place it where?"
         to=gets.chomp
+        #validate
         move(from,to)
       end
       puts "Congratulations, #{@name}!"
     end
 
     def check_win
-      win_state={
-        first: [], 
-        second: [], 
-        third: [7,5,3]
-      }
-      @towers == win_state
+      win_state=[7,5,3]
+      @towers[third] == win_state
     end
 
     def move(from,to)
