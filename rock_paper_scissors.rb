@@ -6,8 +6,10 @@ class Game
   def initialize
     @options = ["rock", "paper", "scissors"]
     @player_1_choice = nil
+    @player_2_choice = nil
     @computer_choice = nil
     @outcome = nil
+    @number_of_players
   end
 
   def print_welcome
@@ -24,7 +26,21 @@ class Game
 
   end
 
-  def get_player_choice
+  def number_of_players
+
+    puts "Enter the number of players (1 - 2): "
+
+    @number_of_players = gets.chomp.to_i
+
+    if @number_of_players != 1 && @number_of_players != 2
+
+      number_of_players
+
+    end
+
+  end
+
+  def get_player_choice(player)
 
     print "Please enter your choice now: "
 
@@ -32,13 +48,13 @@ class Game
 
     if @options.include?(player_input)
 
-      @player_1_choice = player_input
+      player = player_input
 
     else
 
       puts "Please enter either \"rock\", \"paper\", or \"scissors\""
 
-      get_player_choice
+      get_player_choice(player)
 
     end
 
@@ -52,19 +68,19 @@ class Game
 
   end
 
-  def check_outcome
+  def check_outcome(opponent_choice)
 
-    if @player_1_choice == @computer_choice
+    if @player_1_choice == opponent_choice
 
       @outcome = "Tie"
 
-    elsif @@WINNING_COMBINATIONS[@player_1_choice] == @computer_choice
+    elsif @@WINNING_COMBINATIONS[@player_1_choice] == opponent_choice
 
       @outcome = "Player 1 wins!"
 
     else
 
-      @outcome = "Computer wins!"
+      @outcome = "Player 2 wins!"
 
     end
 
@@ -79,10 +95,16 @@ class Game
   def game_loop
     print_welcome
     print_instructions
+    number_of_players
     until @outcome
-      get_player_choice
-      get_computer_choice
-      check_outcome
+      get_player_choice(@player_1_choice)
+      if @number_of_players == 1
+        get_computer_choice
+        check_outcome(@computer_choice)
+      else
+        get_player_choice(@player_2_choice)
+        check_outcome(@player_2_choice)
+      end
       print_outcome
     end
   end
