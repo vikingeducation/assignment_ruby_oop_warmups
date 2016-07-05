@@ -12,3 +12,9 @@ def fibs(num)
   end
   fibbs
 end
+
+def my_benchmark(num)
+  t = Time.now
+  num.times {yield}
+  Time.now - t
+end
