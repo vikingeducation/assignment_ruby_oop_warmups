@@ -2,7 +2,7 @@ class TowerOfHanoi
   attr_reader :towers, :player
   def initialize(height)
     @height = height
-    @towers = [[], Array.new(height, ""), Array.new(height, "")]
+    @towers = [Tower.new(height,"o"), Tower.new(height, ""), Tower.new(height, "")]
     @player = Player.new
 
     (1..height).each do |i|
@@ -87,4 +87,25 @@ class Display
     ("1".."3").each {|ele| bottom_row += ele.center(height+2)}
     puts "#{bottom_row}"
   end
+end
+
+
+class Towers
+  attr_reader :height
+
+  def initialize(height, fill)
+    @height = height
+    @tower = Array.new(height, fill)
+  end
+
+  def pull_row(row)
+    @tower[row]
+  end
+
+  def print_row
+    print @tower[row].center(@height + 2)
+  end
+
+  
+
 end
