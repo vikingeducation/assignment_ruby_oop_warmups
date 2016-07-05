@@ -6,11 +6,16 @@ class Array
       yield self[index]
       index += 1
     end
+    self
+  end
+
+  def my_map(&block)
+    temp_arr = []
+    self.my_each {|num| temp_arr << yield(num)}
+    print temp_arr, "\n"
   end
 end
 
-[1,2,5].my_each{ |item| puts item}
-
-my_proc = Proc.new{|item| puts item**2}
-
-[1,2,5].my_each(&my_proc)
+[1,2,5].my_map do |item|
+  item ** 2
+end
