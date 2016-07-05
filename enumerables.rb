@@ -35,7 +35,7 @@ class Array
   end
 
   def my_inject(num = 0, &block)
-
+    
     self.my_each {|ele| num = yield(num, ele)}
     num
 
@@ -49,6 +49,11 @@ end
 # p [1,2,3,4].my_select {|num| num.even?}
 # p [1, 2, 3].my_all? {|item| item.is_a? String}
 #
-[1, 1, 1].my_inject(0) do |memo, item|
-  memo + item
-end
+#x = [1, 2, 1].my_inject(0) do |memo, item| 
+ # memo + item
+#end
+# puts x  
+
+
+
+
