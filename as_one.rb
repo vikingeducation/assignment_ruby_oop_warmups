@@ -63,10 +63,16 @@ class Array
     true
   end
 
-  def my_inject(proc = nil)
+  def my_inject(total = 0, proc = nil)
+    total = total
     if block_given?
+      self.my_each { |n| total = yield(total, n) }
     else
+      self.my_each { |n| total = proc.call(total, n)}
     end
+    puts total
   end
 
 end
+
+
