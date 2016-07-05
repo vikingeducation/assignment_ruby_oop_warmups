@@ -18,7 +18,7 @@ end
 #p my_reverse "foo"
 
 def fibonacci(num)
-	result = [1]
+	result = [0]
 	current = 1
 	until num == 1
 		result.push(current)
@@ -27,3 +27,5 @@ def fibonacci(num)
 	end
 	return result
 end
+
+#p fibonacci 5
