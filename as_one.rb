@@ -44,4 +44,14 @@ class Array
     result
   end
 
+  def my_select(proc = nil)
+    result = []
+    if block_given?
+      self.my_each { |n| result << n if yield(n) }
+    else
+      self.my_each { |n| result << n if proc.call(n) }
+    end
+    result
+  end
+
 end
