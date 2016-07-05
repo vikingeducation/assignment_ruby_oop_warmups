@@ -25,15 +25,17 @@ class Game
     puts "Welcome to the Tower of Hanoi"
     gameboard = Board.new(@difficulty)
     loop do
-    gameboard.display
-    loop do
+      gameboard.display
+      break if gameboard.done?
       loop do
-        @player_move = convert_input(get_move)
-        break if validate_input(@player_move)
+        loop do
+          @player_move = convert_input(get_move)
+          break if validate_input(@player_move)
+        end
+        break if gameboard.make_move(@player_move)
       end
-      break if gameboard.make_move(@player_move)
     end
-  end
+    puts "You won!"
   end
 
 
@@ -52,15 +54,21 @@ class Board
   end
 
   def make_move(player_move)
-
-    piece = @board[@player_move[0]-1].pop
-    if piece && (piece < @board[@player_move[1]-1] || @board[@player_move[1]-1].nil?)
-    @board[@player_move[1]-1].push(piece)
-  else 
-    false 
+    start = @board[(player_move[0]) - 1]
+    finish = @board[(player_move[1]) - 1]
+    piece = start[-1]
+    if piece && (finish.empty? || piece < finish[-1])
+      start.pop
+      finish.push(piece)
+    else
+      false
+    end
   end
 
-
+  def done?
+    finish_board = [[],[],[]]
+    finish_board[2] = (1..@tower_size).to_a.reverse
+    @board == finish_board
   end
 
 end
