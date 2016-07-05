@@ -22,17 +22,29 @@ end
 
 
 class Game
-  attr_accessor :player, :choice
+  attr_accessor :player, :choice, :opponent
 
   def initialize
     puts "We're gonna play rock, paper, scissors."
+    puts "Do you want to play another person or the computer? (person/computer)"
+    @opponent = gets.chomp
     @player1 = Player.new
-    @computer = Computer.new
+    if @opponent == "person"
+        @player2 = Player.new
+    elsif @opponent == "computer"
+        @player2 = Computer.new
+    end
   end
 
   def get_hand
-    puts "What do you want to choose?"
+    puts "What do you want to choose Player 1?"
     @player1.hand = gets.chomp.downcase
+  end
+
+  def opp_get_hand
+    100.times {puts "\n"}
+    puts "What do you want to choose Player 2?"
+    @player2.hand = gets.chomp.downcase
   end
 
 def check_round(choice1, choice2)
@@ -68,7 +80,8 @@ def check_round(choice1, choice2)
 
   def play
     self.get_hand
-    self.check_round(@player1.hand, @computer.hand)
+    self.opp_get_hand if @opponent == "person"
+    self.check_round(@player1.hand, @player2.hand)
   end
 
 
