@@ -29,6 +29,11 @@ class Tower
       print disc.size.to_s + " "
     end
   end
+
+  def top
+    return nil if @stack.empty?
+    @stack.last.size
+  end
 end
 
 class Game
@@ -67,6 +72,7 @@ class Game
 
   def render_board
     @towers.each do |tower|
+      print "X "
       tower.render
       puts
     end
@@ -74,5 +80,27 @@ class Game
 
   def game_over?
     false
+  end
+
+  def make_move
+    until 
+    from, to = get_move
+    illegal_move?(from, to)
+  end
+
+  def get_move
+    puts "Enter move in this form: from, to "
+    move = gets.chomp.split(",")
+    [move[0].to_i - 1, move[1].to_i - 1]
+  end
+
+  def illegal_move?(from, to)
+    if @towers[to].top == nil
+      true
+    elsif @towers[from].top > @towers[to].top
+      false
+    else
+      true
+    end
   end
 end
