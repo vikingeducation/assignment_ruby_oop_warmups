@@ -1,14 +1,15 @@
 
 class Platform
 
-	PEGS = [
+
+
+	def initialize
+		@disks
+		@pegs = [
 					[],
 					[],
 					[]
 				]
-
-	def initialize
-		@disks
 	end
 
 	def get_number_disks
@@ -35,13 +36,24 @@ class Platform
 
 		@disks.times do |disk|
 
-			PEGS[0] << Disk.new(disk_number)
+			@pegs[0] << Disk.new(disk_number)
 
 			disk_number -= 1
 
 		end
 
 	end
+
+	def render
+  		puts "Current Board:\n"
+ 		 @disks.times do |level|
+ 		 	@platform.each do |peg|
+  				print peg[level].rjust((@disks + 1), " ")
+  			end
+  			print "\n"
+  		end
+  		print "\n"
+ 	 end
 
 
 end
