@@ -1,13 +1,6 @@
-#class TOH
-  #play
-  #win?
-  #board
-  #board_render
-  #move
-  #valid_move?
+require_relative "tower"
 
 class TOH
-  attr_reader :board
 
   def initialize(height)
     @height = height
@@ -15,19 +8,14 @@ class TOH
   end
 
   def play
+    render_board
     until win?
       get_move
       if valid_move?
         change_board
-        p @board
         render_board
-      else
-        puts "That was not a valid move"
       end
     end
-
-    puts "Congrats, you won!"
-
   end
 
   def get_move
@@ -36,15 +24,14 @@ class TOH
 
     puts "Where would you like to move to?"
     @to_move = gets.chomp.to_i - 1
-
-    [@from_move, @to_move]
   end
 
   def valid_move?
     if !@from_move.between?(0,2) || !@to_move.between?(0,2)
-      puts "input a move betwen 1 and 3!"
+      puts "Move not valid. Input a move betwen 1 and 3!"
       return false
     elsif @board[@from_move].tower.all?{ |i| i == nil }
+      puts "Move not valid. Choose a tower that has pieces."
       return false
     elsif @board[@to_move].tower.all?{ |i| i == nil } || @board[@from_move].get_top_piece < @board[@to_move].get_top_piece
       puts "moved from #{@from_move+1} to #{@to_move+1}"
@@ -54,6 +41,7 @@ class TOH
 
   def win?
     if @board[2].tower == (1..@height).to_a.reverse
+      puts "Congrats, you won!"
       return true
     else
       return false
@@ -64,7 +52,6 @@ class TOH
     moving_piece = @board[@from_move].get_top_piece
     @board[@to_move].add(moving_piece)
     @board[@from_move].remove
-    
   end
 
   def render_board
@@ -76,8 +63,6 @@ class TOH
     @board.each do |tower_obj|
       render_array << tower_obj.tower.reverse
     end
-
-    p render_array
 
     render_array.transpose.each do |trans_tower|
       trans_tower.each do |piece|
@@ -92,41 +77,3 @@ class TOH
   end
 end
 
-class Tower < Array
-  attr_reader :tower
-
-  def initialize(height, start = nil)
-    @height = height
-    start ? start_tower : @tower = [nil] * @height
-  end
-
-  def start_tower
-    @tower = (1..@height).to_a.reverse
-  end
-
-  def get_top_piece
-    @tower.last == nil ? @num_index = @tower.index(nil) - 1 : @num_index = -1
-    @tower[@num_index]
-  end
-
-  def add(piece)
-    get_top_piece
-    nil_index = @tower.index(nil)
-    @tower[nil_index] = piece
-  end
-
-  def remove
-    get_top_piece
-    @tower[@num_index] = nil
-  end
-
-
-end
-
-
-# game = TOH.new(4)
-
-# game.play
-# puts game.board
-
-# game.render_board
