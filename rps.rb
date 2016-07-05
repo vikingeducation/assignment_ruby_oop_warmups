@@ -21,7 +21,7 @@ class Player
   end
 
   def gather_choice
-    puts "Enter your choice"
+    puts "#{@name}, enter your choice"
     choice = gets.strip
     case choice
     when "rock"
@@ -57,9 +57,21 @@ class Game
 
   def play
     assign_players
-    @player_one.get_choice
-    @player_two.get_choice
-    determine_winner
+    quit = false
+
+    until quit
+      @player_one.gather_choice
+      @player_two.gather_choice
+      print_choices
+      determine_winner
+
+      puts "Play again?"
+      choice = gets.chomp
+
+      if choice.downcase != "yes"
+        quit = true
+      end
+    end
   end
 
   def assign_players
@@ -78,13 +90,18 @@ class Game
   end
 
   def determine_winner
-    OPTIONS = {:rock => :scissors, :paper => :rock, :scissors => :paper}
-    if OPTIONS[@player_one.status] == @player_two.status
+    winners = {:rock => :scissors, :paper => :rock, :scissors => :paper}
+    if winners[@player_one.status] == @player_two.status
       puts "#{@player_one.name} wins!"
-    elsif OPTIONS[@player_two.status] == @player_one.status
+    elsif winners[@player_two.status] == @player_one.status
       puts "#{@player_two.name} wins!"
     else
       puts "It was a tie!"
     end
+  end
+
+  def print_choices
+    puts "#{@player_one.name} chose: #{@player_one.status.to_s}."
+    puts "#{@player_two.name} chose: #{@player_two.status.to_s}."
   end
 end
