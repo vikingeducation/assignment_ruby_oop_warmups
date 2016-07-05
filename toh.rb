@@ -10,9 +10,7 @@ class TOH
   attr_reader :board
 
   def initialize(height)
-    @height = height
-    @board = Array.new
-    @board.
+    @board = Tower.new
   end
 
   def play
@@ -44,7 +42,7 @@ class TOH
   def valid_move?
     if !@board[@from_move][0]
       return false
-    elsif @board[@to_move].all?{|i| !i} || @board[@from_move][0] < @board[@to_move][0]
+    elsif @board[@to_move].all?{ |i| i == nil } || @board[@from_move][0] < @board[@to_move][0]
       return true
     end
   end
@@ -54,10 +52,9 @@ class TOH
   end
 
   def change_board
-    moving_piece = @board[@from_move].shift
-    @board[@from_move].unshift(nil)
-    nil_index = @board[@to_move].index(nil)
-    @board[@to_move][nil_index] = moving_piece
+    @board[@to_move].add(@board[@from_move])
+    @board[@from_move].remove
+    
 
   end
 
@@ -72,20 +69,31 @@ class TOH
   end
 end
 
-class Tower
-  def initialize(n)
-    arr = [nil]*n
-    @tower = Array.new(3, arr)
-  end
-  def fill_tower
-    @tower[0] = ((1..height).to_a)
+class Tower < Array
+
+
+  def initialize(height)
+
+    @height = height
+    @tower = [nil] * @height
   end
 
-  def add
-    
+  def start_tower
+    @tower = (1..@height).to_a.reverse
+  end
+
+  def get_top_piece
+    @num_index = @tower.index(nil) - 1
+    @tower[num_index]
+  end
+
+  def add(piece)
+    nil_index = @tower.index(nil)
+    @tower[nil_index] = piece
   end
 
   def remove
+    @tower[@num_index] = nil
   end
 
 
