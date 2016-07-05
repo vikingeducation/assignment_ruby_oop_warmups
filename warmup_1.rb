@@ -16,3 +16,14 @@ def my_reverse(string)
 end
 
 #p my_reverse "foo"
+
+def fibonacci(num)
+	result = [1]
+	current = 1
+	until num == 1
+		result.push(current)
+		current += result[result.length-2]
+		num -= 1
+	end
+	return result
+end
