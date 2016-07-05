@@ -1,3 +1,5 @@
+require 'pry'
+
 class TowerOfHanoi
 
 #instance variables: 
@@ -35,13 +37,14 @@ class TowerOfHanoi
     # multiply integer of disc by letter o
     # final line use left-justify and center-justify methods
     # string.ljust(line-width), rjust
-    counter = @first_rod.length
-    line_width = 60
-    while counter > 0
-        # if @board[0][counter] == nil
-      col1 = "#{"o" * @board[0][counter]}"
-      col2 = "#{"o" * @board[1][counter]}"
-      col3 = "#{"o" * @board[2][counter]}"
+    counter = @board.map(&:length).max
+    line_width = 40
+    while counter >= 0
+
+
+      col1 = "#{"o" * (@board[0][counter] || 0)}"
+      col2 = "#{"o" * (@board[1][counter] || 0)}"
+      col3 = "#{"o" * (@board[2][counter] || 0)}"
       puts col1.ljust(line_width/3) + col2.center(line_width/3) + col3.rjust(line_width/3)
       counter -= 1
     end
