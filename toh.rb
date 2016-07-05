@@ -10,6 +10,7 @@ class TOH
   attr_reader :board
 
   def initialize(height)
+    @height = height
     @board = [Tower.new(height, true), Tower.new(height), Tower.new(height)]
   end
 
@@ -40,8 +41,10 @@ class TOH
   end
 
   def valid_move?
-    if @board[@from_move].tower.all?{ |i| i == nil }
-      puts "invalid move!"
+    if !@from_move.between?(0,2) || !@to_move.between?(0,2)
+      puts "input a move betwen 1 and 3!"
+      return false
+    elsif @board[@from_move].tower.all?{ |i| i == nil }
       return false
     elsif @board[@to_move].tower.all?{ |i| i == nil } || @board[@from_move].get_top_piece < @board[@to_move].get_top_piece
       puts "moved from #{@from_move+1} to #{@to_move+1}"
@@ -50,7 +53,11 @@ class TOH
   end
 
   def win?
-    
+    if @board[2].tower == (1..@height).to_a.reverse
+      return true
+    else
+      return false
+    end
   end
 
   def change_board
@@ -67,22 +74,21 @@ class TOH
     render_array = []
 
     @board.each do |tower_obj|
-      render_array << tower_obj.tower
+      render_array << tower_obj.tower.reverse
     end
 
     p render_array
 
     render_array.transpose.each do |trans_tower|
-      trans_tower.each do |piece| 
-        if piece.is_a?(Integer)
-          print "x" * piece
-        else 
-          print " " * @height
+      trans_tower.each do |piece|
+        if piece
+          print "x" * piece + (" " * (1+@height-piece))
+        else
+          print " " * (@height+1)
         end
       end
       print "\n"
     end
-
   end
 end
 
