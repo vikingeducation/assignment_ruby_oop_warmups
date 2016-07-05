@@ -1,12 +1,14 @@
 
+require_relative 'player.rb'
+
 class Game
 
   @@WINNING_COMBINATIONS = { "rock" => "scissors", "paper" => "rock", "scissors" => "paper" }
 
   def initialize
     @options = ["rock", "paper", "scissors"]
-    @player_1_choice = nil
-    @player_2_choice = nil
+    @player_1 = Player.new
+    @player_2 = nil
     @computer_choice = nil
     @outcome = nil
     @number_of_players
@@ -48,7 +50,7 @@ class Game
 
     if @options.include?(player_input)
 
-      player = player_input
+      player.choice = player_input
 
     else
 
@@ -70,11 +72,11 @@ class Game
 
   def check_outcome(opponent_choice)
 
-    if @player_1_choice == opponent_choice
+    if @player_1.choice == opponent_choice
 
       @outcome = "Tie"
 
-    elsif @@WINNING_COMBINATIONS[@player_1_choice] == opponent_choice
+    elsif @@WINNING_COMBINATIONS[@player_1.choice] == opponent_choice
 
       @outcome = "Player 1 wins!"
 
@@ -97,13 +99,14 @@ class Game
     print_instructions
     number_of_players
     until @outcome
-      get_player_choice(@player_1_choice)
+      get_player_choice(@player_1)
       if @number_of_players == 1
         get_computer_choice
         check_outcome(@computer_choice)
       else
-        get_player_choice(@player_2_choice)
-        check_outcome(@player_2_choice)
+        @player_2 = Player.new
+        get_player_choice(@player_2)
+        check_outcome(@player_2.choice)
       end
       print_outcome
     end
