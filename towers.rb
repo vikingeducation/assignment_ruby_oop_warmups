@@ -1,14 +1,14 @@
 class TowerOfHanoi
   attr_reader :towers, :player
   def initialize(height)
-    @towers = [[], [], []]
+    @height = height
+    @towers = [[], Array.new(height, ""), Array.new(height, "")]
     @player = Player.new
 
     (1..height).each do |i|
-      @towers[0] << (i * "o")
+      @towers[0] << ("o" * i)
     end
 
-    @towers[0] = @towers[0].reverse
   end
 
   #play
@@ -17,10 +17,11 @@ class TowerOfHanoi
     #intro/greeting, show the board
     Display.intro
     #get move from player
-    move = player.get_move
-    
+    # move = player.get_move
+    Display.render(@towers, @height)
+    # print_board(@towers, @height)
     #validate move
-    
+
     #check for victory? or quit
 
     #
@@ -49,7 +50,7 @@ class Player
   def get_move
     puts "Enter the initial piece position (# of column):  "
     start_pos = gets.strip
-    
+
     puts "Enter destination position for piece (# of column): "
 
     end_pos = gets.strip
@@ -75,12 +76,15 @@ class Display
   def self.intro
     puts "Welcome to Tower Of Hanoi!"
     puts "To quit input q"
-    render
   end
 
 
-  #render/display
-  def self.render(towers)
-    
+  # render/display
+  def self.render(towers, height)
+    height.times {|i| puts "#{towers[0][i].center(height + 2)}#{towers[1][i].center(height + 2)}#{towers[2][i].center(height + 2)}" }
+    puts "#{(("-"*height).center(height+2))*3}"
+    bottom_row = ""
+    ("1".."3").each {|ele| bottom_row += ele.center(height+2)}
+    puts "#{bottom_row}"
   end
 end
