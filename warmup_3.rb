@@ -49,13 +49,37 @@ class Array
 
 	end
 
+	def my_inject(value, &block)
+
+		return_value = value
+
+		self.my_each do |element|
+
+			return_value = block.call(return_value, element)
+
+		end
+
+		return_value
+
+	end
+
 end
 
 
 
-arry = [1,3,4,5]
+#arry = ["foo", "bar"]
 
-p arry.my_all? { |num| num.class == Fixnum }
+=begin
+reduced = arry.my_inject("") do |memo, item|
+
+	memo + item
+
+end
+=end
+
+#p reduced
+
+#p arry.my_all? { |num| num.class == Fixnum }
 
 #p arry.my_select{|num| num.even?}
 
