@@ -18,3 +18,32 @@ def my_benchmark(num)
   num.times {yield}
   Time.now - t
 end
+
+
+class Array
+
+  def my_each(proc_argument=nil)
+
+    if block_given?
+
+      self.length.times do |n|
+        yield (self[n])
+      end
+
+    else
+      self.length.times do |n|
+        proc_argument.call(self[n])
+      end
+    end
+
+  end
+end
+
+  [1,2,5].my_each{ |item| puts item }
+  # 1
+  # 2
+  # 5
+  #=> [1,2,5]
+  my_proc = Proc.new{|item| puts item**2}
+  #=> #<Proc:0x007fbb6b9c1cc8@(irb):2>
+  [1,2,5].my_each(my_proc)
