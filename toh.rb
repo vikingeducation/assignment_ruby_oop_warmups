@@ -54,17 +54,32 @@ class TOH
   end
 
   def change_board
-    @board[@to_move].add(@board[@from_move])
+    moving_piece = @board[@from_move].get_top_piece
+    @board[@to_move].add(moving_piece)
     @board[@from_move].remove
     
-
   end
 
   def render_board
     puts "Game Board"
     puts "------------"
-    @board.transpose.each do |tower|
-      tower.each {|spot| spot ? (print "x"*spot) : (print " "*@height)}
+
+    render_array = []
+
+    @board.each do |tower_obj|
+      render_array << tower_obj.tower
+    end
+
+    p render_array
+
+    render_array.transpose.each do |trans_tower|
+      trans_tower.each do |piece| 
+        if piece.is_a?(Integer)
+          print "x" * piece
+        else 
+          print " " * @height
+        end
+      end
       print "\n"
     end
 
@@ -84,16 +99,18 @@ class Tower < Array
   end
 
   def get_top_piece
-    @num_index = @tower.index(nil) - 1
-    @tower[num_index]
+    @tower.last == nil ? @num_index = @tower.index(nil) - 1 : @num_index = -1
+    @tower[@num_index]
   end
 
   def add(piece)
+    get_top_piece
     nil_index = @tower.index(nil)
     @tower[nil_index] = piece
   end
 
   def remove
+    get_top_piece
     @tower[@num_index] = nil
   end
 
