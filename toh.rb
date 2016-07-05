@@ -3,8 +3,8 @@ require 'pry'
 class Game
 
   def initialize(num)
-      @difficulty = num
-      @@player_move = []
+    @difficulty = num
+    @@player_move = []
   end
 
   def get_move
@@ -49,8 +49,23 @@ class Board
     @board[0] = (1..@tower_size).to_a.reverse
   end
 
+  def spaced(piece)
+    piece.ljust(@tower_size+2)
+  end
+
   def display
-    p @board
+    @tower_size.downto 0 do |h|
+      3.times do |n|
+        if @board[n][h]
+          print spaced('o' * @board[n][h])
+        else
+          print spaced(' ')
+        end
+      end
+      puts
+    end
+    3.times { |n| print spaced((n+1).to_s)}
+    puts
   end
 
   def make_move(player_move)
