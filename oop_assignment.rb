@@ -194,7 +194,8 @@ class Tower
   end
 
   def valid_move?(to_tower)
-   !empty?&&to_tower.last>self.last
+    return !empty? && (to_tower.last) > last
+    return false if to_tower.last == nil
   end
 
   def win?
@@ -214,9 +215,9 @@ class Tower_Game
   
   def initialize
     @towers={
-      first: Tower.new([7,5,3]), 
-      second:Tower.new([]),
-      third:Tower.new([])
+      'first' => Tower.new([7,5,3]), 
+      'second' => Tower.new([]),
+      'third' => Tower.new([])
     }
     welcome
   end
@@ -231,25 +232,37 @@ class Tower_Game
 
     def play
       until check_win
-        puts "Grab which one?"
-        from=gets.chomp
-        #validate
-        puts "Place it where?"
-        to=gets.chomp
-        #validate
-        move(from,to)
+        begin
+          get_choices
+          check_choices
+          execute_choices
+        rescue StandardError
+          puts "Invalid choices. Try again."
+          retry
+        end
       end
       puts "Congratulations, #{@name}!"
     end
 
-    def check_win
-      win_state=[7,5,3]
-      @towers[third] == win_state
+    def get_choices
+      puts "Grab which one?"
+      @from=gets.chomp
+      puts "Place it where?"
+      @to=gets.chomp
     end
 
-    def move(from,to)
-      @towers[to] << @towers[from].pop
+    def check_choices
+      raise if !(@towers[@from].valid_move? @towers[@to])
     end
+
+    def execute_choices
+      @towers[@to].add_disk(@towers[@from].remove_disk)
+    end
+
+    def check_win
+      @towers['third'].win?
+    end
+
 end
 
 def test_toh
