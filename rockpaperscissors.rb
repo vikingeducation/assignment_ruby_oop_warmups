@@ -7,7 +7,7 @@ class RockPaperScissors
   def initialize
     @player = Player.new
     @computer = ComputerPlayer.new
-    @computer_move = ""
+    
   end
 
   def play
@@ -18,24 +18,26 @@ class RockPaperScissors
     while win_flag.nil?
       win_flag = player_win?
       if win_flag
-        puts "Great job you win, computer guessed #{@computer_move}"
+        puts "Great job you win, computer guessed #{@computer.current_move}"
       elsif win_flag == false
-        puts "You suck, computer wins with #{@computer_move}..."
+        puts "You suck, computer wins with #{@computer.current_move}..."
       else
         puts "Guess again, either rock, paper, or scissor"
       end
     end
+    @player.current_move = nil
+
   end
 
 
 
   def player_win?
-    @computer_move = @computer.guess
-    player_move = @player.guess
-    # binding.pry
-    if OPTIONS[player_move] == @computer_move
+    @computer.guess
+    
+    @player.guess
+    if OPTIONS[@player.current_move] == @computer.current_move
       true
-    elsif player_move == @computer_move
+    elsif @player.current_move == @computer.current_move
       puts "It's a tie, try again..."
     else
       false
@@ -46,24 +48,30 @@ end
 
 
 class ComputerPlayer
-
+  attr_reader :current_move
+  def initialize
+    @current_move = nil
+  end
+  
   def guess
-    computer_move = %w[rock paper scissor].sample
-
-    computer_move
+    @current_move = %w[rock paper scissor].sample
   end
 end
 
 class Player
+  attr_accessor :current_move
+  def initialize
+    @current_move = nil
+  end
 
   def guess
     puts "Enter your play"
-    player_move = nil
-    binding.pry
-    until valid_move? player_move
-      player_move = gets.chomp
+    move = nil
+    until valid_move? move
+      move = gets.chomp
     end
-    player_move
+    @current_move = move
+  
   end
 
   def valid_move? (move)
