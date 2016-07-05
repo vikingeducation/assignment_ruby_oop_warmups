@@ -18,7 +18,7 @@ def fibs(n)
   return fib_array
 end
 
-puts fibs(10)
+#puts fibs(10)
 
 def my_benchmark(n, &block)
   time1 = Time.now
@@ -27,5 +27,22 @@ def my_benchmark(n, &block)
   end
 
   Time.now-time1
+end
+
+
+class Array
+  def my_each(my_proc)
+    self.length.times do |i|
+      my_proc.call(self[i])
+    end
+  end
+
+  def my_map(my_proc)
+    array = []
+  end
 
 end
+
+my_proc = Proc.new{|item| puts item ** 2}
+
+[1,2,5].my_each(my_proc)
