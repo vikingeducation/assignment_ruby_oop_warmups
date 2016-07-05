@@ -173,9 +173,13 @@ end
 
 
 class Tower_Game
+  
   def initialize
-    @towers={first: [7,5,3], second:[],third:[]}
-    @playing=true
+    @towers={
+      first: [7,5,3], 
+      second:[],
+      third:[]
+    }
     welcome
   end
 
@@ -188,20 +192,27 @@ class Tower_Game
     end
 
     def play
-      while @playing
-        puts "Please enter your tower of choice:"
-        choice=gets.chomp
-        @buffer=@towers[choice.to_sym].pop
-        puts "Please enter your tower of choice:"
-        choice=gets.chomp
-        @towers[choice.to_sym] << @buffer
-        check_win
+      until check_win
+        puts "Grab which one?"
+        from=gets.chomp
+        puts "Place it where?"
+        to=gets.chomp
+        move(from,to)
       end
       puts "Congratulations, #{@name}!"
     end
 
     def check_win
-      win_state=
+      win_state={
+        first: [], 
+        second: [], 
+        third: [7,5,3]
+      }
+      @towers == win_state
+    end
+
+    def move(from,to)
+      @towers[to] << @towers[from].pop
     end
 end
 
