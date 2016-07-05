@@ -10,8 +10,15 @@
 class RockPaperScissors
 
 	OPTIONS = {
-		
+		'rock' => 'paper',
+    'paper' => 'scissors',
+    'scissors' => 'rock'
 	}
+
+  # values beat keys, check computer decision against
+  # if OPTIONS[@human_decision] == @computer_decision ; humans lost
+  # if @human == @comp ; tie message
+  # otherwise ; win
 
 	def initialize(players)
 		@players = players
@@ -22,6 +29,7 @@ class RockPaperScissors
 			puts "Choose your weapon:"
 			@user_decision = gets.chomp.downcase
 			@computer_decision = ["rock", "paper", "scissors"][rand(3)]
+      puts "Computer chooses #{@computer_decision}."
 			compare(@user_decision, @computer_decision)
 			puts "Play again?"
 			if gets.chomp.downcase == "y"
@@ -45,28 +53,23 @@ class RockPaperScissors
 	end
 
 	def compare(player1, player2)
-
-		if player1 == player2
-			puts "It was a tie!"
-		elsif player1 == "rock"
-			if player2 == "paper"
-				puts "Player2 wins!"
-			elsif player2 == "scissors"
-				puts "You win!"
-			end
-		elsif player1 == "paper"
-			if player2 == "scissors"
-				puts "Player2 wins!"
-			elsif player2 == "rock"
-				puts "You win!"
-			end
-		elsif player1 == "scissors"
-			if player2 == "rock"
-				puts "Player2 wins!"
-			elsif player2 == "paper"
-				puts "You win!"
-			end
-		end
+    if @players == 1
+      if player1 == player2
+      puts "It was a tie!"
+  		elsif OPTIONS[player1] == player2
+        puts "You lose!"
+      elsif OPTIONS[player1] != player2
+        puts "You win!"
+  		end
+    elsif @players == 2
+      if player1 == player2
+      puts "It was a tie!"
+      elsif OPTIONS[player1] == player2
+        puts "Player 2 wins!"
+      elsif OPTIONS[player1] != player2
+        puts "Player 1 wins!"
+      end
+    end
 	end
 
 end
