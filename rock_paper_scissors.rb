@@ -1,54 +1,70 @@
-
 class Player
-attr_accessor :choice
 
-  def initialize(choice)
-    @choice = choice
+  CHOICES = ['rock', 'paper', 'scissors']
+
+  attr_accessor :choice
+
+  def initialize
+    @choice = nil
   end
 
   def get_choice
     puts "What is your choice"
-    player_choice = gets.chomp
-    
+    @choice = gets.chomp
+  end
+
+  def get_random_choice
+    @choice=CHOICES.sample
   end
 
 end
 
 class Game
 
+  def initialize
+    @players = 0
+  end
+
+  def compare_choices(choice1, choice2)
+    return 'No one!' if choice1 == 'rock' && choice2 == 'rock'
+    return 'Player Two!' if choice1 == 'rock' && choice2 == 'paper'
+    return 'Player One!' if choice1 == 'rock' && choice2 == 'scissors'
+    return 'No one!' if choice1 == 'scissors' && choice2 == 'scissors'
+    return 'Player One!' if choice1 == 'scissors' && choice2 == 'paper'
+    return 'Player Two!' if choice1 == 'scissors' && choice2 == 'rock'
+    return 'No one!' if choice1 == 'paper' && choice2 == 'paper'
+    return 'Player One!' if choice1 == 'paper' && choice2 == 'rock'
+    return 'Player Two!' if choice1 == 'paper' && choice2 == 'scissors'
+  end
+
+
+
   def play
-    choices_array = ['rock', 'paper', 'scissors']
 
     puts "Welcome to rock paper scissors"
     puts "How many people will be playing today?"
-    num_players = gets.chomp.to_i
-    puts "What is your choice"
-
-    choice = gets.chomp
-
-    player1 = Player.new(choice)
-    if num_players == 1
-      player2 = Player.new(choices_array.sample)
+    @players = gets.chomp.to_i
+    player1 = Player.new
+    player1.get_choice
+    if @players == 1
+      player2 = Player.new
+      player2.get_random_choice
       puts "computer chose #{player2.choice}"
     else
-      puts "What is your choice player two?"
-      choice = gets.chomp
-      player2 = Player.new(choice)
+      player2 = Player.new
+      player2.get_choice
     end
 
+    winner = compare_choices(player1.choice, player2.choice)
 
-    winner = 'No one!' if player1.choice == 'rock' && player2.choice == 'rock'
-    winner = 'Player Two!' if player1.choice == 'rock' && player2.choice == 'paper'
-    winner = 'Player One!' if player1.choice == 'rock' && player2.choice == 'scissors'
-    winner = 'No one!' if player1.choice == 'scissors' && player2.choice == 'scissors'
-    winner = 'Player One!' if player1.choice == 'scissors' && player2.choice == 'paper'
-    winner = 'Player Two!' if player1.choice == 'scissors' && player2.choice == 'rock'
-    winner = 'No one!' if player1.choice == 'paper' && player2.choice == 'paper'
-    winner = 'Player One!' if player1.choice == 'paper' && player2.choice == 'rock'
-    winner = 'Player Two!' if player1.choice == 'paper' && player2.choice == 'scissors'
+    winner = 'Computer' if @players == 1 && winner == 'Player Two!'
+
+
 
     puts "#{winner} wins"
 
   end
 
 end
+
+Game.new.play
