@@ -2,7 +2,7 @@
 #   ask for move
 #   try to make the move
 #   if move didn't work, print error
-
+require 'pry'
 class Disc
   attr_reader :size
 
@@ -14,6 +14,7 @@ end
 class Tower
 
   def initialize(height)
+    @@winning_height ||= height
     @stack = []
     add_discs(height)
   end
@@ -34,6 +35,22 @@ class Tower
     return nil if @stack.empty?
     @stack.last.size
   end
+
+  def self.move(from, to)
+    to.push(from.pop)
+  end
+
+  def pop
+    @stack.pop
+  end
+
+  def push(item)
+    @stack << item
+  end
+
+  def won?
+    @stack.size == @@winning_height
+  end
 end
 
 class Game
@@ -49,6 +66,7 @@ class Game
       render_board
       make_move
     end
+    render_board
     puts "Congratulations! You won! You are amazing!"
   end
 
@@ -67,6 +85,7 @@ class Game
   end
 
   def setup_board
+    @towers = []
     @towers << Tower.new(@height) << Tower.new(0) << Tower.new(0)
   end
 
@@ -79,13 +98,17 @@ class Game
   end
 
   def game_over?
-    false
+    @towers[1..2].any? { |tower| tower.won? }
   end
 
   def make_move
-    until 
     from, to = get_move
-    illegal_move?(from, to)
+    while illegal_move?(from, to)
+      puts "That was an illegal move!"
+      render_board
+      from, to = get_move
+    end
+    Tower.move(@towers[from], @towers[to])
   end
 
   def get_move
@@ -95,12 +118,13 @@ class Game
   end
 
   def illegal_move?(from, to)
+    return true if @towers[from].top.nil?
     if @towers[to].top == nil
-      true
-    elsif @towers[from].top > @towers[to].top
       false
-    else
+    elsif @towers[from].top > @towers[to].top
       true
+    else
+      false
     end
   end
 end
