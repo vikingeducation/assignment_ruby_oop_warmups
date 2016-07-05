@@ -37,13 +37,11 @@ class Array
     end
 
   end
-end
 
-  [1,2,5].my_each{ |item| puts item }
-  # 1
-  # 2
-  # 5
-  #=> [1,2,5]
-  my_proc = Proc.new{|item| puts item**2}
-  #=> #<Proc:0x007fbb6b9c1cc8@(irb):2>
-  [1,2,5].my_each(my_proc)
+  def my_map
+    result = []
+    self.my_each { |n| result << yield(n) }
+    result
+  end
+
+end
