@@ -194,12 +194,15 @@ class Tower
   end
 
   def valid_move?(to_tower)
-    return !empty? && (to_tower.last) > last
-    return false if to_tower.last == nil
+    return !empty? && (to_tower.empty?||((to_tower.last) > last))
   end
 
   def win?
     @database==[7,5,3]
+  end
+
+  def print_tower
+    print @database
   end
   
 end
@@ -245,6 +248,7 @@ class Tower_Game
     end
 
     def get_choices
+      render
       puts "Grab which one?"
       @from=gets.chomp
       puts "Place it where?"
@@ -261,6 +265,12 @@ class Tower_Game
 
     def check_win
       @towers['third'].win?
+    end
+
+    def render
+      @towers.each do |k,v| 
+        puts "#{k}: #{v.print_tower}"
+      end
     end
 
 end
