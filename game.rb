@@ -3,10 +3,10 @@ require_relative 'player.rb'
 
 class Game
 
-  @@WINNING_COMBINATIONS = { "rock" => "scissors", "paper" => "rock", "scissors" => "paper" }
+  WINNING_COMBINATIONS = { "rock" => "scissors", "paper" => "rock", "scissors" => "paper" }
+  OPTIONS = ["rock", "paper", "scissors"]
 
   def initialize
-    @options = ["rock", "paper", "scissors"]
     @player_1 = Player.new
     @player_2 = nil
     @computer_choice = nil
@@ -46,13 +46,13 @@ class Game
 
     print "Please enter your choice now: "
 
-    player_input = gets.chomp.downcase
+    player.make_choice
 
-    if @options.include?(player_input)
+  end
 
-      player.choice = player_input
+  def validate_player_choice(player)
 
-    else
+    unless OPTIONS.include?(player.choice)
 
       puts "Please enter either \"rock\", \"paper\", or \"scissors\""
 
@@ -64,9 +64,9 @@ class Game
 
   def get_computer_choice
 
-    puts "The computer is choosing now"
+    puts "Player 2 is choosing now"
 
-    @computer_choice = @options.sample
+    @computer_choice = OPTIONS.sample
 
   end
 
@@ -76,7 +76,7 @@ class Game
 
       @outcome = "Tie"
 
-    elsif @@WINNING_COMBINATIONS[@player_1.choice] == opponent_choice
+    elsif WINNING_COMBINATIONS[@player_1.choice] == opponent_choice
 
       @outcome = "Player 1 wins!"
 
@@ -100,12 +100,14 @@ class Game
     number_of_players
     until @outcome
       get_player_choice(@player_1)
+      validate_player_choice(@player_1)
       if @number_of_players == 1
         get_computer_choice
         check_outcome(@computer_choice)
       else
         @player_2 = Player.new
         get_player_choice(@player_2)
+        validate_player_choice(@player_2)
         check_outcome(@player_2.choice)
       end
       print_outcome
