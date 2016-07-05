@@ -54,4 +54,15 @@ class Array
     result
   end
 
+  def my_all?(proc = nil)
+    if block_given?
+      self.my_each { |n| return false unless yield(n) }
+    else
+      self.my_each { |n| return false unless proc.call(n) }
+    end
+    true
+  end
+
+  def my_inject(proc = nil)
+
 end
