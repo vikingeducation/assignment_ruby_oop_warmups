@@ -1,8 +1,3 @@
-# until winning condition
-#   ask for move
-#   try to make the move
-#   if move didn't work, print error
-require 'pry'
 class Disc
   attr_reader :size
 
@@ -36,20 +31,21 @@ class Tower
     @stack.last.size
   end
 
+  def won?
+    @stack.size == @@winning_height
+  end
+
   def self.move(from, to)
     to.push(from.pop)
   end
 
+  
   def pop
     @stack.pop
   end
 
   def push(item)
     @stack << item
-  end
-
-  def won?
-    @stack.size == @@winning_height
   end
 end
 
@@ -67,7 +63,7 @@ class Game
       make_move
     end
     render_board
-    puts "Congratulations! You won! You are amazing!"
+    puts "Congratulations! You won, #{@name}! You are amazing!"
   end
 
   def get_name
