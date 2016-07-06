@@ -39,7 +39,6 @@ class Tower
     to.push(from.pop)
   end
 
-  
   def pop
     @stack.pop
   end
