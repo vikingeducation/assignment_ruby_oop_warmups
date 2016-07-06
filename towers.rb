@@ -4,23 +4,25 @@ class TowerOfHanoi
     @height = height
     @towers = [Tower.new(height,"o"), Tower.new(height, ""), Tower.new(height, "")]
     @player = Player.new
-
-    (1..height).each do |i|
-      @towers[0] << ("o" * i)
-    end
-
   end
 
   #play
   def play
 
     #intro/greeting, show the board
-    Display.intro
-    #get move from player
-    # move = player.get_move
-    Display.render(@towers, @height)
-    # print_board(@towers, @height)
+    Display.intro(@towers, @height)
+
+    next_move = nil
     #validate move
+    until valid_move?(next_move)
+      #get move from player
+      next_move = player.get_move
+
+
+    #
+    #move piece
+    #
+    Display.render(@towers, @height)
 
     #check for victory? or quit
 
@@ -31,6 +33,7 @@ class TowerOfHanoi
 
   def valid_move?(move)
     #check that the initial piece is smaller than the target piece
+
   end
 
   def victory?
@@ -50,7 +53,7 @@ class Player
   def get_move
     puts "Enter the initial piece position (# of column):  "
     start_pos = gets.strip
-
+    return "q" if start_pos == "q"
     puts "Enter destination position for piece (# of column): "
 
     end_pos = gets.strip
@@ -73,15 +76,16 @@ end
 class Display
 
   #greetings/salutations
-  def self.intro
+  def self.intro(towers, height)
     puts "Welcome to Tower Of Hanoi!"
     puts "To quit input q"
+    render(towers, height)
   end
 
 
   # render/display
   def self.render(towers, height)
-    height.times {|i| puts "#{towers[0][i].center(height + 2)}#{towers[1][i].center(height + 2)}#{towers[2][i].center(height + 2)}" }
+    height.times {|i| towers[0].print_row(i) + towers[1].print_row(i) + towers[2] }
     puts "#{(("-"*height).center(height+2))*3}"
     bottom_row = ""
     ("1".."3").each {|ele| bottom_row += ele.center(height+2)}
@@ -106,6 +110,19 @@ class Towers
     print @tower[row].center(@height + 2)
   end
 
-  
+  def empty_space
+    target_block = nil
+    empty = nil
+    return empty_row, target_block unless @tower.any? ""
 
+    @tower.each_with_index do |ele, i|
+      empty_row, target_block = (i - 1), ele unless ele == "" }
+    end
+
+    empty_row, target_block
+  end
+
+  def first_block
+
+  end
 end
