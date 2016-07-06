@@ -276,10 +276,35 @@ class Tower_Game
 
     def get_choices
       render
-      puts "Grab which one?"
-      @from=gets.chomp
-      puts "Place it where?"
-      @to=gets.chomp
+      loop do
+        puts "Grab which one?"
+        @from=gets.chomp
+        redo if check_input(@from)
+        puts "Place it where?"
+        @to=gets.chomp
+        redo if check_input(@to)
+        break
+      end
+    end
+
+    def check_input(input)
+      check_quit(input)
+      return true if check_render(input)
+      return false
+    end
+
+    def check_render(input)
+      if !!/\Arender\z/i.match(input)
+        render
+        return true
+      end
+    end
+
+    def check_quit(input)
+      if !!/\Aq\z/i.match(input) 
+        puts "Thanks for playing!"
+        abort
+      end
     end
 
     def check_choices
