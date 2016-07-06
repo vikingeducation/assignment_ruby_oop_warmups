@@ -1,10 +1,11 @@
 
 class Disk
 
+  attr_accessor :size, :image
+
   def initialize(size)
     @size = size
-    @image = "o"*@size
-
+    @image = "O" * @size
   end
 
 end
