@@ -1,12 +1,12 @@
 require 'time'
 require 'pry'
+# require 'byebug'
 
 def my_benchmark number_of_times
+  # byebug
+  # binding.pry
   begin_time = Time.now
   number_of_times.times { yield }
   end_time = Time.now
-  binding.pry
   (begin_time - end_time) / number_of_times
 end
-
-puts my_benchmark(100) {rand(100)}
