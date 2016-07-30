@@ -17,7 +17,6 @@ class Game
 				arr << user_input << @ai.rand_output
 				win_or_lose?(arr)
 				turn
-				p arr
 			end
 		end
 	end
@@ -52,7 +51,7 @@ class Game
 	end
 
 	def turn
-		puts "Your turn>"
+		puts "Your input"
 	end
 
 end
