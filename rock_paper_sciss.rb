@@ -2,7 +2,6 @@ class Game
 	def initialize
 		@player = Player.new("Farruh")
 		@ai = Oponent.new("AI")
-		@friend = Oponent.new("Drug")
 	end
 
 	def play
@@ -32,16 +31,6 @@ class Game
 			puts "Game is draw.."
 		else
 			puts "Invlalid entry"
-		end
-	end
-
-	def ai_or_human?
-		puts "Type number of players: 1 or 2"
-		players = gets.chomp
-		if players == "1"
-			true
-		elsif players == "2"
-			false
 		end
 	end
 
