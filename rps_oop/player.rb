@@ -2,7 +2,7 @@ class Player
 
   def initialize
 
-    @health = 100
+    @health = 50
 
   end
 

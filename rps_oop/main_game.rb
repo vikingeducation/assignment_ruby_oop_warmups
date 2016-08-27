@@ -5,7 +5,6 @@ class MainGame
   require "./scissors"
   require "./player"
   require "./human"
-  require "./computer"
 
 #----------
 
@@ -18,7 +17,7 @@ class MainGame
     puts "*                                                              *"
     puts "*   This ain't your mommy's Paper, Rock, Scissors.  Around     *"
     puts "*   here, we fight to the death.  You and your opponent each   *"
-    puts "*   have 100 points of health.  No health potions allowed.     *"
+    puts "*   have 50 points of health.  No health potions allowed.      *"
     puts "*   If you don't have the stomach for mortal combat, you may   *"
     puts "*   enter 'q' between rounds to surrender.                     *"
     puts "*                                                              *"
@@ -79,7 +78,7 @@ class MainGame
 
 #----------
 
-  def fight#(player_weapon, ai_weapon)
+  def fight
 
     if @player_weapon == @ai_weapon
       puts "\nIt's a clash of the #{@player_weapon}s!  Both fighters draw blood!"
@@ -103,7 +102,7 @@ class MainGame
 
 #----------
 
-  def check_for_pulse
+  def check_for_pulse #move to player class?
 
     player_dead = @human_player.dead?
     computer_dead = @ai_character.dead?
@@ -127,7 +126,6 @@ class MainGame
 
   def display_game_status(round)
 
-    #puts "\n****************************************************************************"
     puts "\nAt the end of round #{round}, the combatants lick their wounds."
     puts "#{@player1}'s health is currently: #{@human_player.health}."
     puts "#{@player2}'s health is currently: #{@ai_character.health}."
@@ -146,9 +144,6 @@ class MainGame
 
     until i == 20
 
-      #until player_weapon == "rock" || player_weapon == "paper" || player_weapon == "scissors"
-      #  player_weapon = choose_player_weapon
-      #end
       choose_player_weapon
       choose_ai_weapon
       puts "\nRound #{i}!  Fight!!!!!!"
