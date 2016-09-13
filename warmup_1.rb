@@ -22,3 +22,22 @@ end
 
 puts my_reverse("Timothy")
 puts my_reverse("Scott")
+
+# ---------------------------------------
+# Fibonacci
+# fibs(number)
+# number = number of elements of fibonacci sequence
+# fibs(5)
+# GOAL [0, 1, 1, 2, 3]
+
+def fibs(number)
+  sequence = [0, 1]
+  number -= 2
+  number.times do
+    sum = sequence[-1] + sequence[-2]
+    sequence << sum
+  end
+  sequence
+end
+
+p fibs(5)
