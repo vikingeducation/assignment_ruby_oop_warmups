@@ -18,13 +18,13 @@ end
 #returns nil at the end instead of the array
 
 
-[1,2,5].my_each{ |item| puts item }
+#[1,2,5].my_each{ |item| puts item }
 # 1
 # 2
 # 5
 #=> [1,2,5]
-my_proc = Proc.new{|item| puts item**2}
-[1,2,5].my_each(&my_proc)
+#my_proc = Proc.new{|item| puts item**2}
+#[1,2,5].my_each(&my_proc)
 # 1
 # 4
 # 25
