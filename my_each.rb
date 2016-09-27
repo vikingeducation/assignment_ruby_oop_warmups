@@ -1,6 +1,6 @@
 class Array
 
- def my_each(proc_arg = 0)
+ def my_each(proc_arg = self)
   if block_given?
     n = 0
     while n < self.length
@@ -10,8 +10,8 @@ class Array
   else
     proc_arg.call
   end
+  self
  end
- self
 end
 
 #ISSUE=======================
@@ -24,7 +24,7 @@ end
 # 5
 #=> [1,2,5]
 my_proc = Proc.new{|item| puts item**2}
-[1,2,5].my_each(my_proc)
+[1,2,5].my_each(&my_proc)
 # 1
 # 4
 # 25

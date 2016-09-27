@@ -11,4 +11,4 @@ end
 my_benchmark(10000) { puts "hi" }
 
 #ISSUES=====================
-#Returns all his and puts seconds rather than return only seconds
+#Returns all hi and puts seconds rather than return only seconds
