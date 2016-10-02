@@ -1,5 +1,5 @@
 class  HumanPlayer
-  attr_accessor :choice
+  attr_reader :choice
 
   def get_decision
     loop do
@@ -8,7 +8,6 @@ class  HumanPlayer
         break
       end
     end
-    @choice
   end
 
   def validate_choice_format(var_choice)

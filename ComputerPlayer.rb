@@ -1,6 +1,6 @@
 
 class ComputerPlayer
-  attr_accessor :choice
+  attr_reader :choice
 
   def initialize
     @choice = choice
