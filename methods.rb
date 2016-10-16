@@ -55,6 +55,41 @@ def my_each(proc_arg = self)
 	end
 	return self
 end	
+
+def my_map(map_items = self)
+	map_arr = Array.new
+	map_items.size.times do | item |
+		map_arr.push(yield(map_items[item]))
+	end
+	return map_arr
+end
+
+def my_select(my_proc = self)
+	sel_arr = Array.new
+	self.size.times do | item |
+		sel_arr << self[item] if my_proc.call(self[item])
+	end
+	return sel_arr
+end
+
+def my_all?(my_proc = self)
+	check_all = nil
+	self.my_each do | item |
+		check_all = my_proc.call(item)
+		break if check_all == false
+	end
+	return check_all
+
+end
+
+def my_inject(sum=0)
+	self.my_each do | item |
+		sum = yield(sum, item)
+	end
+	puts sum
+	return sum
+
+end
 end
 puts my_reverse("Blah!")
 puts fibs(8)
@@ -64,3 +99,14 @@ my_proc = Proc.new do | item |
 	puts item ** 2
 end
 [1,2,5].my_each(my_proc)
+[1,2,5].my_map do | item |
+	item ** 2
+end
+my_proc = Proc.new do | item |
+	item.even?
+end
+puts [1,2,5].my_select(my_proc)
+puts [1,2,5].my_all?(my_proc)
+[1,2,5].my_inject(0) do | memo, item |
+	memo + item
+end
