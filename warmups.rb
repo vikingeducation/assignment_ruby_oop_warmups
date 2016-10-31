@@ -29,19 +29,29 @@ def my_benchmark(number_of_times)
 end
 
 class Array
+
   def my_each(proc=nil)
-    if block_given?
-      for index in 0...self.length
+    for index in 0...self.length
+      if block_given?
         yield(self[index])
-      end
-    else
-      for index in 0...self.length
-        proc.call
+      else
+        proc.call(self[index])
       end
     end
   end
+
+  def my_map
+    output_array = []
+    for index in 0...self.length
+      
+  end
+
 end
 
-#[1,2,5].my_each{ |item| puts item }
-my_proc = Proc.new{|item| puts item**2}
-[1,2,5].my_each(my_proc)
+# [1,2,5].my_each{ |item| puts item }
+# my_proc = Proc.new{|item| puts item**2}
+# [1,2,5].my_each(my_proc)
+
+
+
+
