@@ -51,6 +51,7 @@ class TowerOfHanoi
     won
   end
 
+  # Create the display grid and then display it
   def render
     grid = render_grid
     print "\n\n"
@@ -58,6 +59,7 @@ class TowerOfHanoi
     print "\n\n"
   end
 
+  # Fill blank space in the grid
   def render_grid
     grid_rows = Array.new(@stack_size){[]}
     @stack_size.times do |row|
@@ -68,6 +70,7 @@ class TowerOfHanoi
     grid_rows.reverse
   end
 
+  # Display disk stacks
   def render_visual grid    
     grid.each do |row|
       row.each do |cell|
