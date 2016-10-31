@@ -1,4 +1,5 @@
 class TowerOfHanoi
+	attr_accessor :num_discs, :p1, :p2, :p3
 
 	def initialize(num_discs)
 		@num_discs = num_discs
@@ -10,36 +11,46 @@ class TowerOfHanoi
 	def setup
 		disc_array = []
 		@num_discs.times do |size| # size 0 -> smallest
-			disc_array << Disk.new(size) 
+			disc_array << Disc.new(size) 
 		end
-		p1.stack = disc_array
+		p1.store(disc_array)
 	end
 
 end
 
 class Disc
 
-	def initialize(pillar, size, position)
-		@pillar = pillar
+	attr_reader :size
+
+	def initialize(size)
 		@size = size
-		@position = position
 	end
-
-	def move
-
-	end
-
 end
 
 class Pillar 
+	attr_accessor :stack
+	attr_reader :smallest
 
 	def initialize
+		@stack = []
+		@smallest = nil
+	end
 
+	def store(discs)
+		@stack = discs
+		@smallest = discs[0]
 	end
 
 	def move_disc_to(new_pillar)
+		valid_move?(new_pillar)
+		new_pillar.stack.unshift(@stack.shift)
 	end
 
+	def valid_move?(new_pillar)
+		return false if @smallest.nil?
+		return true if new_pillar.smallest.nil?
+		@smallest < new_pillar.smallest
+	end
 end
 
 class Board # rendering
