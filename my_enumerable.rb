@@ -28,17 +28,9 @@ class Array
   def my_all?(&proc)
     self.my_each do |elem|
       if block_given?
-        if yield(elem)
-          next
-        else
-          return false
-        end
+        yield(elem) ? next : (return false)
       else
-        if proc.call(elem)
-          next
-        else
-          return false
-        end
+        proc.call(elem) ? next : (return false)
       end
     end
 
