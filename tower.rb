@@ -34,6 +34,7 @@ class TowerOfHanoi
   def movement compare=false
     yield(false)
     rod = gets.chomp
+    quit(rod)
     until valid?(rod, compare)
       render
       yield(true)
@@ -85,11 +86,7 @@ class TowerOfHanoi
   end
 
   def quit input
-    if input == "quit"
-      exit
-    else
-      input = input.to_i
-    end
+    exit if input == "quit"
   end
 
   def reset difficulty=0
@@ -101,11 +98,11 @@ class TowerOfHanoi
   def take_turn
     plate, target= 0
     plate = movement do |error|
-      if error then puts "#{@pickup_error}\n\n" end
+      puts "#{@pickup_error}\n\n" if error
       puts "\n#{@pickup_line} "
     end
     target = movement plate do |error|
-      if error then puts "#{@putdown_error}\n\n" end
+      puts "#{@putdown_error}\n\n" if error
       puts "\n#{@putdown_line} "
     end
     if plate != target 
@@ -115,7 +112,6 @@ class TowerOfHanoi
   end
 
   def valid? location, size_check=false
-    location = quit location
     if (1..3).include?(location)
       if (size_check)
         return (!@gameboard[location-1][-1] || @gameboard[location-1][-1] >= @gameboard[size_check-1][-1])
