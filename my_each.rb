@@ -4,7 +4,7 @@ class Array
 
     counter = 0
     while counter < self.length
-      yield(self[counter])
+      block_given? ? yield(self[counter]) : proc.call(self[counter])
       counter += 1
     end
 
