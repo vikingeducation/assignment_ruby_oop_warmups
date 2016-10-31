@@ -1,15 +1,16 @@
 class Game
+
+  MOVES = { 'r' => 's', 's' => 'p', 'p' => 'r' }
+
   def play
     puts "Rock paper scissors game"
-    puts "Type 'quit' to quit."
-    while true
+    loop do
       take_turn
     end
   end
 
   def take_turn
-    moves = ["rock","paper","scissors"]
-    print "Enter your move: rock, paper or scissors \n >> "
+    print "Enter the first letter of your move: [r]ock, [p]aper, [s]cissors or quit \n >> "
     player_move = gets.chomp
     quit?(player_move)
     computer_move = moves[rand(0..2)]
@@ -22,6 +23,7 @@ class Game
     puts "You win!" if winner == 1
     puts "Tie" if winner == 0
     puts "You lose" if winner == -1
+    puts "Invalid move" if winner == -2
   end
 
   def quit?(player_move)
@@ -29,20 +31,9 @@ class Game
   end
 
   def evaluate_winner(move_1,move_2)
-    case move_1
-    when "rock"
-      return 1 if move_2 == "scissors"
-      return 0 if move_2 == "rock"
-      return -1 if move_2 == "paper"
-    when "scissors"
-      return 1 if move_2 == "paper"
-      return 0 if move_2 == "scissors"
-      return -1 if move_2 == "rock"
-    when "paper"
-      return 1 if move_2 == "rock"
-      return 0 if move_2 == "paper"
-      return -1 if move_2 == "scissors"
-    end
+    return 1 if MOVES[move_1] == move_2
+    return -1 if MOVES[move_2] == move_1
+    return 0
   end
 
 end
