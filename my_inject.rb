@@ -15,4 +15,6 @@ end
 
 array = [1,2,3]
 
-puts array.my_inject(0) { |memo, item| memo + item }
+puts array.my_inject(0) do |memo, item| 
+  memo + item 
+end
