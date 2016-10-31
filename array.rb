@@ -27,8 +27,11 @@ class Array
     return true
   end
 
-  def my_inject(initial_val = 0)
-    
+  def my_inject(memo = nil)
+    self.my_each do |item| 
+      memo = (memo ? yield(memo, item) : self[0])
+    end
+    memo
   end
 end
 
@@ -39,8 +42,9 @@ end
 
 # puts [1,2,3,4].my_map { |i| i*i }
 
-puts [2,4].my_all? { |item| item.even? }
+#puts [2,4].my_all? { |item| item.even? }
 
+puts ["what", "happens", "now"].my_inject("word") { |sum, i| sum + i }
 
 
 
