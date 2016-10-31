@@ -16,6 +16,20 @@ class TowerOfHanoi
 		p1.store(disc_array)
 	end
 
+	def render
+		# Example
+		#	#
+		#	##
+		#	###
+		#	1   
+		# 2
+		# 3
+		pillars = [@p1, @p2, @p3]
+		pillars.each do |pillar|
+			puts pillar
+		end
+	end
+
 end
 
 class Disc
@@ -42,8 +56,15 @@ class Pillar
 	end
 
 	def move_disc_to(new_pillar)
-		valid_move?(new_pillar)
-		new_pillar.stack.unshift(@stack.shift)
+		if valid_move?(new_pillar)
+			new_pillar.stack.unshift(@stack.shift)
+			update_smallest
+			new_pillar.update_smallest
+		end
+	end
+
+	def update_smallest
+		@smallest = @stack[0]
 	end
 
 	def valid_move?(new_pillar)
@@ -51,11 +72,15 @@ class Pillar
 		return true if new_pillar.smallest.nil?
 		@smallest < new_pillar.smallest
 	end
+
+	def to_s
+		@stack.reverse.each do |disc|
+			puts '#' * (disc.size+1) 
+		end
+	end
+
 end
 
-class Board # rendering
-
-end 
 
 
 
