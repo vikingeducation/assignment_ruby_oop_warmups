@@ -1,21 +1,13 @@
 class Array
   def my_map(my_proc = nil)
-    if my_proc != nil
-      i = 0
-      length.times do
+    length.times do |i|
+      if my_proc != nil
         self[i] = my_proc.call(self[i])
-        i += 1
-      end
-      p self
-    elsif block_given?
-      i = 0
-      length.times do
+      elsif block_given?
         self[i] = yield(self[i])
-        i += 1
+      else
+        puts "You did not provide an operation"
       end
-      p self
-    else
-      puts "You did not provide an operation"
     end
   end
 end
