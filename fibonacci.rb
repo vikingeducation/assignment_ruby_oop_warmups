@@ -8,7 +8,6 @@ def fibs(times = 1)
     a = b
     b = c
   end
-  puts sequence
   return sequence
 end
 
