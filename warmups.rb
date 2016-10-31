@@ -45,9 +45,9 @@ class Array
     self.my_each do |i|
     # for index in 0...self.length
       if block_given?
-        output_array.push(yield(self[index]))
+        output_array.push(yield(i))
       else
-        output_array.push(proc.call(self[index]))
+        output_array.push(proc.call(i))
       end
     end
     output_array
@@ -59,8 +59,8 @@ end
 my_proc = Proc.new{|item| puts item**3}
 # [1,2,5].my_each(my_proc)
 
-# x = [1,2,5].my_map do |item|
-#  item ** 2
-# end
-# puts x
+x = [1,2,5].my_map do |item|
+ item ** 2
+end
+puts x
 x = [1,2,5].my_map(my_proc)
