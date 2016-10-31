@@ -1,17 +1,31 @@
 # game class
 class Game
+
+  def initialize
+
+  end
+
+  # check choices agaist each other
+
+  # player interactions
+  def play
+    # get player choices
+    @player.choice
+  end
+
 end
-  # check whether a player beat another player
 
 # (eventually 2) players
 class Player
 
+  CHOICES = ["r", "p", "s"]
+
 
   def initialize(human=false)
     @human = human
-    CHOICES = ["r", "p", "s"]
   end
 
+  # players make moves
   def choice
     puts "Enter 'r', 'p', or 's' to make your choice:"
     @input = @human ? gets.chomp.downcase : CHOICES.sample
@@ -23,9 +37,22 @@ class Player
     CHOICES.include?(@input)
   end
 end
-  # players make moves
 
-# hash
-  # rock
-  # paper
-  # scissors
+
+
+# player
+  # players make moves
+  # helper: valid?
+
+# game
+  # constant comparison hash
+    # rock
+    # paper
+    # scissors
+  # initialize players
+    # new instance of each
+      # human or computer
+  # play
+    # getting player input <--> game calls player.choice 
+  # helper: check against hash
+  # helper: render
