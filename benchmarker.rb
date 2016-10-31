@@ -5,7 +5,7 @@ def my_benchmark(num_of_times)
     yield
   end
 
-  run_time = start_time - Time.now
+  run_time = Time.now - start_time
 end
 
-my_benchmark(10000) { puts "hi" }
+my_benchmark(10000) { }
