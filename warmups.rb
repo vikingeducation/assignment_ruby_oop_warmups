@@ -22,3 +22,27 @@ def fibs(number)
   end
   return fib_array
 end
+
+def my_benchmark(number_of_times)
+  start_time = Time.now
+  number_of_times.times do
+    yield
+  end
+  end_time = Time.now
+  return end_time - start_time
+end
+
+class Array
+  def my_each
+    for index in 0...self.length
+      yield(self[index])
+    end
+  end
+end
+
+
+
+
+
+
+
