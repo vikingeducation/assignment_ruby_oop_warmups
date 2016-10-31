@@ -8,7 +8,7 @@ def fibs(times = 1)
     a = b
     b = c
   end
-  return sequence
+  sequence
 end
 
 fibs(8)
