@@ -85,28 +85,20 @@ class Array
     result
   end
 
-  def my_inject(initial=nil, proc=nil)
+  def my_inject(initial=nil)
     memo = initial
+    memo = self.shift if memo.nil?
     self.my_each do |element|
-      if block_given?
-        if !yield(element)
-          result = false
-        end
-      else
-        if !proc.call(element)
-          result = false
-        end
-      end
-    end      
+      memo = yield(memo, element)
+      puts memo
+      # else
+      # end
+    end
+    memo
   end
 
 end
 
-[1,2,5].my_inject(0) do |memo, item|
-   memo + item
+[1,2,5].my_inject(6) do |memo, item|
+  memo + item
 end
-
-
-
-
-
