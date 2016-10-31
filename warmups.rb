@@ -53,14 +53,60 @@ class Array
     output_array
   end
 
+  def my_select(proc=nil)
+    output_array = []
+    self.my_each do |element|
+      if block_given?
+        if yield(element)
+          output_array.push(element)
+        end
+      else
+        if proc.call(element)
+          output_array.push(element)
+        end
+      end
+    end
+    output_array
+  end
+
+  def my_all?(proc=nil)
+    result = true
+    self.my_each do |element|
+      if block_given?
+        if !yield(element)
+          result = false
+        end
+      else
+        if !proc.call(element)
+          result = false
+        end
+      end
+    end
+    result
+  end
+
+  def my_inject(initial=nil, proc=nil)
+    memo = initial
+    self.my_each do |element|
+      if block_given?
+        if !yield(element)
+          result = false
+        end
+      else
+        if !proc.call(element)
+          result = false
+        end
+      end
+    end      
+  end
+
 end
 
-# [1,2,5].my_each{ |item| puts item }
-my_proc = Proc.new{|item| puts item**3}
-# [1,2,5].my_each(my_proc)
+[1,2,5].my_inject(0) do |memo, item|
+   memo + item
+end
 
-# x = [1,2,5].my_map do |item|
-#  item ** 2
-# end
-# puts x
-x = [1,2,5].my_map(my_proc)
+
+
+
+
