@@ -86,17 +86,17 @@ class Round
 			puts "It's a tie"
 		end
 		puts "Play again?(y/n)"
-		input = gets.chomp.downcase
 		loop do 	
+			input = gets.chomp.downcase
 			if valid_yes_or_no?(input)
 				if input == 'y'
 					@game.run
 				elsif input == 'n'
 					@game.quit
 					break
-				else
-					puts "Please enter (Y/N)"
 				end
+			else
+				puts "Please enter (Y/N)"
 			end
 		end
 	end
