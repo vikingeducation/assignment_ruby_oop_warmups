@@ -8,6 +8,5 @@ def fibs(num)
   end
 
   result
-end
 
-puts fibs(8)
+end
