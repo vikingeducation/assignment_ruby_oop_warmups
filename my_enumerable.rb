@@ -50,14 +50,6 @@ class Array
     true
   end
 
-  # do your own
-  # def my_inject(memo=nil)
-  #   self.my_each do |item|
-  #     memo = (memo ? yield(memo, item) : self[0])
-  #   end
-  #   memo
-  # end
-
   def my_inject(memo=nil, &proc)
     if !memo
       memo = 0
@@ -71,9 +63,5 @@ class Array
     end
     memo
   end
-
-  # RPS
-
-  # Tower of Hanoi
 
 end
