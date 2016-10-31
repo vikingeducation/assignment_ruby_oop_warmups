@@ -1,2 +1,3 @@
 # assignment_ruby_oop_warmups
 Jonathan Popenuck
+John Sawyer
