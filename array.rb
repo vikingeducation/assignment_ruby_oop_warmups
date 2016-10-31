@@ -42,9 +42,9 @@ end
 
 # puts [1,2,3,4].my_map { |i| i*i }
 
-#puts [2,4].my_all? { |item| item.even? }
+# puts [2,4].my_all? { |item| item.even? }
 
-puts ["what", "happens", "now"].my_inject("word") { |sum, i| sum + i }
+# puts ["what", "happens", "now"].my_inject("word") { |sum, i| sum + i }
 
 
 
