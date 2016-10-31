@@ -44,7 +44,7 @@ end
 
 # puts [2,4].my_all? { |item| item.even? }
 
-# puts ["what", "happens", "now"].my_inject("word") { |sum, i| sum + i }
+puts ["what", "happens", "now"].my_inject { |sum, i| sum + i }
 
 
 
