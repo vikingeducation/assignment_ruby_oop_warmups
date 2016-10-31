@@ -10,6 +10,8 @@ class Array
 
   end
 
+  # my map
+
   def my_select(&proc)
     result = []
 
@@ -36,5 +38,17 @@ class Array
 
     true
   end
+
+  # do your own
+  def my_inject(memo=nil)
+    self.my_each do |item|
+      memo = (memo ? yield(memo, item) : self[0])
+    end
+    memo
+  end
+
+  # RPS
+
+  # Tower of Hanoi
 
 end
