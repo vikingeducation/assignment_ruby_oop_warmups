@@ -11,6 +11,17 @@ class Array
   end
 
   # my map
+  def my_map(&proc)
+    result = []
+    self.my_each do |elem|
+      if block_given?
+        result << yield(elem)
+      else
+        result << proc.call(elem)
+      end
+    end
+    result
+  end
 
   def my_select(&proc)
     result = []
@@ -40,9 +51,23 @@ class Array
   end
 
   # do your own
-  def my_inject(memo=nil)
-    self.my_each do |item|
-      memo = (memo ? yield(memo, item) : self[0])
+  # def my_inject(memo=nil)
+  #   self.my_each do |item|
+  #     memo = (memo ? yield(memo, item) : self[0])
+  #   end
+  #   memo
+  # end
+
+  def my_inject(memo=nil, &proc)
+    if !memo
+      memo = 0
+    end
+    self.my_each do |elem|
+      if block_given?
+        memo = yield(memo, elem)
+      else
+        memo = proc.call(memo, elem)
+      end
     end
     memo
   end
