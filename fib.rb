@@ -1,6 +1,5 @@
 def fib(num)
-  return nil if num <= 0
-  return 0 if num == 1
+  return num if num <= 1
   seq = [0,1]
 
   while seq.length < num 
