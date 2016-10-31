@@ -1,11 +1,10 @@
 class Array
-  def my_inject(start = 0, my_proc = nil)
-    memo = start
-    length.times do |i|
-      if my_inject != nil
-        my_proc.call(self[i])
+  def my_inject(memo = 0, my_proc = nil)
+    each do |element|
+      if my_proc != nil
+        memo = my_proc.call(memo, element)
       elsif block_given?
-        yield(self[i])
+        memo = yield(memo, element)
       else
         return puts "You did not provide an operation"
       end
