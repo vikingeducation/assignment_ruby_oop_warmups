@@ -8,12 +8,12 @@ class TowerOfHanoi
     play
   end
 
-  def create_gameplay stack_size
+  # def create_gameplay stack_size
     
-    @stack_size = stack_size
-    @turns = 0
-    @best_possible = 2**@stack_size-1
-  end
+  #   @stack_size = stack_size
+  #   @turns = 0
+  #   @best_possible = 2**@stack_size-1
+  # end
 
   # def create_gameboard
   #   @gameboard = [[],[],[]]
@@ -128,16 +128,16 @@ class TowerOfHanoi
     @goal == @gameboard[2]
   end
 
-  def won
-    puts "Congratulations, You won!\nYou completed the tower in #{@turns} moves."
-    if @turns > @best_possible
-      puts "There is a more efficient solution possible (#{@best_possible} moves)\nretry?"
-      if gets.chomp == "yes" then reset end
-    else
-      puts "You completed the game in the least amount of turns possible!\nUp the difficulty?"
-      if gets.chomp == "yes" then reset(1) end
-    end
-  end
+  # def won
+  #   puts "Congratulations, You won!\nYou completed the tower in #{@turns} moves."
+  #   if @turns > @best_possible
+  #     puts "There is a more efficient solution possible (#{@best_possible} moves)\nretry?"
+  #     if gets.chomp == "yes" then reset end
+  #   else
+  #     puts "You completed the game in the least amount of turns possible!\nUp the difficulty?"
+  #     if gets.chomp == "yes" then reset(1) end
+  #   end
+  # end
 end
 
 t = TowerOfHanoi.new
