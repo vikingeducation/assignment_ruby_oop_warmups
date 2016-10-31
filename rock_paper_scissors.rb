@@ -7,39 +7,48 @@ class RockPaperScissors
     play
   end
 
-  def valid?
-    
+  def valid?(input)
+    return true if input == "yes" || input == "no"
+    puts "Invalid input"
+    return false
   end
 
   def play
     puts "Welcome to rock-paper-scissors!"
-    puts "Play with two players? (yes/no)"
-    until valid?
+    begin
+      puts "Play with two players? (yes/no)"
       @players = gets.chomp.downcase
+    end until valid?(@players)
+    @player1 = pick
+    if @players == "yes"
+      @player2 = @options[pick]
+    else 
+      @player2 = computer
     end
+    compare
   end
 
-  def player2
+  def computer
     option_values = ["rock", "paper", "scissors"]
-    @player2 = @options[option_values[rand(2)]]
+    @options[option_values[rand(2)]]
   end
 
   def pick
-    until @options.include? @pick
+    choice = nil
+    until @options.include? choice
       puts "Enter \"rock\", \"paper\", or \"scissors\""
-      @pick = gets.chomp.downcase
+      choice = gets.chomp.downcase
     end
+    return choice
   end
 
   def compare
-    if @pick == @computer[:win]
-      puts "#{@player2[:value]} beats #{@pick}... you lose!"
-    elsif @pick == @computer[:lose]
-      puts "#{@pick} beats #{@player2[:value]}... you win!"
+    if @player1 == @player2[:win]
+      puts "#{@player2[:value]} beats #{@player1}... Player 1 loses!"
+    elsif @player1 == @player2[:lose]
+      puts "#{@player1} beats #{@player2[:value]}... Player 1 wins!"
     else
-      @pick = ""
       puts "Tie Game"
-      player2
       play
     end
   end
