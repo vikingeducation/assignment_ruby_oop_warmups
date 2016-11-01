@@ -1,19 +1,28 @@
 class Game
 
   MOVES = { 'r' => 's', 's' => 'p', 'p' => 'r' }
+  COMPUTER_MOVES = MOVES.keys
+  def initialize(game_type)
+    if game_type == 'c'
+      # set up for computer
+      @game_type = :vs_computer
+    else
+      #set up for human
+      @game_type = :vs_human
+    end
+  end
 
   def play
-    puts "Rock paper scissors game"
     loop do
       take_turn
     end
   end
 
   def take_turn
-    print "Enter the first letter of your move: [r]ock, [p]aper, [s]cissors or quit \n >> "
+    print "Enter the first letter of your move: [r]ock, [p]aper, [s]cissors or type 'quit' \n >> "
     player_move = gets.chomp
     quit?(player_move)
-    computer_move = moves[rand(0..2)]
+    computer_move = COMPUTER_MOVES[rand(0..2)]
     puts "Computer move: #{computer_move}"
     winner = evaluate_winner(player_move,computer_move)
     results(winner)
@@ -38,5 +47,9 @@ class Game
 
 end
 
-game = Game.new
+puts "Rock paper scissors game"
+print "Enter 'h' to play vs. human, or 'c' to play vs. computer \n >> "
+game_type = gets.chomp
+
+game = Game.new(game_type)
 game.play
