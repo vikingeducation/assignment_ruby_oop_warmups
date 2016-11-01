@@ -51,5 +51,3 @@ class TowerController
 
 
 end
-
-t = TowerController.new(2)
