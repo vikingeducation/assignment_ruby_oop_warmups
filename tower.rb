@@ -21,10 +21,10 @@ class TowerOfHanoi
   #   @goal = @gameboard[0].dup
   # end
 
-  def move_piece plate, target
-    @gameboard[target-1] << @gameboard[plate-1][-1]
-    @gameboard[plate-1].pop
-  end
+  # def move_piece plate, target
+  #   @gameboard[target-1] << @gameboard[plate-1][-1]
+  #   @gameboard[plate-1].pop
+  # end
 
   def movement compare=false
     yield(false)

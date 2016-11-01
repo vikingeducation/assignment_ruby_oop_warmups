@@ -3,9 +3,9 @@ class TowerModel
 	attr_accessor :gameboard, :turns
 
   def initialize stack_size=4
+    @stack_size = stack_size
     @goal = goal
     @gameboard = [@goal,[],[]]
-    @stack_size = stack_size
     @turns = 0
     @best_possible = 2**@stack_size-1    
   end
