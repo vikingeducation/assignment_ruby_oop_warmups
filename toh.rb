@@ -1,12 +1,16 @@
 class TowerOfHanoi
 	attr_accessor :num_discs, :p1, :p2, :p3
+	
 
-	def initialize(num_discs)
+	def initialize(num_discs=3)
 		@num_discs = num_discs
-		@p1 = Pillar.new
-		@p2 = Pillar.new
-		@p3 = Pillar.new
+		@p1 = Pillar.new(1)
+		@p2 = Pillar.new(2)
+		@p3 = Pillar.new(3)
+		@num_to_pillar = { '1' => @p1, '2' => @p2, '3' => @p3 }
 	end
+
+
 
 	def setup
 		disc_array = []
@@ -16,17 +20,31 @@ class TowerOfHanoi
 		p1.store(disc_array)
 	end
 
+	def run
+		setup
+		loop do 
+			render
+			puts "Grab disc from which pillar? (1/2/3)"
+			from = gets.chomp
+			puts "Place disc on which pillar? (1/2/3)"
+			to = gets.chomp
+			if !['1','2','3'].include?(from) || !['1','2','3'].include?(to)
+				puts "Invalid input. Try again."
+				next
+			end
+			@num_to_pillar[from].move_disc_to(@num_to_pillar[to])
+			break if is_win?
+		end
+	end
+
+	def is_win?
+		@p3.stack.length == @num_discs
+	end
+
 	def render
-		# Example
-		#	#
-		#	##
-		#	###
-		#	1   
-		# 2
-		# 3
 		pillars = [@p1, @p2, @p3]
 		pillars.each do |pillar|
-			puts pillar
+			pillar.render
 		end
 	end
 
@@ -45,9 +63,10 @@ class Pillar
 	attr_accessor :stack
 	attr_reader :smallest
 
-	def initialize
+	def initialize(num)
 		@stack = []
 		@smallest = nil
+		@num = num
 	end
 
 	def store(discs)
@@ -64,7 +83,11 @@ class Pillar
 	end
 
 	def update_smallest
-		@smallest = @stack[0]
+		if @stack.length == 0
+			@smallest = nil 
+		else
+			@smallest = @stack[0].size
+		end
 	end
 
 	def valid_move?(new_pillar)
@@ -73,15 +96,18 @@ class Pillar
 		@smallest < new_pillar.smallest
 	end
 
-	def to_s
-		@stack.reverse.each do |disc|
+	def render
+		puts @num
+		@stack.each do |disc|
 			puts '#' * (disc.size+1) 
 		end
+
 	end
 
 end
 
-
+game = TowerOfHanoi.new
+game.run
 
 
 
