@@ -21,8 +21,8 @@ class TowerRender
     puts "Where would you like to move a plate to?(\#1-3)"
   end
 
-  def self.putdown_error
-    puts "Plates can only be stacked on larger plates"
+  def self.error
+    puts "\n\nInvalid Move!"
   end
 
   def self.welcome_message stack_size
