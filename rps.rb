@@ -28,9 +28,12 @@ class Player
 
   # players make moves
   def choice
-    puts "Enter 'r', 'p', or 's' to make your choice:"
-    input = @human ? gets.chomp.downcase : CHOICES.sample
-    input = choice unless is_valid?(input)
+    if @human
+      puts "Enter 'r', 'p', or 's' to make your choice:"
+      input = gets.chomp.downcase
+    else
+      input = CHOICES.sample
+    end
     input
   end
 
