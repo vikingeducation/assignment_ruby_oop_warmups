@@ -6,7 +6,7 @@ class ToH
     @board = { one: @peg1, two: @peg2, three: @peg3 }
   end
 
-  def gamelogic    
+  def gamelogic
     set_discs
   end
 
@@ -18,11 +18,11 @@ class ToH
       temp_hash[keyname] = keyname
     end
     temp_hash.delete(0)
-    @peg1.stack = temp_hash    
+    @peg1.stack = temp_hash
   end
 
   def move(from,to)
-    
+
     display
   end
 
@@ -31,20 +31,20 @@ class ToH
   end
 
   def display
-    puts @peg1.stack ; puts @peg2.stack; puts @peg3.stack; 
+    puts @peg1.stack ; puts @peg2.stack; puts @peg3.stack;
   end
 
 end
 
 class Peg
   attr_accessor :stack
-  def initialize 
+  def initialize
     @stack = {}
   end
 end
 
 class Disc
-  attr_accessor :pegsize 
+  attr_accessor :pegsize
   def intitialize(size = 0)
     @size = size
   end
