@@ -1,41 +1,60 @@
+require './rps-player'
+
 class RockPaperScissors
 
-def initialize
-  @player1_move = player1_move
-  @computer_move = computer_move
-  @choices = %w(rock, paper, scissors)
-end
+  def initialize
+    @win_options = [["paper","rock"], ["rock","scissors"], ["scissors","paper"]]
+  end
 
-def play_game
-  puts "Ready to play?"
-  gets
-  player_throw
-  computer_throw
-  evaluate
-end
+  def play
+    intro
+    if computer_mode?
+      @player1 = Player.new(true)
+      @player2 = Player.new
+    else
+      @player1 = Player.new(true)
+      @player2 = Player.new(true)
+    end
+    player1_move = @player1.throw(1)
+    player2_move = @player2.throw(2)
+    result(player1_move, player2_move)
+  end
 
-def player_throw
-  until @choices.include?(@player1_move) 
-    puts "Rock, paper, scissors..."
-    print ">"
-    @player1_move = gets.chomp.downcase.gsub(/\s+/, "")
-    puts "Sorry, that's not a valid move" unless choices.include?(@player1_move)
+  def intro
+    print "\n\n\n"
+    puts "Rock, Paper, Scissors!!"
+    puts
+  end
+
+  def computer_mode?
+    loop do
+      puts "If this is a 2-player game, please enter 'a'."
+      puts "Otherwise, enter 'b' if you're playing against the computer."
+      mode = gets.chomp
+      if mode == "a"
+        return false
+      elsif mode == "b"
+        return true
+      end
+    end
+  end
+
+  def result(move1, move2)
+    if @win_options.include?([move1, move2])
+      puts "Player 1 wins!"
+      binding.pry
+    elsif @win_options.include?([move2, move1])
+      binding.pry
+      puts "Player 2 wins!"
+    elsif move1 == move2
+      binding.pry
+      puts "It's a tie!"
+    end
+    puts "\n\n\n"
   end
 end
 
-def computer_throw  
-  @computer_move = @choices.sample
-end
-
-def evaluate
-  evaluation_array << @player_throw
-  evaluation_array << @computer_throw
-
-end
 
 
-
-
-
-#class ends here
-end
+game = RockPaperScissors.new
+game.play
