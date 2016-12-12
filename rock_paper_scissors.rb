@@ -82,16 +82,8 @@ class RockPaperScissors
 	def play
 		create_players
 		while(@number_of_rounds_remaining > 0)
-			puts "Please enter your choice"
-			player1_choice = gets.chomp
-			player1.cur_choice = player1_choice
-			if player2.type == 1
-				puts "Please enter player 2 choice"
-				player2_choice = gets.chomp
-				player2.cur_choice = player2_choice
-			else
-				player2_choice = player2.make_choice
-			end
+			player1.make_choice
+			player2.make_choice
 			result = compare_choice
 			show_result result
 			show_score

@@ -10,6 +10,11 @@ class Player
 	end
 
 	def make_choice
-		@cur_choice = ["s", "r", "p"].sample
+		if @type == 0
+			@cur_choice = ["s", "r", "p"].sample
+		else
+			puts "#{@name}, Please enter your choice"
+			@cur_choice = gets.chomp
+		end
 	end
 end
