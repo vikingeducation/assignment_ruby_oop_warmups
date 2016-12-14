@@ -1,6 +1,6 @@
 class Array
 
-  def my_each( item_block = nil)
+  def my_map( item_block = nil)
     i = 0
     while i < self.size
       yield(self[i])    if block_given?
@@ -8,7 +8,5 @@ class Array
       i += 1
     end
   end
-
-
 
 end
