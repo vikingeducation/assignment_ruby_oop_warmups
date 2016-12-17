@@ -3,8 +3,7 @@ require './players.rb'
 
 class RPS
 
-  # game = RPS.new
-  # game.play to start
+  # game = RPS.new to start programme
 
   def initialize
     @moves = ['r', 'p', 's']
