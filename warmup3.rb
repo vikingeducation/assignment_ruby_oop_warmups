@@ -1,4 +1,3 @@
-require 'pry'
 class Array
 
   def my_each( prock = nil)
@@ -49,7 +48,6 @@ class Array
   end
 
   def my_inject(memo=0, prock = nil, &block )
-    binding.pry
     # procked version
     self.my_each do |n, m=memo|
       memo = yield(m, n)
