@@ -21,36 +21,29 @@ class RPS
   def main_menu
     # welcome message
     welcome
-
     puts
 
     # validate player mode
     get_playmode until valid_mode?(@playmode)
-
     puts
 
     # provide user feedback on their chosen game mode
     mode_confirmation(@playmode)
-
     puts
 
     # get number of points required to win
     get_points
-
     puts
 
     # create players
     @player1 = create_player(1)
-
     puts
 
     @player2 = @playmode == '2'? create_player(2) : create_computer
 
-
   end
 
   def play
-
     run_game until game_over?
     puts "The winner is #{winner == @player1? 'you!' : @computer_win.sample}\n\n" if @playmode == '1'
     puts "Congratulations, #{winner.name}! You've won! \n\n" if @playmode == '2'
@@ -67,7 +60,6 @@ class RPS
   def quit?(key)
     exit if key == 'q' || key == 'quit'
   end
-
 
   def get_move(player, secret=false)
     # secret tells us if the input should be hidden
@@ -93,7 +85,6 @@ class RPS
     @player2.move = @moves.sample
     puts "Computer: #{@player2.move}"
   end
-
 
   def run_game
     until round_over?
@@ -146,7 +137,6 @@ class RPS
     print "[#{@player2.name}:"
     puts "#{@player2.points}]".rjust(25-@player2.name.length)
     puts
-
   end
 
   def reset_player_points
@@ -171,7 +161,6 @@ class RPS
   def create_computer
     Player.new('Computer')
   end
-
 
   def create_player(num)
     puts "Please enter your name, player #{num}"
@@ -218,9 +207,4 @@ class RPS
     puts "=" * @gamewidth
   end
 
-
 end
-
-
-g = RPS.new
-g.play
