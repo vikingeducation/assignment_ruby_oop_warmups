@@ -1,5 +1,5 @@
 require 'io/console'
-require './players.rb'
+require 'players.rb'
 
 class RPS
 
