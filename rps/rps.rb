@@ -1,5 +1,5 @@
 require 'io/console'
-require 'players.rb'
+require_relative('players.rb')
 
 class RPS
 
@@ -39,6 +39,8 @@ class RPS
     puts
 
     @player2 = @playmode == '2'? create_player(2) : create_computer
+    puts
+    play
 
   end
 
@@ -130,11 +132,12 @@ class RPS
     puts
     print "[Current score"
     print "]".rjust(25-"Current score".length)
+    puts
     print "[#{@player1.name}:"
-    print "#{@player1.points}]".rjust(25-@player1.name.length)
+    print "#{@player1.points}]".rjust(25-@player1.name.length-1)
     puts
     print "[#{@player2.name}:"
-    puts "#{@player2.points}]".rjust(25-@player2.name.length)
+    puts "#{@player2.points}]".rjust(25-@player2.name.length-1)
     puts
   end
 
@@ -207,5 +210,5 @@ class RPS
   end
 
 end
-    
-    game = RPS.new
+
+game = RPS.new
