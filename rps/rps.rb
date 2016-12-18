@@ -207,3 +207,5 @@ class RPS
   end
 
 end
+    
+    game = RPS.new
