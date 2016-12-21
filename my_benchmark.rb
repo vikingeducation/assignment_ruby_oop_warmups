@@ -7,4 +7,4 @@ def my_benchmark(counter)
   duration = Time.now - start
 end
 
-p my_benchmark(100) { puts "hi" }
+# p my_benchmark(100) { puts "hi" }
