@@ -65,3 +65,4 @@ class GameController < Controller
 		end
 	end
 end
+

@@ -39,3 +39,4 @@ class GameValidation < Validation
 		return true
 	end
 end
+

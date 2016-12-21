@@ -106,3 +106,4 @@ class GameModel < Model
 			@game = [first_tower, [], []]
 		end
 end
+

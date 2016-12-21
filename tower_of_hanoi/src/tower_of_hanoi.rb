@@ -12,3 +12,4 @@ class TowerOfHanoi < App
 		)
 	end
 end
+
