@@ -43,8 +43,6 @@ end
 
 class TowerOfHanoi
 
-  # attr_accessor :no_of_disks
-
   # Intialise the board
   def initialize(n)
     @no_of_disks = n
@@ -128,19 +126,14 @@ class TowerOfHanoi
   # Move a disk from 1 pin to the other
   def move(from, to)
     if move_valid?(from, to)
-      # puts "valid move"
-      # puts "#{@board.toh}"
 
       from = from-1
       to = to-1
 
       disk = @board.toh[from].shift
 
-      # puts "The disk we are moving #{disk}"
-
       if(@board.toh[to].empty?)
         @board.toh[to] = [disk]
-        # puts "The to destination was empty"
       else
         @board.toh[to].unshift(disk)
       end
@@ -171,10 +164,8 @@ class TowerOfHanoi
       if(@board.toh[from].empty?)
         return false
       elsif(@board.toh[to].empty?)
-        # puts "destination pin is empty"
         return true  
       elsif((@board.toh[from].first) < (@board.toh[to].first))
-        # puts "#{@board.@toh[to].first} is less than #{@board.@toh[to].first} "
         return true
       else 
         return false
@@ -182,7 +173,4 @@ class TowerOfHanoi
     else false
     end
   end
- 
-
-  
 end

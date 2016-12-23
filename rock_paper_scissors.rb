@@ -3,6 +3,10 @@
 
 # Start with one player against the computer and then add 2-player mode.\
 
+# To run this create a new Game object
+# game = Game.new
+# game.play
+
 require 'pry'
 
 
