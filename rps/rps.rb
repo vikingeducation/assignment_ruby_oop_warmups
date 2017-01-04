@@ -10,8 +10,6 @@ class RPS
     @emojify = {'r' => '👊 ', 'p' => '🖐 ', 's' => '✌️ ' }
     @playmode = ''
     @points = 0
-    @player1 = ''
-    @player2 = ''
     @gamewidth = 70
     @computer_win = ['Computer!-Oh hey, that\'s me!', 'meeeeeeeeeeeeee! 👾 ', 'not you :(', 'Computer']
     main_menu

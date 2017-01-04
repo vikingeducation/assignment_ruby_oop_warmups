@@ -29,7 +29,7 @@ class Array
   def my_select( prock = nil)
     selected = []
     self.my_each do |n|
-      if ( block_given? && yield(n) ) || (prock != nil && prock.call(n))
+      if ( block_given? && yield(n) ) || (prock && prock.call(n))
         selected << n
       end
     end
@@ -39,9 +39,9 @@ class Array
   def my_all?(prock = nil,  &block)
     # procked version
     prock = block ? block : prock
-    if !prock.nil?
+    if prock
       self.my_each do |n|
-        return false if prock.call(n) == false
+        return false unless prock.call(n)
       end
     end
     true
