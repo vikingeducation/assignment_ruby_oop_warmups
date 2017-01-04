@@ -23,8 +23,8 @@ class Array
     selected_array = []
 
     size.times do |ind|
-        (selected_array << self[ind] if my_proc.call(self[ind])) if my_proc
-        (selected_array << self[ind] if yield(self[ind])) if block_given?
+      (selected_array << self[ind] if my_proc.call(self[ind])) if my_proc
+      (selected_array << self[ind] if yield(self[ind])) if block_given?
     end
 
     selected_array
@@ -32,10 +32,24 @@ class Array
 
   def my_all?(my_proc = nil)
     size.times do |ind|
-        (return false unless my_proc.call(self[ind])) if my_proc
-        (return false unless yield(self[ind])) if block_given?
+      (return false unless my_proc.call(self[ind])) if my_proc
+      (return false unless yield(self[ind])) if block_given?
     end
 
-    return true
+    true
+  end
+
+  def my_inject(base = nil, my_proc = nil)
+    sum = base
+    size.times do |ind|
+      if sum.nil?
+        sum = self[ind]
+        next
+      end
+      sum = my_proc.call(sum, self[ind]) if my_proc
+      sum = yield(sum, self[ind]) if block_given?
+    end
+
+    sum
   end
 end
