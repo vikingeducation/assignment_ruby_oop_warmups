@@ -31,6 +31,15 @@ class Arena
   end
 
   def play
+    begin
+      run
+    rescue SystemExit, Interrupt
+    end
+
+    puts "\nGoodbye!"
+  end
+
+  def run
     check_game
     if rps_game.game_state[:won] == true
       puts 'Thanks for playing!'
@@ -69,12 +78,12 @@ class Arena
     case last_turn_winner
     when player_1.name
       rps_game_wins[player_1.name] += 1
-      play
+      run
     when player_2.name
       rps_game_wins[player_2.name] += 1
-      play
+      run
     else
-      play
+      run
     end
   end
 
@@ -88,6 +97,7 @@ class Arena
     # binding.pry
     rps_game.game_state[:winner] = winner
     rps_game.game_state[:won] = true
+    puts "*****\n"
     puts "And the winner is....#{rps_game.game_state[:winner]}!!!!"
     puts 'With a final score of: '
     display_score(rps_game_wins)
