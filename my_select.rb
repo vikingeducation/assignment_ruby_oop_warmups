@@ -16,5 +16,3 @@ class Array
     result
   end
 end
-
-oc)
