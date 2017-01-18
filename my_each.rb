@@ -17,9 +17,3 @@ class Array
     end
   end
 end
-
-
-
-[1,2,3].my_each { |item| puts item }
-my_proc = Proc.new{|item| puts item**2}
-[1,2,5].my_each(my_proc)
