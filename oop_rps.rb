@@ -14,14 +14,12 @@ class Human < Player
   def initialize(name)
     super
   end
-
 end
 
 class Computer < Player
 
   def initialize(name = "Computer")
     super
-
   end
 
   def select_random
@@ -60,6 +58,7 @@ def play
   end
 
 
+  #loop thru game
   continue = true
   while continue
     puts "#{player_1.name} enter your selection: P for Paper, R for Rock, or S for Scissors"
@@ -71,7 +70,7 @@ def play
       input = gets.chomp
     end
     player_1.selection = select(input)
-    system "clear"
+    system "clear" #clear screen so other player cant see pick
 
     if player_2.class == Human
       puts "#{player_2.name} enter your selection: P for Paper, R for Rock, or S for Scissors"
@@ -84,9 +83,9 @@ def play
       end
       player_2.selection = select(input)
     else
-      player_2.select_random
+      player_2.select_random #if player 2 is computer
     end
-    system "clear"
+    system "clear" #clear screen so other player cant see pick
 
     puts "#{player_1.name} picked: #{player_1.selection}"
     puts "#{player_2.name} picked: #{player_2.selection}"
@@ -96,15 +95,15 @@ def play
     print ">> "
     input = gets.chomp
     if input.upcase != "Y"
+      system "clear"
       exit
     end
-
-
 
   end
 end
 
 def valid_selection?(selection)
+  #checks if input is valid
   selection = selection.upcase
   if selection == "P" || selection == "R" || selection == "S"
     return true
@@ -115,6 +114,7 @@ end
 
 
 def select(char)
+  #converts char to word
   char = char.upcase
   case char
   when "P" then "Paper"
@@ -125,6 +125,7 @@ end
 
 
 def check_winner(p1,p2)
+  #outputs the winner
   if p1.selection == p2.selection
     puts "You Tied"
   elsif (p1.selection == "Rock" && p2.selection == "Scissors") || (p1.selection == "Paper" && p2.selection == "Rock") || (p1.selection == "Scissors" && p2.selection == "Paper")
