@@ -1,8 +1,10 @@
-def  my_reverse(word)
-  word.reverse
+def my_reverse(word)
+  reversed = ""
+  (word.length-1).downto(0) { |index| reversed += word[index] }
+  reversed
 end
 
-puts my_reverse("blah")
+puts my_reverse("hello")
 
 
 def fibonacci(number_stop)
@@ -18,3 +20,9 @@ def fibonacci(number_stop)
 end
 
 puts fibonacci(4)
+
+def my_benchmark(number_of_times)
+  #Ask Robert about how to use time
+end 
+
+
