@@ -22,7 +22,30 @@ end
 puts fibonacci(4)
 
 def my_benchmark(number_of_times)
-  #Ask Robert about how to use time
+  start_time = Time.now
+    number_of_times.times do
+      yield
+    end
+  end_time = Time.now
+  final = end_time - start_time
+  puts "This took #{final}."
+end
+
+my_benchmark(10) { puts "hello"}
+
+
+def my_each()
 end 
 
+def my_map()
+end
+
+def my_select()
+end
+
+def my_all?()
+end
+
+def my_inject()
+end
 
