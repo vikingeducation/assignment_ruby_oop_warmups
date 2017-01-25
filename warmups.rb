@@ -24,14 +24,14 @@ puts fibonacci(4)
 def my_benchmark(number_of_times)
   start_time = Time.now
     number_of_times.times do
-      yield
+      puts "hello"
     end
   end_time = Time.now
   final = end_time - start_time
   puts "This took #{final}."
 end
 
-my_benchmark(10) { puts "hello"}
+my_benchmark(15) 
 
 
 def my_each()
