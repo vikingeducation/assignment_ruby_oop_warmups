@@ -61,4 +61,18 @@ class Array
 
     self
   end
+
+  def my_map(proc = nil)
+    output = []
+
+    if block_given?
+      self.my_each { |item| output << yield(item) }
+    elsif !proc.nil?
+      self.my_each { |item| output << proc.call(item) }
+    end
+
+    # should probably return an Enumerator
+    output
+  end
 end
+
