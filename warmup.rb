@@ -71,7 +71,8 @@ class Array
       self.my_each { |item| output << proc.call(item) }
     end
 
-    # should probably return an Enumerator
+    # TODO: return an Enumerator object if
+    # no block or proc argument is provided
     output
   end
 end
