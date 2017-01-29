@@ -46,3 +46,19 @@ end
 
 
 # Warmup 3: Rebuild the Enumerable Methods
+
+class Array
+  def my_each(proc = nil)
+    if block_given?
+      i = 0
+      while i < self.size
+        yield(self[i])
+        i += 1
+      end
+    elsif !proc.nil?
+      self.size.times { |i| proc.call(self[i]) }
+    end
+
+    self
+  end
+end
