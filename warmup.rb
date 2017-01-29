@@ -75,5 +75,19 @@ class Array
     # no block or proc argument is provided
     output
   end
+
+  def my_select(proc = nil)
+    output = []
+
+    if block_given?
+      self.my_each { |item| output << item if yield(item) }
+    elsif !proc.nil?
+      self.my_each { |item| output << item if proc.call(item) }
+    end
+
+    # TODO: return an Enumerator object if
+    # no block or proc argument is provided
+    output
+  end
 end
 
