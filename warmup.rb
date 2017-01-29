@@ -89,5 +89,31 @@ class Array
     # no block or proc argument is provided
     output
   end
+
+  def my_all?(proc = nil)
+    all_true = true
+
+    if block_given?
+      self.my_each do |item|
+        all_true = all_true && yield(item)
+        return false unless all_true
+      end
+    elsif !proc.nil?
+      self.my_each do |item|
+        all_true = all_true && proc.call(item)
+        return false unless all_true
+      end
+    else
+      # neither block nor proc provided -
+      # check if all members of the collection
+      # are truthy
+      self.my_each do |item|
+        all_true = all_true && item
+        return false unless all_true
+      end
+    end
+
+    true if all_true
+  end
 end
 
