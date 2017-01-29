@@ -1,3 +1,5 @@
+# Warmup 1: Ruby Methods
+
 def my_reverse(string)
   len = string.length
   chars = string.chars
@@ -25,6 +27,9 @@ def fibs(numbers)
   result
 end
 
+
+# Warmup 2: Benchmarker
+
 def my_benchmark(number_of_times)
   return 0 if number_of_times <= 0
     
@@ -38,3 +43,6 @@ def my_benchmark(number_of_times)
     0
   end
 end
+
+
+# Warmup 3: Rebuild the Enumerable Methods
