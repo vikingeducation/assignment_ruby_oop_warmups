@@ -115,5 +115,20 @@ class Array
 
     true if all_true
   end
-end
 
+  def my_inject(initial, proc = nil)
+    memo = initial
+
+    if block_given?
+      self.my_each do |item|
+        memo = yield(memo, item)
+      end
+    elsif !proc.nil?
+      self.my_each do |item|
+        memo = proc.call(memo, item)
+      end
+    end
+
+    memo
+  end
+end
