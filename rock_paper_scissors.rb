@@ -57,7 +57,7 @@ class RockPaperScissors
 
   # main game loop
   def play
-
+    display_instructions
   end
 
   # checks who won a given round
@@ -114,8 +114,13 @@ class RockPaperScissors
     puts "Congratulations, #{winner.name}! You won!"
   end
 
-  def display_introduction
+  def display_instructions
     puts "Welcome to Rock Paper Scissors!"
+    puts
+    puts "We'll play until someone has won #{wins_required} times."
+    puts "Each round, please enter either 'rock', 'paper', or 'scissors'."
+    puts "Enter 'q' to quit."
+    puts
   end
 end
 
