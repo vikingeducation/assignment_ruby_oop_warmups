@@ -57,6 +57,8 @@ class RockPaperScissors
 
   # main game loop
   def play
+    display_introduction
+
 
   end
 
@@ -89,7 +91,7 @@ class RockPaperScissors
   # gets player name
   def player_name(player_number)
     print "Player #{player_number}, please enter your name: "
-    name = gets.chomp
+    gets.chomp
   end
 
   # prints the current scores of both players
@@ -113,6 +115,10 @@ class RockPaperScissors
   def congratulate
     puts "Congratulations, #{winner.name}! You won!"
   end
+
+  def display_introduction
+    puts "Welcome to Rock Paper Scissors!"
+  end
 end
 
 
@@ -126,6 +132,7 @@ class Player
     @move = ""
   end
 
+  # asks player for his move
   def make_move
     print "Please enter your move: "
     @move = gets.chomp
@@ -143,8 +150,9 @@ class Computer
     @move = ""
   end
 
-  def make_move(moves)
-    @move = moves.sample
+  # gets computer to make a random move
+  def make_move
+    ["rock", "paper", "scissors"].sample
   end
 end
 
