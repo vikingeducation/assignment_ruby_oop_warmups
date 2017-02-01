@@ -57,8 +57,6 @@ class RockPaperScissors
 
   # main game loop
   def play
-    display_introduction
-
 
   end
 
