@@ -53,7 +53,7 @@ class TowerOfHanoi
   end
 
   # moves a Disk from one tower to another
-  def move(from, to)
+  def move_disk(from, to)
     towers[to].push(towers[from].pop)
   end
 
@@ -72,6 +72,7 @@ class TowerOfHanoi
     end
   end
 
+  # displays instructions
   def display_instructions
     puts "Welcome to Tower of Hanoi!"
     puts "Instructions: "
@@ -107,7 +108,7 @@ if $0 == __FILE__
   p tower.valid_move?(2, 1)
   p tower.valid_move?(2, 3)
   p tower.valid_move?(3, 2)
-  p tower.move(1, 2)
+  p tower.move_disk(1, 2)
   p tower.towers[1]
   p tower.towers[2]
   p tower.towers[3]
