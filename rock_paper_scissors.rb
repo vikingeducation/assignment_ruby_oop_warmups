@@ -38,6 +38,7 @@
 
 class RockPaperScissors
   VALID_MOVES = ["rock", "paper", "scissors"]
+  QUIT_OPTIONS = ["q", "quit", "exit"]
 
   attr_accessor :player1, :player2, :single_player, :wins_required
 
@@ -45,19 +46,84 @@ class RockPaperScissors
     @single_player = single_player
     @wins_required = wins_required
 
-    # @player1 = Player.new(player_name(1))
-    @player1 = Player.new("Erik")
+    @player1 = Player.new
 
     if single_player
       @player2 = Computer.new
     else
-      @player2 = Player.new(player_name(2))
+      @player2 = Player.new
     end
   end
 
   # main game loop
   def play
+    # print instructions and intro
     display_instructions
+
+    begin
+      # get player names
+      player1.name = get_player_name(1)
+      player2.name = get_player_name(2) unless single_player
+    
+      until game_over?
+        # get player1's move
+        player1.move = get_next_move(player1).downcase
+
+        # quit game if player wants to do so
+        exit_game if QUIT_OPTIONS.include?(player1.move)
+
+
+        if single_player
+          # computer makes its move
+          player2.make_move
+        else
+          # human player2 makes his move
+        end
+
+        display_moves
+        winner = round_winner
+        display_round_winner(winner)
+        increment_score(winner)
+        display_scores
+      end
+
+      congratulate(game_winner)
+    rescue SystemExit, Interrupt
+      puts
+      exit_game
+    end
+  end
+
+  # gets player name
+  def get_player_name(player_number)
+    print "Player #{player_number}, please enter your name: "
+    gets.chomp
+  end
+
+  # gets the next move/input of a human player
+  def get_next_move(player)
+    loop do
+      puts
+      print "Enter your move, #{player.name}: "
+      input = gets.chomp
+
+      if valid_move?(input)
+        return input
+      else
+        puts "Invalid move. Please try again."
+      end
+    end
+  end
+
+  # checks if a move is valid, or if player wants to quit
+  def valid_move?(move)
+    VALID_MOVES.include?(move.downcase) || QUIT_OPTIONS.include?(move.downcase)
+  end
+
+  # displays the current moves of each player
+  def display_moves
+    puts "Player 1 (#{player1.name}) makes his move: #{player1.move}!"
+    puts "Player 2 (#{player2.name}) makes his move: #{player2.move}!"
   end
 
   # checks who won a given round
@@ -81,22 +147,26 @@ class RockPaperScissors
     end
   end
 
-  # checks if a move is valid
-  def valid_move?(move)
-    VALID_MOVES.include?(move.downcase)
+  # displays the winner of a round
+  def display_round_winner(player)
+    unless player.nil?
+      puts "#{player.name} won this round!"
+    else
+      puts "It's a tie!"
+    end
   end
 
-  # gets player name
-  def player_name(player_number)
-    print "Player #{player_number}, please enter your name: "
-    gets.chomp
+  # increments the score of the winner of a round,
+  # unless it's a tie
+  def increment_score(player)
+    player.score += 1 unless player.nil?
   end
 
   # prints the current scores of both players
-  def current_scores
+  def display_scores
     puts "** Current score **"
-    puts "Player 1: #{player1.score}"
-    puts "Player 2: #{player2.score}"
+    puts "Player 1 (#{player1.name}): #{player1.score}"
+    puts "Player 2 (#{player2.name}): #{player2.score}"
   end
 
   # checks if game is over
@@ -104,23 +174,31 @@ class RockPaperScissors
     player1.score == wins_required || player2.score == wins_required
   end
 
-  # checks who won
-  def winner
+  # checks who won the game
+  def game_winner
     player1.score > player2.score ? player1 : player2
   end
 
   # prints a congratulatory message for the winner
-  def congratulate
+  def congratulate(winner)
+    puts
     puts "Congratulations, #{winner.name}! You won!"
   end
 
+  # display intro and instructions
   def display_instructions
     puts "Welcome to Rock Paper Scissors!"
     puts
     puts "We'll play until someone has won #{wins_required} times."
     puts "Each round, please enter either 'rock', 'paper', or 'scissors'."
-    puts "Enter 'q' to quit."
+    puts "Enter 'quit' to quit."
     puts
+  end
+
+  # quits game
+  def exit_game
+    puts "Goodbye!"
+    exit
   end
 end
 
@@ -129,16 +207,10 @@ end
 class Player
   attr_accessor :name, :score, :move
 
-  def initialize(name = "Derp", score = 0)
+  def initialize(name = "Derp")
     @name = name
-    @score = score
+    @score = 0
     @move = ""
-  end
-
-  # asks player for his move
-  def make_move
-    print "Please enter your move: "
-    @move = gets.chomp
   end
 end
 
@@ -155,7 +227,7 @@ class Computer
 
   # gets computer to make a random move
   def make_move
-    ["rock", "paper", "scissors"].sample
+    @move = ["rock", "paper", "scissors"].sample
   end
 end
 
