@@ -27,6 +27,10 @@ class TowerOfHanoi
 
     return true if towers[from].last.size > towers[to].last.size
   end
+
+  def move(from, to)
+    towers[to].push(towers[from].pop)
+  end
 end
 
 
@@ -51,8 +55,8 @@ if $0 == __FILE__
   p tower.valid_move?(2, 1)
   p tower.valid_move?(2, 3)
   p tower.valid_move?(3, 2)
-  # p tower.move(tower.towers[1], tower.towers[2])
-  # p tower.towers[1]
-  # p tower.towers[2]
-  # p tower.towers[3]
+  p tower.move(1, 2)
+  p tower.towers[1]
+  p tower.towers[2]
+  p tower.towers[3]
 end
