@@ -89,7 +89,7 @@ class TowerOfHanoi
   end
 
   # check if the game is over
-  def game_over?
+  def victory?
     all_disks_in_place? && all_disks_in_order?(3)
   end
 
@@ -124,7 +124,7 @@ class TowerOfHanoi
   end
 
   # print congratulatory message
-  def player_won
+  def congratulate
     puts "\nCongratulations, you won!"
   end
 
@@ -145,8 +145,8 @@ class TowerOfHanoi
         move_disk(from, to)
         render
 
-        if game_over?
-          player_won
+        if victory?
+          congratulate
           break
         end
       end
