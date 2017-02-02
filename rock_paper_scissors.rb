@@ -39,7 +39,7 @@
 require 'io/console'
 
 class RockPaperScissors
-  VALID_MOVES = ["rock", "paper", "scissors"]
+  VALID_MOVES = { "r" => "rock", "p" => "paper", "s" => "scissors" }
   QUIT_OPTIONS = ["q", "quit", "exit"]
 
   attr_accessor :player1, :player2, :single_player, :wins_required
@@ -112,26 +112,30 @@ class RockPaperScissors
   def get_next_move(player)
     loop do
       print "Enter your move, #{player.name}: "
-      # input = gets.chomp
-      input = STDIN.noecho(&:gets).chomp
 
-      if valid_move?(input)
-        return input
-      else
-        puts "Invalid move. Please try again."
+      move = STDIN.noecho(&:gets).chomp.downcase
+
+      if VALID_MOVES.has_key?(move)
+        return VALID_MOVES[move]
       end
+      
+      return move if valid_move?(move)
+      
+      puts "Invalid move. Please try again."
+      puts
     end
   end
 
   # checks if a move is valid, or if player wants to quit
   def valid_move?(move)
-    VALID_MOVES.include?(move.downcase) || QUIT_OPTIONS.include?(move.downcase)
+    VALID_MOVES.has_key?(move) || VALID_MOVES.has_value?(move) || QUIT_OPTIONS.include?(move)
   end
 
   # displays the current moves of each player
   def display_moves
-    puts "Player 1 (#{player1.name}) makes his move: #{player1.move}!"
-    puts "Player 2 (#{player2.name}) makes his move: #{player2.move}!"
+    puts
+    puts "Player 1 (#{player1.name}) makes the move: #{player1.move}!"
+    puts "Player 2 (#{player2.name}) makes the move: #{player2.move}!"
   end
 
   # checks who won a given round
@@ -198,7 +202,7 @@ class RockPaperScissors
     puts "Welcome to Rock Paper Scissors!"
     puts
     puts "We'll play until someone has won #{wins_required} times."
-    puts "Each round, please enter either 'rock', 'paper', or 'scissors'."
+    puts "Each round, please enter either '(r)ock', '(p)aper', or '(s)cissors'."
     puts "Enter 'quit' to quit."
     puts
   end
