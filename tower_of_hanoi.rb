@@ -75,7 +75,7 @@ class TowerOfHanoi
 
   # print out the current state of the towers
   def render
-    puts "\nCurrent state:"
+    puts "\nCurrent state of towers:"
 
     1.upto(3) do |i|
       output = ""
@@ -84,8 +84,7 @@ class TowerOfHanoi
         output += "#{disk.size}, "
       end
       
-      # trim trailing comma and space
-      # puts output[0..-3]
+      # trim trailing comma
       last_comma = output.rindex(",")
       unless last_comma.nil?
         output = output[0..last_comma - 1]
