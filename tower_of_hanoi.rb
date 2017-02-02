@@ -28,8 +28,22 @@ class TowerOfHanoi
     return true if towers[from].last.size > towers[to].last.size
   end
 
+  # moves a Disk from one tower to another
   def move(from, to)
     towers[to].push(towers[from].pop)
+  end
+
+  # print out the current state of the towers
+  def render
+    1.upto(3) do |i|
+      output = ""
+      output += "Tower #{i}: "
+      towers[i].each do |disk|
+        output += "#{disk.size}, "
+      end
+      # trim trailing comma and space
+      puts output[0..-3]
+    end
   end
 end
 
@@ -45,9 +59,7 @@ end
 
 if $0 == __FILE__
   tower = TowerOfHanoi.new
-  p tower.towers[1]
-  p tower.towers[2]
-  p tower.towers[3]
+  tower.render
   p tower.valid_move?(1, 1)
   p tower.valid_move?(1, 2)
   p tower.valid_move?(1, 3)
@@ -59,4 +71,5 @@ if $0 == __FILE__
   p tower.towers[1]
   p tower.towers[2]
   p tower.towers[3]
+  tower.render
 end
