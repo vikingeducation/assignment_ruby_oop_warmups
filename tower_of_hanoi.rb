@@ -19,15 +19,14 @@ class TowerOfHanoi
 
   # checks if requested move is valid
   def valid_move?(from, to)
-    return false if from.empty?
+    return false if towers[from].empty?
 
-    return true if to.empty?
+    return true if towers[to].empty?
 
-    return true if from == to
+    return true if towers[from] == towers[to]
 
-    return true if from.last.size > to.last.size
+    return true if towers[from].last.size > towers[to].last.size
   end
-
 end
 
 
@@ -45,11 +44,15 @@ if $0 == __FILE__
   p tower.towers[1]
   p tower.towers[2]
   p tower.towers[3]
-  p tower.valid_move?(tower.towers[1], tower.towers[1])
-  p tower.valid_move?(tower.towers[1], tower.towers[2])
-  p tower.valid_move?(tower.towers[1], tower.towers[3])
-  p tower.valid_move?(tower.towers[3], tower.towers[1])
-  p tower.valid_move?(tower.towers[2], tower.towers[1])
-  p tower.valid_move?(tower.towers[2], tower.towers[3])
-  p tower.valid_move?(tower.towers[3], tower.towers[2])
+  p tower.valid_move?(1, 1)
+  p tower.valid_move?(1, 2)
+  p tower.valid_move?(1, 3)
+  p tower.valid_move?(3, 1)
+  p tower.valid_move?(2, 1)
+  p tower.valid_move?(2, 3)
+  p tower.valid_move?(3, 2)
+  # p tower.move(tower.towers[1], tower.towers[2])
+  # p tower.towers[1]
+  # p tower.towers[2]
+  # p tower.towers[3]
 end
