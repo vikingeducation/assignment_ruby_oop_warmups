@@ -1,5 +1,6 @@
 # TODO:
 # 1. Refactor render method to display Disks in graphical format
+# 2. Refactor play method to reset game when the player wins
 
 class TowerOfHanoi
   QUIT_OPTIONS = ["q", "quit", "exit"]
