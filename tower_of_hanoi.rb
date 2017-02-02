@@ -42,6 +42,7 @@ class TowerOfHanoi
     end
   end
 
+  # check if we're correctly moving a disk from one tower to another
   def proper_stacking?(from, to)
     if towers[to].empty? || towers[from].last.size > towers[to].last.size
       return true
@@ -58,6 +59,8 @@ class TowerOfHanoi
 
   # print out the current state of the towers
   def render
+    puts "\nCurrent state:"
+
     1.upto(3) do |i|
       output = ""
       output += "Tower #{i}: "
@@ -67,6 +70,13 @@ class TowerOfHanoi
       # trim trailing comma and space
       puts output[0..-3]
     end
+  end
+
+  def display_instructions
+    puts "Welcome to Tower of Hanoi!"
+    puts "Instructions: "
+    puts "Enter where you'd like to move from and to"
+    puts "in the format '1, 3'. Enter 'q' to quit."
   end
 
   # exits the game
