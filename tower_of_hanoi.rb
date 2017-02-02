@@ -1,4 +1,6 @@
 class TowerOfHanoi
+  QUIT_OPTIONS = ["q", "quit", "exit"]
+
   attr_accessor :towers, :starting_disks
 
   def initialize(starting_disks = 3)
@@ -57,6 +59,11 @@ class TowerOfHanoi
     towers[to].push(towers[from].pop)
   end
 
+  def get_player_move
+    print "\nPlease enter your move: "
+    move = gets.chomp.split(",")
+  end
+
   # print out the current state of the towers
   def render
     puts "\nCurrent state:"
@@ -113,4 +120,5 @@ if $0 == __FILE__
   p tower.towers[2]
   p tower.towers[3]
   tower.render
+  p tower.get_player_move
 end
