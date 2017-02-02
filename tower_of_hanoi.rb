@@ -45,6 +45,14 @@ class TowerOfHanoi
       puts output[0..-3]
     end
   end
+
+  # exits the game
+  def exit_game
+    puts "Goodbye!"
+    exit
+  end
+
+  
 end
 
 
