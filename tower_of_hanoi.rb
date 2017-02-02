@@ -19,13 +19,42 @@ class TowerOfHanoi
 
   # checks if requested move is valid
   def valid_move?(from, to)
-    return false if towers[from].empty?
+    return false unless has_disk(towers[from])
 
     return true if towers[to].empty?
 
     return true if towers[from] == towers[to]
 
     return true if towers[from].last.size > towers[to].last.size
+  end
+
+  # checks if there are any disks in the tower
+  def has_disk(tower)
+    unless tower.empty?
+      return true
+    else
+      puts "That tower has no disks to move."
+      return false
+    end
+  end
+
+  # checks if the requested from/to tower is within the correct range
+  def in_range?(tower)
+    if (1..3).include?(tower)
+      return true
+    else
+      puts "That input is not a valid tower."
+      return false
+    end
+  end
+
+  def proper_stacking(from, to)
+    if towers[to].empty? || towers[from].last > tower[to].last
+      return true
+    else
+      puts "You need to put a smaller disk on top of a larger one."
+      return false
+    end
   end
 
   # moves a Disk from one tower to another
@@ -52,7 +81,6 @@ class TowerOfHanoi
     exit
   end
 
-  
 end
 
 
