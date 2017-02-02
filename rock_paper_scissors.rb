@@ -57,13 +57,15 @@ class RockPaperScissors
 
   # main game loop
   def play
-    # print instructions and intro
-    display_instructions
-
     begin
+      # print instructions and intro
+      display_instructions
+      check_if_two_players
+
       # get player names
       player1.name = get_player_name(1)
       player2.name = get_player_name(2) unless single_player
+      puts
     
       until game_over?
         # get player1's move
@@ -78,6 +80,10 @@ class RockPaperScissors
           player2.make_move
         else
           # human player2 makes his move
+          player2.move = get_next_move(player2).downcase
+
+          # quit game if player wants to do so
+          exit_game if QUIT_OPTIONS.include?(player2.move)
         end
 
         display_moves
@@ -103,7 +109,6 @@ class RockPaperScissors
   # gets the next move/input of a human player
   def get_next_move(player)
     loop do
-      puts
       print "Enter your move, #{player.name}: "
       input = gets.chomp
 
@@ -167,6 +172,7 @@ class RockPaperScissors
     puts "** Current score **"
     puts "Player 1 (#{player1.name}): #{player1.score}"
     puts "Player 2 (#{player2.name}): #{player2.score}"
+    puts
   end
 
   # checks if game is over
@@ -181,7 +187,6 @@ class RockPaperScissors
 
   # prints a congratulatory message for the winner
   def congratulate(winner)
-    puts
     puts "Congratulations, #{winner.name}! You won!"
   end
 
@@ -193,6 +198,14 @@ class RockPaperScissors
     puts "Each round, please enter either 'rock', 'paper', or 'scissors'."
     puts "Enter 'quit' to quit."
     puts
+  end
+
+  def check_if_two_players
+    print "Are there two players? (y/n) "
+
+    response = gets.chomp.downcase
+
+    @single_player = false if response == "y"
   end
 
   # quits game
