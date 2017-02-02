@@ -1,3 +1,6 @@
+# TODO:
+# 1. Refactor render method to display Disks in graphical format
+
 class TowerOfHanoi
   QUIT_OPTIONS = ["q", "quit", "exit"]
 
