@@ -83,8 +83,15 @@ class TowerOfHanoi
       towers[i].each do |disk|
         output += "#{disk.size}, "
       end
+      
       # trim trailing comma and space
-      puts output[0..-3]
+      # puts output[0..-3]
+      last_comma = output.rindex(",")
+      unless last_comma.nil?
+        output = output[0..last_comma - 1]
+      end
+
+      puts output
     end
   end
 
