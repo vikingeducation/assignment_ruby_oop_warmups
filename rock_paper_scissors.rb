@@ -36,6 +36,8 @@
 # 6. If it's a tie, repeat steps 1 to 5.
 # 7. Repeat the above until the desired number of rounds are met, or the player decides to quit.
 
+require 'io/console'
+
 class RockPaperScissors
   VALID_MOVES = ["rock", "paper", "scissors"]
   QUIT_OPTIONS = ["q", "quit", "exit"]
@@ -110,7 +112,8 @@ class RockPaperScissors
   def get_next_move(player)
     loop do
       print "Enter your move, #{player.name}: "
-      input = gets.chomp
+      # input = gets.chomp
+      input = STDIN.noecho(&:gets).chomp
 
       if valid_move?(input)
         return input
