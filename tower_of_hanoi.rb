@@ -46,7 +46,7 @@ class TowerOfHanoi
 
   # check if we're correctly moving a disk from one tower to another
   def proper_stacking?(from, to)
-    if towers[to].empty? || towers[from].last.size > towers[to].last.size
+    if towers[to].empty? || towers[to].last.size > towers[from].last.size
       return true
     else
       puts "You need to put a smaller disk on top of a larger one."
@@ -90,7 +90,7 @@ class TowerOfHanoi
 
   # check if the game is over
   def game_over?
-    all_disks_in_place? && all_disks_in_order(3)
+    all_disks_in_place? && all_disks_in_order?(3)
   end
 
   # check if all Disks are on the last tower
@@ -119,10 +119,41 @@ class TowerOfHanoi
 
   # exits the game
   def exit_game
-    puts "Goodbye!"
+    puts "\nGoodbye!"
     exit
   end
 
+  # print congratulatory message
+  def player_won
+    puts "\nCongratulations, you won!"
+  end
+
+  # main method to play game
+  def play
+    display_instructions
+    render
+
+    begin
+      loop do
+        from, to = get_player_move
+
+        exit_game if QUIT_OPTIONS.include?(from)
+        next if from.nil?
+
+        next unless valid_move?(from, to)
+
+        move_disk(from, to)
+        render
+
+        if game_over?
+          player_won
+          break
+        end
+      end
+    rescue Interrupt
+      exit_game
+    end
+  end
 end
 
 
@@ -137,18 +168,5 @@ end
 
 if $0 == __FILE__
   tower = TowerOfHanoi.new
-  tower.render
-  p tower.valid_move?(1, 1)
-  p tower.valid_move?(1, 2)
-  p tower.valid_move?(1, 3)
-  p tower.valid_move?(3, 1)
-  p tower.valid_move?(2, 1)
-  p tower.valid_move?(2, 3)
-  p tower.valid_move?(3, 2)
-  tower.move_disk(1, 3)
-  tower.move_disk(1, 3)
-  tower.move_disk(1, 3)
-  tower.render
-  p tower.all_disks_in_place?
-  p tower.all_disks_in_order?(3)
+  tower.play
 end
