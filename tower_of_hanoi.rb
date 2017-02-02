@@ -88,6 +88,27 @@ class TowerOfHanoi
     end
   end
 
+  # check if the game is over
+  def game_over?
+    all_disks_in_place? && all_disks_in_order(3)
+  end
+
+  # check if all Disks are on the last tower
+  def all_disks_in_place?
+    towers[1].length == 0 && towers[2].length == 0 && towers[3].length == starting_disks
+  end
+
+  # check if all Disks are in the right order
+  def all_disks_in_order?(tower)
+    counter = starting_disks
+    towers[tower].each do |disk|
+      return false unless disk.size == counter
+      counter -= 1
+    end
+
+    true
+  end
+
   # displays instructions
   def display_instructions
     puts "Welcome to Tower of Hanoi!"
@@ -124,10 +145,10 @@ if $0 == __FILE__
   p tower.valid_move?(2, 1)
   p tower.valid_move?(2, 3)
   p tower.valid_move?(3, 2)
-  p tower.move_disk(1, 2)
-  p tower.towers[1]
-  p tower.towers[2]
-  p tower.towers[3]
+  tower.move_disk(1, 3)
+  tower.move_disk(1, 3)
+  tower.move_disk(1, 3)
   tower.render
-  p tower.get_player_move
+  p tower.all_disks_in_place?
+  p tower.all_disks_in_order?(3)
 end
