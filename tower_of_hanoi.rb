@@ -59,9 +59,18 @@ class TowerOfHanoi
     towers[to].push(towers[from].pop)
   end
 
+  # prompts the player for a move/input
   def get_player_move
     print "\nPlease enter your move: "
     move = gets.chomp.split(",")
+
+    if QUIT_OPTIONS.include?(move.first)
+      return move.first
+    elsif move.length == 2
+      return move.map(&:to_i)
+    else
+      puts "\nInvalid input. Please try again.\n"
+    end
   end
 
   # print out the current state of the towers
