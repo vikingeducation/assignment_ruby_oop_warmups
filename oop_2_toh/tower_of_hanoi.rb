@@ -2,12 +2,9 @@ require_relative 'rod.rb'
 require_relative 'disk.rb'
 
 class TowerOfHanoi
-  def initialize(disks=3)
+  def initialize(disk_count=3)
     @rods = [Rod.new, Rod.new, Rod.new]
-
-    disks.downto(1) do |i|
-      @rods[0].push(Disk.new(i))
-    end
+    @disk_count = disk_count
   end
 
   # TODO - Refactor new_game method
@@ -19,6 +16,12 @@ class TowerOfHanoi
 
   def reset_board
     3.times { |i| @rods[i].reset }
+
+    i = @disk_count
+    while i > 0 do
+      @rods[0].push(Disk.new(i))
+      i -= 1
+    end
   end
 
   def instructions
@@ -69,7 +72,6 @@ class TowerOfHanoi
     entry == "q"
   end
 
-  # TODO - Refactor play method
   def play
     new_game
 
@@ -85,11 +87,11 @@ class TowerOfHanoi
   #### Render methods
   def render
     puts "Rod One:"
-    @rod_one.render
+    @rods[0].render
     puts "Rod Two:"
-    @rod_two.render
+    @rods[1].render
     puts "Rod Three:"
-    @rod_three.render
+    @rods[2].render
   end
 
   # TODO - Refactor valid_move? method
@@ -126,4 +128,4 @@ class TowerOfHanoi
 end
 
 a = TowerOfHanoi.new
-a.render
+a.play
