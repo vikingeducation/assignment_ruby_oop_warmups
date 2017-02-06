@@ -36,4 +36,18 @@ class Array
     select_arr
   end
 
+  def my_all?(proc = nil)
+    if block_given?
+      self.my_each do |i|
+        return false unless yield(i)
+      end
+    else
+      self.my_each do |i|
+        return false unless proc.call(i)
+      end
+    end
+
+    true
+  end
+
 end
