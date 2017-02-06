@@ -5,9 +5,14 @@ require_relative 'paper.rb'
 require_relative 'scissors.rb'
 
 class Game
-  def initialize(player_one, player_two)
-    @player_one = player_one
-    @player_two = player_two
+  def initialize(player_one="Player 1", player_two="Player 2", vs_computer?=true)
+    @player_one = Player.new(player_one)
+
+    if vs_computer?
+      @player_two = ComputerPlayer.new(player_two)
+    else
+      @player_two = Player.new(player_two)
+    end
   end
 
   def play
@@ -26,4 +31,5 @@ class Game
       @player_two.name
     end
   end
+
 end
