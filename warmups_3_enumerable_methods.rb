@@ -50,4 +50,20 @@ class Array
     true
   end
 
+  def my_inject(init_value=0, proc=nil)
+    running_total = init_value
+
+    if block_given?
+      self.my_each do |i|
+        running_total = yield(running_total, i)
+      end
+    else
+      self.my_each do |i|
+        running_total = proc.call(running_total, i)
+      end
+    end
+
+    running_total
+  end
+
 end
