@@ -1,4 +1,5 @@
 require_relative 'rod.rb'
+require_relative 'disk.rb'
 
 class TowerOfHanoi
   def initialize(disks=3)
@@ -6,9 +7,8 @@ class TowerOfHanoi
     @rod_two = Rod.new
     @rod_three = Rod.new
 
-    i = disks
     disks.downto(1) do |i|
-      @rod_one.add_disk(i)
+      @rod_one.add_disk(Disk.new(i))
     end
   end
 
@@ -89,55 +89,13 @@ class TowerOfHanoi
 
   # TODO - Refactor render methods
   #### Render methods
-
-  def render_margin(margin)
-    print " " * margin
-  end
-
-  def render_base(line_width, margin)
-    dash_padding = (line_width - 3) / 2
-    board_length = line_width * 3 + margin * 2
-
-    puts "-" * board_length
-
-    1.upto(3) do |i|
-      print "-" * dash_padding
-      print " #{i} "
-      print "-" * dash_padding
-      print " " * margin unless i == 3
-      puts if i == 3
-    end
-
-    puts "-" * board_length
-    puts
-  end
-
-  def render_disk(line_width, disk_width)
-    padding = (line_width - disk_width) / 2
-    print " " * padding
-    disk_width == 0 ? print(" ") : print("0" * disk_width)
-    print " " * padding
-  end
-
   def render
-    line_width = 7 + (@disks - 3) * 2
-    margin = 3 + (@disks - 3)
-
-    @disks.downto(0) do |row|
-      3.times do |rod|
-        if @rods[rod][row]
-          disk_width = 1 + (@rods[rod][row] - 1) * 2
-        else
-          disk_width = 0
-        end
-
-        render_disk(line_width, disk_width)
-        render_margin(margin)
-        puts if rod == 2
-      end
-    end
-
-    render_base(line_width, margin)
+    puts "Rod One:"
+    @rod_one.render
+    puts "Rod Two:"
+    @rod_two.render
+    puts "Rod Three:"
+    @rod_three.render
   end
 
   # TODO - Refactor valid_move? method
@@ -172,3 +130,6 @@ class TowerOfHanoi
   end
 
 end
+
+a = TowerOfHanoi.new
+a.render
