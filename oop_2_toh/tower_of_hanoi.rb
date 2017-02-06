@@ -17,6 +17,13 @@ class TowerOfHanoi
     @rod_two.reset
     @rod_three.reset
   end
+
+  def instructions
+    puts "\nWelcome to Tower of Hanoi!\n\n"
+    puts "Instructions:\n\n"
+    puts "Enter where you'd like to move from and to"
+    puts "in the format '1,3'. Enter 'q' to quit."
+  end
 end
 
 TowerOfHanoi.new
