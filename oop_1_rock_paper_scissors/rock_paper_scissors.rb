@@ -4,7 +4,7 @@ require_relative 'rock.rb'
 require_relative 'paper.rb'
 require_relative 'scissors.rb'
 
-class Game
+class RockPaperScissors
   def initialize(player_one="Player 1", player_two="Player 2", vs_computer=true)
     @player_one = Player.new(player_one)
 
@@ -46,6 +46,3 @@ class Game
   end
 
 end
-
-game = Game.new
-game.play
