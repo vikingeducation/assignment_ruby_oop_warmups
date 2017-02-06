@@ -3,12 +3,10 @@ require_relative 'disk.rb'
 
 class TowerOfHanoi
   def initialize(disks=3)
-    @rod_one = Rod.new
-    @rod_two = Rod.new
-    @rod_three = Rod.new
+    @rods = [Rod.new, Rod.new, Rod.new]
 
     disks.downto(1) do |i|
-      @rod_one.add_disk(Disk.new(i))
+      @rods[0].push(Disk.new(i))
     end
   end
 
@@ -20,9 +18,7 @@ class TowerOfHanoi
   end
 
   def reset_board
-    @rod_one.reset
-    @rod_two.reset
-    @rod_three.reset
+    3.times { |i| @rods[i].reset }
   end
 
   def instructions
@@ -37,8 +33,8 @@ class TowerOfHanoi
     from = entry[0].to_i - 1
     to = entry[2].to_i - 1
 
-    # disk = @rods[from].pop()
-    # @rods[to].push(disk)
+    disk = @rods[from].pop()
+    @rods[to].push(disk)
   end
 
   # TODO - Refactor win? method
