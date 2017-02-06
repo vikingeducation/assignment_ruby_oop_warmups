@@ -1,4 +1,5 @@
 require_relative 'player.rb'
+require_relative 'computer_player.rb'
 require_relative 'rock.rb'
 require_relative 'paper.rb'
 require_relative 'scissors.rb'
@@ -7,6 +8,12 @@ class Game
   def initialize(player_one, player_two)
     @player_one = player_one
     @player_two = player_two
+  end
+
+  def play
+    @player_one.choose_move
+    @player_two.choose_move
+    puts winner
   end
 
   def winner
@@ -20,4 +27,3 @@ class Game
     end
   end
 end
-
