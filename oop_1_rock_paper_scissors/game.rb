@@ -16,11 +16,20 @@ class Game
   end
 
   def play
+    puts "#{@player_one.name}, it's your turn." unless @player_two.class == ComputerPlayer
     @player_one.choose_move
+
+    puts "#{@player_two.name}, it's your turn." unless @player_two.class == ComputerPlayer
     @player_two.choose_move
-    puts @player_one.move
-    puts @player_two.move
-    puts winner
+
+    puts "#{@player_one.name} chose #{@player_one.move.class}."
+    puts "#{@player_two.name} chose #{@player_two.move.class}."
+
+    if winner == "Draw"
+      puts "The game is a draw."
+    else
+      puts "The winner is #{winner}."
+    end
   end
 
   def winner
@@ -28,7 +37,7 @@ class Game
     move_two = @player_two.move
 
     if move_one.class == move_two.class
-      puts "Draw"
+      "Draw"
     elsif move_one.beats?(move_two)
       @player_one.name
     else
