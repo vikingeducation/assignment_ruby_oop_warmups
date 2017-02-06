@@ -11,6 +11,12 @@ class TowerOfHanoi
       @rod_one.add_disk(i)
     end
   end
+
+  def reset_board
+    @rod_one.reset
+    @rod_two.reset
+    @rod_three.reset
+  end
 end
 
 TowerOfHanoi.new
