@@ -5,7 +5,7 @@ class Rod
     @disks = []
   end
 
-  def add_disk(disk)
+  def push(disk)
     @disks.push(disk)
   end
 
