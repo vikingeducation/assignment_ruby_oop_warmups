@@ -9,6 +9,10 @@ class Rod
     @disks.push(disk)
   end
 
+  def pop
+    @disks.pop
+  end
+
   def render
     i = @disks.count - 1
 
