@@ -5,10 +5,10 @@ require_relative 'paper.rb'
 require_relative 'scissors.rb'
 
 class Game
-  def initialize(player_one="Player 1", player_two="Player 2", vs_computer?=true)
+  def initialize(player_one="Player 1", player_two="Player 2", vs_computer=true)
     @player_one = Player.new(player_one)
 
-    if vs_computer?
+    if vs_computer
       @player_two = ComputerPlayer.new(player_two)
     else
       @player_two = Player.new(player_two)
@@ -18,6 +18,8 @@ class Game
   def play
     @player_one.choose_move
     @player_two.choose_move
+    puts @player_one.move
+    puts @player_two.move
     puts winner
   end
 
@@ -25,7 +27,9 @@ class Game
     move_one = @player_one.move
     move_two = @player_two.move
 
-    if move_one.beats?(move_two)
+    if move_one.class == move_two.class
+      puts "Draw"
+    elsif move_one.beats?(move_two)
       @player_one.name
     else
       @player_two.name
@@ -33,3 +37,6 @@ class Game
   end
 
 end
+
+game = Game.new
+game.play
