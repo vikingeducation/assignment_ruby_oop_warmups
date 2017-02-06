@@ -3,7 +3,7 @@ require_relative 'paper.rb'
 
 class Scissors
   def beats?(item)
-    !item.beatsRock?
+    !item.beatsScissors?
   end
 
   def beatsRock?
