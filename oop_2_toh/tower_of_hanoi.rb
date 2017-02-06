@@ -25,24 +25,22 @@ class TowerOfHanoi
     puts "\nWelcome to Tower of Hanoi!\n\n"
     puts "Instructions:\n\n"
     puts "Enter where you'd like to move from and to"
-    puts "in the format '1,3'. Enter 'q' to quit."
+    puts "in the format '1,3'. Entesr 'q' to quit."
   end
 
-  # TODO - Refactor move_disk method
   def move_disk(entry)
     from = entry[0].to_i - 1
     to = entry[2].to_i - 1
 
-    disk = @rods[from].pop()
+    disk = @rods[from].pop
     @rods[to].push(disk)
   end
 
-  # TODO - Refactor win? method
   def win?
     winning_sequence = []
 
     @disks.downto(1) do |i|
-      winning_sequence.push(i)
+      winning_sequence.push(Disk.new(i))
     end
 
     @rods[1] == winning_sequence || @rods[2] == winning_sequence ? true : false
