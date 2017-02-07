@@ -39,15 +39,13 @@ class TowerOfHanoi
   end
 
   def win?
-    winning_sequence = Rod.new
-
-    i = @disk_count
-    while i > 0 do
-      winning_sequence.push(Disk.new(i))
-      i -= 1
+    if @rods[1].count == @disk_count
+      true
+    elsif @rods[2].count == @disk_count
+      true
+    else
+      false
     end
-
-    @rods[1] == winning_sequence || @rods[2] == winning_sequence ? true : false
   end
 
   def invalid_entry
