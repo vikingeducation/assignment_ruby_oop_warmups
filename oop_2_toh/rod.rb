@@ -21,12 +21,11 @@ class Rod
     @disks.pop
   end
 
-  def render
-    i = @disks.count - 1
-
-    @disks.count.times do
-      @disks[i].render
-      i -= 1
+  def render(line_width, row)
+    if count > row
+      @disks[row].render(line_width)
+    else
+      print " " * line_width
     end
   end
 

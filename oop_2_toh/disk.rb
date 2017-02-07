@@ -3,9 +3,13 @@ class Disk
     @size = size
   end
 
-  # TODO - Refactor render method for disks
-  def render
-    puts @size
+  def render(line_width)
+    disk_width = 1 + (@size - 1) * 2
+    padding = (line_width - disk_width) / 2
+
+    print " " * padding
+    disk_width == 0 ? print(" ") : print("0" * disk_width)
+    print " " * padding
   end
 
   def size

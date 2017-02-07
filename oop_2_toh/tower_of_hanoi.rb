@@ -82,18 +82,6 @@ class TowerOfHanoi
     play_again? ? play : exit
   end
 
-  # TODO - Refactor render methods
-  #### Render methods
-  def render
-    puts "Rod One:"
-    @rods[0].render
-    puts "Rod Two:"
-    @rods[1].render
-    puts "Rod Three:"
-    @rods[2].render
-  end
-
-  # TODO - Refactor valid_move? method
   def valid_move?(entry)
     from = entry[0].to_i - 1
     to = entry[2].to_i - 1
@@ -109,7 +97,6 @@ class TowerOfHanoi
     true
   end
 
-  # TODO - Refactor user_move method
   def user_move
     print "Enter move: "
     entry = gets.chomp()
@@ -124,7 +111,39 @@ class TowerOfHanoi
     end
   end
 
-end
+  #### Render methods
+  def render
+    line_width = 7 + (@disk_count - 3) * 2
+    margin = 3 + (@disk_count - 3)
 
-a = TowerOfHanoi.new
-a.play
+    @disk_count.downto(0) do |row|
+      3.times do |rod|
+        @rods[rod].render(line_width, row)
+        render_margin(margin)
+        puts if rod == 2
+      end
+    end
+
+    render_base(line_width, margin)
+  end
+
+  def render_margin(margin)
+    print " " * margin
+  end
+
+  def render_base(line_width, margin)
+    dash_padding = (line_width - 3) / 2
+
+    i = 1
+    3.times do
+      print "-" * dash_padding
+      print " #{i} "
+      print "-" * dash_padding
+      print " " * margin unless i == 3
+      i += 1
+    end
+
+    print "\n\n"
+  end
+
+end
