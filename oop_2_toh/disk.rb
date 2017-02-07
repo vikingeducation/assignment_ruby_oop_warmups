@@ -7,4 +7,8 @@ class Disk
   def render
     puts @size
   end
+
+  def size
+    @size
+  end
 end
