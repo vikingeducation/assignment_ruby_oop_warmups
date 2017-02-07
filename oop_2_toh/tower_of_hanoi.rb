@@ -27,7 +27,7 @@ class TowerOfHanoi
     puts "\nWelcome to Tower of Hanoi!\n\n"
     puts "Instructions:\n\n"
     puts "Enter where you'd like to move from and to"
-    puts "in the format '1,3'. Entesr 'q' to quit."
+    puts "in the format '1,3'. Enter 'q' to quit."
   end
 
   def move_disk(entry)
@@ -100,10 +100,10 @@ class TowerOfHanoi
 
     return false unless /[1-3,1-3]/.match(entry)
     return false if from == to
-    return false if @rods[from] == []
+    return false if @rods[from].count == 0
 
-    if @rods[to] != []
-      return false if @rods[to][-1] < @rods[from][-1]
+    if @rods[to].count > 0
+      return false if @rods[to].top_disk.size < @rods[from].top_disk.size
     end
 
     true
