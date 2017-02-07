@@ -7,7 +7,6 @@ class TowerOfHanoi
     @disk_count = disk_count
   end
 
-  # TODO - Refactor new_game method
   def new_game
     reset_board
     instructions
@@ -40,10 +39,12 @@ class TowerOfHanoi
   end
 
   def win?
-    winning_sequence = []
+    winning_sequence = Rod.new
 
-    @disks.downto(1) do |i|
+    i = @disk_count
+    while i > 0 do
       winning_sequence.push(Disk.new(i))
+      i -= 1
     end
 
     @rods[1] == winning_sequence || @rods[2] == winning_sequence ? true : false

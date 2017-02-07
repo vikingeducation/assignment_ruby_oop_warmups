@@ -9,6 +9,14 @@ class Rod
     @disks.push(disk)
   end
 
+  def count
+    @disks.count
+  end
+
+  def top_disk
+    @disks[-1]
+  end
+
   def pop
     @disks.pop
   end
