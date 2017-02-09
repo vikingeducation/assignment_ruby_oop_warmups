@@ -3,12 +3,10 @@ require './my_each.rb'
 class Array
   def my_select (proc_argument = nil)
     result = []
-    if block_given?
-      self.my_each do |item|
+    self.my_each do |item|
+      if block_given?
         result << item if yield(item)
-      end
-    else
-      self.my_each do |item|
+      else
         result << item if proc_argument.call(item)
       end
     end
