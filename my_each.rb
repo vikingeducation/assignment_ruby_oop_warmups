@@ -1,12 +1,14 @@
 class Array
-  def my_each(&block)
-    (self.length).times do |x|
-      block.call(self[x])
+  def my_each( proc = nil, &block)
+    if block_given?
+      (self.length).times do |x|
+        block.call(self[x])
+      end
+    else
+      (self.length).times do |x|
+        proc.call(self[x])
+      end
     end
-  end
-  
-  def my_each(my_proc)
-    puts my_proc
   end
 end
 
