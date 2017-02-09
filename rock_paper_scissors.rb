@@ -12,7 +12,7 @@ class Game
     play
   end
 
-  def humanChoice
+  def human_choice
     loop do
       puts "Your choice: #{CHOICES}? "
       choice = gets.chomp.downcase
@@ -24,16 +24,16 @@ class Game
     end
   end
 
-  def computerChoice
+  def computer_choice
     return CHOICES.slice(0,3).sample
   end
 
-  def secondPlayerChoice
+  def second_player_choice
     if @two_player_mode
       puts "Second player's turn: "
-      player2_choice = humanChoice
+      player2_choice = human_choice
     else
-      player2_choice = computerChoice
+      player2_choice = computer_choice
     end
   end
 
@@ -51,9 +51,9 @@ class Game
   def play
     loop do
       puts "First player's turn: "
-      player1_choice = humanChoice
+      player1_choice = human_choice
       break if player1_choice == "quit"
-      player2_choice = secondPlayerChoice
+      player2_choice = second_player_choice
       break if player2_choice == "quit"
       puts "\nPlayer 1 picked: #{player1_choice}, player 2 picked: #{player2_choice}!"
       check_win(player1_choice, player2_choice)

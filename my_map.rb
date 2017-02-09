@@ -3,12 +3,10 @@ require './my_each.rb'
 class Array
   def my_map (proc_argument = nil)
     result = []
-    if block_given?
-      self.my_each do |item|
+    self.my_each do |item|
+      if block_given?
         result << yield(item)
-      end
-    else
-      self.my_each do |item|
+      else
         result << proc_argument.call(item)
       end
     end
