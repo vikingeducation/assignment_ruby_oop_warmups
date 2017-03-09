@@ -71,14 +71,14 @@ end
 class Array 
 
   def my_each 
-		(self.length).times do |i|
+    (self.length).times do |i|
       yield self[i]
-		end
-		self
+    end
+    self
   end
 
   def my_map
-	  result = []
+    result = []
 
     self.my_each do |el|
       result << yield(el)
@@ -88,7 +88,7 @@ class Array
   end
 
   def my_select
-	  result = []
+    result = []
 
     self.my_each do |el|
       result << el if yield(el)
@@ -105,6 +105,7 @@ class Array
         exit
       end
     end
+    
     true
 
   end
