@@ -20,8 +20,7 @@ end
 
 ## Function 2: Fibonacci
 
-### Option 1: since no one will ever want a Fibonacci sequence of less than three numbers, 
-### I don't see the probem with filling the array with the first two numbers already.
+### Version 1
 
 def fibonacci(n)
 	fibo_nums = [0, 1]
@@ -33,8 +32,7 @@ def fibonacci(n)
 	fibo_nums
 end
 
-### Option 2: but people like to make things overly complicated,
-### so here's a recursive version as well
+### Version 2 (recursive)
 
 def fibonacci(n)
 	fibo_nums []
