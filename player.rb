@@ -3,7 +3,7 @@ class Player
   attr_accessor :name, :score, :move, :robot
 
   def initialize(name, robot)
-    puts "Player - #{name} : #{robot}"
+    puts "Player Name? - #{name} : Robot? - #{robot}"
     @name = name
     @robot = robot
     @score = 0

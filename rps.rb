@@ -16,8 +16,6 @@ class RPS
   def initialize
     puts 'DEBUG: RPS - init'
     @valid_input = 'Valid input: [r/R] = Rock, [p/P] = Paper, [s/S] = Scissors'
-    @valid_quit = 'q/Q to quit'
-    @human_players = 1
     @player1 = nil
     @player2 = nil
   end
@@ -25,13 +23,20 @@ class RPS
   def play
     system 'clear'
     puts 'Welcome to an epic match up of R/P/S'
-    puts '1 or 2 players?...only 1 for now.'
-    puts @valid_input
+    print '1 or 2 players? (1/2):'
+    number_players = gets.chomp.to_i
+    puts
+
     # puts @valid_quit
-    if @human_players == 1
+    if number_players == 2
+      @player1 = Player.new('Player1', !IS_ROBOT)
+      @player2 = Player.new('Player2', !IS_ROBOT)
+    else
       @player1 = Player.new('Player1', !IS_ROBOT)
       @player2 = Player.new('Robot', IS_ROBOT)
     end
+    puts
+    puts @valid_input
 
     continue = true
     round = 1
@@ -54,7 +59,6 @@ class RPS
 
   def again_or_quit
     print 'Another round? (Y/N):'
-    # play = STDIN.noecho(&:gets)
     play = gets.chomp.downcase
     puts
     return false if play == 'n'
@@ -138,8 +142,8 @@ class RPS
      end
     puts out
     print_dash_line
-    puts "#{@player1.name}:#{@player1.score}".center(OUTPUTWIDTH)
-    puts "#{@player2.name}:#{@player2.score}".center(OUTPUTWIDTH)
+    puts "#{@player1.name}: #{@player1.score}".center(OUTPUTWIDTH)
+    puts "#{@player2.name}: #{@player2.score}".center(OUTPUTWIDTH)
     print_dash_line
   end
 
