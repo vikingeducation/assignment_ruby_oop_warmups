@@ -66,10 +66,9 @@ end
 
 # WARMUP 3: Rebuild the Enumerable Methods
 
-## Function 1: my_each, own implementation of Enumerable#each
-
 class Array 
 
+  ## Function 1: my_each, own implementation of Enumerable#each
   def my_each 
     (self.length).times do |i|
       yield self[i]
@@ -77,6 +76,7 @@ class Array
     self
   end
 
+  ## Function 2: my_map, own implementation of Enumerable#map
   def my_map
     result = []
 
@@ -87,6 +87,7 @@ class Array
     result
   end
 
+  ## Function 3: my_each, own implementation of Enumerable#select
   def my_select
     result = []
 
@@ -97,6 +98,7 @@ class Array
     print result
   end
 
+  ## Function 4: my_all?, own implementation of Enumerable#all?
   def my_all?
 
     self.my_each do |el|
@@ -110,6 +112,19 @@ class Array
 
   end
 
+  ## Function 5: my_inject, own implementation of Enumerable#inject
+  def my_inject(first_value = nil)
+
+    result = first_value
+
+    self.my_each do |el|
+      result = result.nil? ? el : yield(result, el)
+    end
+
+    print result
+  end
 end
+
+
 
 
