@@ -37,9 +37,10 @@ class RPS
   def play
     loop do
       @player_1.get_choice
-      break if end_game?
       @player_2.get_choice
-      
+            
+      break if end_game?
+
       check_winner
     end
   end
@@ -84,7 +85,7 @@ class RPS
   end
 
   def end_game?
-    if @player_1.instance_variable_get("@choice").downcase == "exit" || @player_2.instance_variable_get("@choice").downcase == "exit"
+    if @player_1.instance_variable_get("@choice").downcase == "exit" || @player_2.instance_variable_get("@choice").downcase == "exit" 
       puts
       puts "Thanks for playing! See you next time."
       puts
