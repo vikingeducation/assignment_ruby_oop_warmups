@@ -1,5 +1,5 @@
 class Array
-  #my_each - does the same as Ruby's each method  
+  #my_each - does the same as Ruby's each method
   def my_each (*a_proc)
     current_index = 0
     until self.size == current_index
@@ -59,15 +59,18 @@ class Array
 
   #my_inject method - same function as Ruby's inject method - takes block or proc and can use my_each to implement
   #combines all elements of an array by applying a binary operation specified by a block or a proc
-  def my_inject(*arg)
-    starting_value = 0
-    starting_value += arg
-    self.length.times do
-      self.my_each do |item|
-        starting_value += yield(item)
+  def my_inject(arg = self[0])
+    if arg == self[0]
+      self.drop(1).my_each do |item|
+        arg = yield(arg, item)
       end
+      arg
+    else
+      self.my_each do |item|
+        arg = yield(arg, item)
+      end
+      arg
     end
-    return starting_value
   end #end of my_inject method
 
 
@@ -91,7 +94,11 @@ print my_array.my_select(&another_proc)
 print my_array.all?(&another_proc)
 print my_array.my_all?(&another_proc)
 
+subtract_proc = Proc.new {|product, item| product - item}
+
 print my_array.inject {|sum, item| sum + item}
-print my_array.inject {|product, item| product - item}
+print my_array.inject(0, &subtract_proc)
+print my_array.inject(&subtract_proc)
 print my_array.my_inject {|sum, item| sum + item}
-print my_array.my_inject {|product, item| product - item}
+print my_array.my_inject(0, &subtract_proc)
+print my_array.my_inject(&subtract_proc)
