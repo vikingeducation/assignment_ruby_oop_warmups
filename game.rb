@@ -1,5 +1,3 @@
-require 'pry'
-
 class Game
   attr_reader :p1, :p2, :number_of_players
 
