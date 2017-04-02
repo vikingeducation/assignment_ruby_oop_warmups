@@ -86,6 +86,47 @@ class Array
     new_map
   end
 
+  def my_select(proc_option = nil)
+    result = []
+    i = 0
+    while i < self.size
+      if block_given?
+        result << self[i] if yield(self[i])
+      else
+        result << self[i] if proc_option.call(self[i])
+      end
+      i += 1
+    end
+    result
+  end
+
+  def my_all(proc_option = nil)
+    i = 0
+    while i < self.size
+      if block_given?
+        return false unless yield(self[i])
+      else
+        return false unless proc_option.call(self[i])
+      end
+      i += 1
+    end
+    return true
+  end
+
+  def my_inject(start_value, proc_option = nil)       ###problems 
+    i = 0
+    q = start_value
+    while i < self.size
+      if block_given?
+        q = q + yield(self[i])
+      else
+        q = q + proc_option.call(self[i])
+      end
+      i += 1
+    end
+    return q
+  end
+
 end
 
 
