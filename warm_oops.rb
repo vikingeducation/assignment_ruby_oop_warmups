@@ -113,22 +113,45 @@ class Array
     return true
   end
 
-  def my_inject(start_value, proc_option = nil)       ###problems 
+  def test(&proc)
+    puts "SUCCESS"
+  end
+
+  #def my_inject(start_value, &proc_option)       ###problems
+  def my_inject(start_value, proc_option = nil)       ###problems
     i = 0
-    q = start_value
+    last_iteration = start_value
     while i < self.size
+      #last_iteration = yield(last_iteration, self[i]) if block_given?
+      #last_iteration = proc_option.call(last_iteration, self[i]) unless block_given?     #I actually think the if's look cleaner here
+
       if block_given?
-        q = q + yield(self[i])
+        last_iteration = yield(last_iteration, self[i])
       else
-        q = q + proc_option.call(self[i])
+        last_iteration = proc_option.call(last_iteration, self[i])
       end
+
       i += 1
     end
-    return q
+    return last_iteration
   end
 
 end
+#test code, for inject
+#p = Proc.new { |total, i| total + i}
+#puts [1,2,3,4,5].my_inject(0, p)
+#puts [1,2,3,4,5].my_inject(0) {|total, i| total + i}
+
+##########  oop 1  #########
+    ##########  Rock, Paper, Scissors   #########
+
+#single player and 2 player
+#classes? could do a class for Rock Paper & Scissors, but that seems like over-kill
+  #computer player class? human player class? 
 
 
-#oop 1
-#oop 2
+
+
+
+##########  oop 2  #########
+    ##########  zzzzzzzz   #########
