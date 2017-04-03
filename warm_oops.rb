@@ -147,7 +147,31 @@ end
 
 #single player and 2 player
 #classes? could do a class for Rock Paper & Scissors, but that seems like over-kill
-  #computer player class? human player class? 
+  #computer player class? human player class?
+class HumanPlayer
+  @selection = nil
+  @@options = ["rock", "paper", "scissors"]
+  attr_reader :selection
+
+  def choose
+    puts "What'll it be? Rock, paper, or scissor?"
+    input = gets.chomp.downcase
+    @selection = input if @@options.include?(input)
+  end
+
+end
+
+class ComputerPlayer
+  @selection = nil
+  #getters and setters for selection
+  attr_reader :selection
+  @@options = ["rock", "paper", "scissors"]
+
+  #choose rock paper or scissors
+  def choose
+    @selection = @@options[ rand(0..2) ]
+  end
+end
 
 
 
