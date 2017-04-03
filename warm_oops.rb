@@ -173,6 +173,91 @@ class ComputerPlayer
   end
 end
 
+class Rock
+  @outcomes = { "paper"=> -1, "rock"=> 0, "scissors"=> 1}
+  @id = "rock"
+  attr_reader :id
+  def <=>(other)
+    return @outcomes[ other.id ]
+  end
+end
+
+class Paper
+  @outcomes = { "paper"=> -1, "rock"=> 0, "scissors"=> 1}
+  @id = "paper"
+  attr_reader :id
+  def <=>(other)
+    return @outcomes[ other.id ]
+  end
+end
+
+class Scissors
+  @outcomes = { "paper"=> -1, "rock"=> 0, "scissors"=> 1}
+  @id = "scissors"
+  attr_reader :id
+  def <=>(other)
+    return @outcomes[ other.id ]
+  end
+end
+
+#our game class
+class RockPaperScissors
+  @game_type = nil      #I'll use a string for a flag for now, ideally it'd be a #define macro  #what's the best flag method in Ruby? Hashes/Sets?
+  def welcome_mat
+    puts "WELCOME TO THE BATTLE OF THE CENTURY"
+    puts "In this corner, we have our reigning Rock Paper Scissors WORLD CHAMPION, Mucho Man Randy Savage!!"
+    puts "Will you take on the champ (play versus AI) or would you prefer to play a Wealter-weight match (PvP)?"
+
+
+    #check user input loop
+    input = gets.chomp.upcase
+    valid_input = false
+    while !valid_input
+      puts 'Please say "BRING IT ON" to face the champ or "I\'M TOO SCARED" to play versus another challenger.'
+      if input == "BRING IT ON"
+        #Human v AI
+        valid_input = true
+        @game_type = "hvh"
+      elsif input == "I'M TOO SCARED"
+        #Human v Human
+        valid_input = true
+        @game_type = "pvp"
+      else
+        #error message
+        puts "I'm sorry I couldn't hear you over all your whimpering."
+      end
+    end
+  end
+
+  def single_player
+    ai = ComputerPlayer.new
+    player = HumanPlayer.new
+
+  end
+
+  #tell us who wins, could perhaps make a rock paper and scissors class and then extend the <=> operator for them
+  def who_wins (player_1, player_2)
+
+
+  end
+
+
+  def two_player
+    #..
+  end
+
+
+  def victory_screen
+    puts "Congratualtions! You've won!"
+  end
+
+  #..
+end
+#add decide single, two_player, or computer
+#add rounds....maybe
+#add victory screen
+
+
 
 
 
