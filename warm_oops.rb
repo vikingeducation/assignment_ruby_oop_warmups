@@ -173,28 +173,41 @@ class ComputerPlayer
   end
 end
 
+#soo...making classes for Rock Paper and Scissors is definitely overkill but it was worthwhile to learn to extend the Comparable
+  #and use all the cool <=> 's and
+
 class Rock
-  @outcomes = { "paper"=> -1, "rock"=> 0, "scissors"=> 1}
-  @id = "rock"
   attr_reader :id
+  include Comparable
+  def initialize
+    @id = "rock"
+    @outcomes = { "paper"=> -1, "rock"=> 0, "scissors"=> 1}
+  end
   def <=>(other)
     return @outcomes[ other.id ]
   end
 end
 
 class Paper
-  @outcomes = { "paper"=> -1, "rock"=> 0, "scissors"=> 1}
-  @id = "paper"
   attr_reader :id
+  include Comparable
+  def initialize
+    @id = "paper"
+    @outcomes = { "paper"=> 0, "rock"=> 1, "scissors"=> -1}
+  end
+
   def <=>(other)
     return @outcomes[ other.id ]
   end
 end
 
 class Scissors
-  @outcomes = { "paper"=> -1, "rock"=> 0, "scissors"=> 1}
-  @id = "scissors"
   attr_reader :id
+  include Comparable
+  def initialize
+    @id = "scissors"
+    @outcomes = { "paper"=> 1, "rock"=> -1, "scissors"=> 0}
+  end
   def <=>(other)
     return @outcomes[ other.id ]
   end
@@ -235,13 +248,6 @@ class RockPaperScissors
 
   end
 
-  #tell us who wins, could perhaps make a rock paper and scissors class and then extend the <=> operator for them
-  def who_wins (player_1, player_2)
-
-
-  end
-
-
   def two_player
     #..
   end
@@ -253,9 +259,8 @@ class RockPaperScissors
 
   #..
 end
-#add decide single, two_player, or computer
 #add rounds....maybe
-#add victory screen
+
 
 
 
