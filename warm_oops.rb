@@ -145,34 +145,6 @@ end
 ##########  oop 1  #########
     ##########  Rock, Paper, Scissors   #########
 
-#single player and 2 player
-#classes? could do a class for Rock Paper & Scissors, but that seems like over-kill
-  #computer player class? human player class?
-class HumanPlayer
-  @selection = nil
-  @@options = ["rock", "paper", "scissors"]
-  attr_reader :selection
-
-  def choose
-    puts "What'll it be? Rock, paper, or scissor?"
-    input = gets.chomp.downcase
-    @selection = input if @@options.include?(input)
-  end
-
-end
-
-class ComputerPlayer
-  @selection = nil
-  #getters and setters for selection
-  attr_reader :selection
-  @@options = ["rock", "paper", "scissors"]
-
-  #choose rock paper or scissors
-  def choose
-    @selection = @@options[ rand(0..2) ]
-  end
-end
-
 #soo...making classes for Rock Paper and Scissors is definitely overkill but it was worthwhile to learn to extend the Comparable
   #and use all the cool <=> 's and
 
@@ -213,24 +185,80 @@ class Scissors
   end
 end
 
+#single player and 2 player
+  #computer player class? human player class? -yea yea
+class HumanPlayer
+  @selection = nil
+  @@options = ["rock", "paper", "scissors"]
+  attr_reader :selection
+
+  def initialize
+    rock = Rock.new
+    paper = Paper.new
+    scissors = Scissors.new
+    @option_objects = [rock, paper, scissors]
+  end
+
+  def choose
+    puts "What'll it be? Rock, paper, or scissors?"
+    #add some error checking here
+    input = gets.chomp.downcase
+    @selection = input if @@options.include?(input)
+    @selection = @option_objects[@@options.index(@selection)]
+  end
+
+end
+
+class ComputerPlayer
+  @selection = nil
+  #getters and setters for selection
+  attr_reader :selection
+  #@@options = ["rock", "paper", "scissors"]
+
+  def initialize
+    rock = Rock.new
+    paper = Paper.new
+    scissors = Scissors.new
+    @options = [rock, paper, scissors]
+  end
+
+  #choose rock paper or scissors
+  def choose
+    #@selection = @@options[ rand(0..2) ]
+    @selection = @options[ rand(0..2) ]
+  end
+end
+
 #our game class
 class RockPaperScissors
-  @game_type = nil      #I'll use a string for a flag for now, ideally it'd be a #define macro  #what's the best flag method in Ruby? Hashes/Sets?
+
+  def initialize
+    @game_type = nil      #I'll use a string for a flag for now, ideally it'd be a #define macro  #what's the best flag method in Ruby? Hashes/Sets?
+    welcome_mat
+    play
+  end
+
+  def play
+    single_player if @game_type == "hva"
+    two_player if @game_type == "pvp"
+  end
+
+
   def welcome_mat
     puts "WELCOME TO THE BATTLE OF THE CENTURY"
-    puts "In this corner, we have our reigning Rock Paper Scissors WORLD CHAMPION, Mucho Man Randy Savage!!"
+    puts "In this corner, we have our reigning Rock Paper Scissors WORLD CHAMPION, Macho Man Randy Savage!!"
     puts "Will you take on the champ (play versus AI) or would you prefer to play a Wealter-weight match (PvP)?"
 
 
     #check user input loop
-    input = gets.chomp.upcase
     valid_input = false
     while !valid_input
       puts 'Please say "BRING IT ON" to face the champ or "I\'M TOO SCARED" to play versus another challenger.'
+      input = gets.chomp.upcase
       if input == "BRING IT ON"
         #Human v AI
         valid_input = true
-        @game_type = "hvh"
+        @game_type = "hva"
       elsif input == "I'M TOO SCARED"
         #Human v Human
         valid_input = true
@@ -245,11 +273,59 @@ class RockPaperScissors
   def single_player
     ai = ComputerPlayer.new
     player = HumanPlayer.new
+    tied = true
+    while tied
+      player.choose
+      ai.choose
+      if ai.selection > player.selection
+        #you lose
+        puts "#{ai.selection.id} beats #{player.selection.id}"
+        #randyQuote
+        puts "MACHO MAN RANDY SAVAGE : Ohhhh yeeeeeeah"
+        puts "You lose..."
+        tied = false
+      elsif ai.selection < player.selection
+        #you win
+        tied = false
+        puts "#{player.selection.id} beats #{ai.selection.id}"
+        puts "Congratualtions : you win !"
+        puts "MACHO MAN RANDY SAVAGE : What can I say about this move? Nothing so I won’t."
+        puts "You're now the WORLD CHAMPION! We're mailing your belt now."
+      else
+        #you tie play again
+        puts "You both chose #{ai.selection.id}, try again."
+        puts "MACHO MAN RANDY SAVAGE : Expect the unexpected in the kingdom of madness!"
+      end
+    end
 
   end
 
   def two_player
-    #..
+    player_1 = HumanPlayer.new
+    player_2 = HumanPlayer.new
+
+    tied = true
+    while tied
+      print "Player_1 : "
+      player_1.choose
+      print "Player_2 : "
+      player_2.choose
+      if player_2.selection > player_1.selection
+        puts "#{player_2.selection.id} beats #{player_1.selection.id}"
+        puts "Congratualtions Player 2 : you win !"
+        tied = false
+      elsif player_2.selection < player_1.selection
+        puts "#{player_1.selection.id} beats #{player_2.selection.id}"
+        puts "Congratualtions Player 1 : you win !"
+        tied = false
+      else
+        #you tie play again
+        print "Seems that you tied, "
+        print "you both chose #{player_2.selection.id}"
+        puts " try again."
+      end
+    end
+
   end
 
 
@@ -260,6 +336,8 @@ class RockPaperScissors
   #..
 end
 #add rounds....maybe
+#test code 
+#game = RockPaperScissors.new
 
 
 
