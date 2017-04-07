@@ -27,8 +27,9 @@ class Array
   end
 
   def my_map(submitted_proc = nil)
-    size.times { |index| block_given? ? self[index] = yield(self[index]) : self[index] = submitted_proc.call(self[index]) }
-    self
+    output = []
+    size.times { |index| block_given? ? output << yield(self[index]) : output << submitted_proc.call(self[index]) }
+    output
   end
 
   def my_select(submitted_proc = nil)
