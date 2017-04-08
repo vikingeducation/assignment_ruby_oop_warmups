@@ -63,7 +63,7 @@ class GameBoard
 
   def valid_move?
     @stacks[@new_move[:start]].empty? ? (return false) : from_top_disk = @stacks[@new_move[:start]][-1]
-    @stacks[@new_move[:finish]].empty? ? to_top_disk = @num_disks**2 : to_top_disk = @stacks[@new_move[:finish]][-1]
+    @stacks[@new_move[:finish]].empty? ? (return true) : to_top_disk = @stacks[@new_move[:finish]][-1]
 
     from_top_disk < to_top_disk ? (return true) : (return false)
   end
