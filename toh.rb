@@ -1,3 +1,7 @@
+#!/usr/bin/ruby
+
+require 'pry'
+
 class Towers
   attr_reader :towers, :winning_tower
   attr_accessor :moves
