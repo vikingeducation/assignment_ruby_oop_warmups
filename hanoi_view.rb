@@ -23,183 +23,37 @@ def introduction
   gets
 end
 
-def tower_view
-  #Top layer display
-
+def layer_display(i)
   puts ""
   $stacks[0..2].each do |stack|
-    if stack[9]==($disks)
+    if stack[i]==($disks)
       print "#{Tier_1}"
-    else
-      print "#{Tier_0}"
-    end
-  end
-
-  #Layer -1 display
-  puts ""
-  $stacks[0..2].each do |stack|
-    if stack[8]==($disks)
-      print "#{Tier_1}"
-    elsif stack[8]==($disks-1)
+    elsif stack[i]==($disks-1)
       print "#{Tier_2}"
-    else
-      print "#{Tier_0}"
-    end
-  end
-
-#layer -2 display
-  puts ""
-  $stacks[0..2].each do |stack|
-    if stack[7]==($disks)
-      print "#{Tier_1}"
-    elsif stack[7]==($disks-1)
-      print "#{Tier_2}"
-    elsif stack[7]==($disks-2)
+    elsif stack[i]==($disks-2)
       print "#{Tier_3}"
-    else
-      print "#{Tier_0}"
-    end
-  end
-
-
-#Layer -3 display
-
-  puts ""
-  $stacks[0..2].each do |stack|
-    if stack[6]==($disks)
-      print "#{Tier_1}"
-    elsif stack[6]==($disks-1)
-      print "#{Tier_2}"
-    elsif stack[6]==($disks-2)
-      print "#{Tier_3}"
-    elsif stack[6]==($disks-3)
+    elsif stack[i]==($disks-3)
       print "#{Tier_4}"
-    else
-      print "#{Tier_0}"
-    end
-  end
-
-
-  #Layer -4 display
-
-  puts ""
-  $stacks[0..2].each do |stack|
-    if stack[5]==($disks)
-      print "#{Tier_1}"
-    elsif stack[5]==($disks-1)
-      print "#{Tier_2}"
-    elsif stack[5]==($disks-2)
-      print "#{Tier_3}"
-    elsif stack[5]==($disks-3)
-      print "#{Tier_4}"
-    elsif stack[5]==($disks-4)
+    elsif stack[i]==($disks-4)
       print "#{Tier_5}"
-    else
-      print "#{Tier_0}"
-    end
-  end
-
-
-  #Layer -5 display
-
-  puts ""
-  $stacks[0..2].each do |stack|
-    if stack[4]==($disks)
-      print "#{Tier_1}"
-    elsif stack[4]==($disks-1)
-      print "#{Tier_2}"
-    elsif stack[4]==($disks-2)
-      print "#{Tier_3}"
-    elsif stack[4]==($disks-3)
-      print "#{Tier_4}"
-    elsif stack[4]==($disks-4)
-      print "#{Tier_5}"
-    elsif stack[4]==($disks-5)
+    elsif stack[i]==($disks-5)
       print "#{Tier_6}"
-    else
-      print "#{Tier_0}"
-    end
-  end
-
-
-
-#Layer -6 display
-
-puts ""
-  $stacks[0..2].each do |stack|
-    if stack[3]==($disks)
-      print "#{Tier_1}"
-    elsif stack[3]==($disks-1)
-      print "#{Tier_2}"
-    elsif stack[3]==($disks-2)
-      print "#{Tier_3}"
-    elsif stack[3]==($disks-3)
-      print "#{Tier_4}"
-    elsif stack[3]==($disks-4)
-      print "#{Tier_5}"
-    elsif stack[3]==($disks-5)
-      print "#{Tier_6}"
-    elsif stack[3]==($disks-6)
+    elsif stack[i]==($disks-6)
       print "#{Tier_7}"
-    else
-      print "#{Tier_0}"
-    end
-  end
-
-
-#Layer -7 display
-
-  puts ""
-  $stacks[0..2].each do |stack|
-    if stack[2]==($disks)
-      print "#{Tier_1}"
-    elsif stack[2]==($disks-1)
-      print "#{Tier_2}"
-    elsif stack[2]==($disks-2)
-      print "#{Tier_3}"
-    elsif stack[2]==($disks-3)
-      print "#{Tier_4}"
-    elsif stack[2]==($disks-4)
-      print "#{Tier_5}"
-    elsif stack[2]==($disks-5)
-      print "#{Tier_6}"
-    elsif stack[2]==($disks-6)
-      print "#{Tier_7}"
-    elsif stack[2]==($disks-7)
+    elsif stack[i]==($disks-7)
       print "#{Tier_8}"
-    else
-      print "#{Tier_0}"
-    end
-  end
-
-
-#Layer -8 display
-
-  puts ""
-  $stacks[0..2].each do |stack|
-    if stack[1]==($disks)
-      print "#{Tier_1}"
-    elsif stack[1]==($disks-1)
-      print "#{Tier_2}"
-    elsif stack[1]==($disks-2)
-      print "#{Tier_3}"
-    elsif stack[1]==($disks-3)
-      print "#{Tier_4}"
-    elsif stack[1]==($disks-4)
-      print "#{Tier_5}"
-    elsif stack[1]==($disks-5)
-      print "#{Tier_6}"
-    elsif stack[1]==($disks-6)
-      print "#{Tier_7}"
-    elsif stack[1]==($disks-7)
-      print "#{Tier_8}"
-    elsif stack[1]==($disks-8)
+    elsif stack[i]==($disks-8)
       print "#{Tier_9}"
     else
       print "#{Tier_0}"
     end
   end
+end
 
+def tower_view
+  (1..9).reverse_each do |i|
+    layer_display(i)
+  end
 
 #Base Layer; always present
   puts ""
