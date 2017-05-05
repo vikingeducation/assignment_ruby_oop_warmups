@@ -9,7 +9,7 @@ def spare_peg(from, to)
 end
 
 def hanoi(num, from, to)
-  if num == 1 # base case
+  if num == 1 
     return [AI_move.new(num, from, to)]
   end
 
