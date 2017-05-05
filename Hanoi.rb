@@ -162,7 +162,7 @@ class Hanoi
 
   def continue?
     puts "\e[H\e[2J"
-    puts "Care to try again?"
+    puts "Try again?"
     puts 'Press "q" to quit, or "enter" to continue'
     response= gets.chomp
     if response== "q"
