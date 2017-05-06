@@ -336,7 +336,7 @@ class RockPaperScissors
   #..
 end
 #add rounds....maybe
-#test code 
+#test code
 #game = RockPaperScissors.new
 
 
@@ -346,4 +346,161 @@ end
 
 
 ##########  oop 2  #########
-    ##########  zzzzzzzz   #########
+    ##########  TOWERS OF HANOI    #########
+
+    #Setup initial towers
+      #welcome_mat      [game ]
+      #create necessary classes / objects [game ]
+    #Start the game loop
+      #ask for move     [player ]
+      #validate move    [game_board ]
+        #if NO then loop up again and print an error message
+      #do move          [game_board ]
+      #check for victory  [game_board ]
+        #if yes -> display victory_screen && exit [game ]
+        #if no ->continue loop                    [game ]
+
+  #player class
+class Player
+  def initialize
+    @last_move = nil
+  end
+
+  def get_move
+    @last_move = gets.chomp
+    return @last_move
+  end
+
+end
+
+class Disk
+  attr_reader :size
+  include Comparable
+
+  def initialize (size)
+    @size = size
+  end
+
+  def <=> (other)
+    @size <=> other.size
+  end
+end
+
+  #game_board class
+
+class GameBoard
+
+  def initialize
+    #make the disks
+    disk_one = Disk.new(1)
+    disk_two = Disk.new(2)
+    disk_three = Disk.new(3)
+    #store the disks
+    @left_stack = [disk_three, disk_two, disk_one]
+    @middle_stack = []
+    @right_stack = []
+    #make the stack locations
+  end
+
+  def validate_move
+    #check that top disk of stack isn't < moved_disk
+    #check that moved_disk != null
+    #
+  end
+
+  def move(disk, location)
+    #change location of disk
+    if left_stack.last = disk
+      left_stack.pop
+    elsif middle_stack.last = disk
+      middle_stack.pop
+    elsif right_stack.last = disk
+      right_stack.pop
+    else
+      #handle the error
+    end
+    location << disk
+  end
+
+  def victory?
+    return true if right_stack == [disk_three, disk_two, disk_one]
+    return false
+  end
+
+  def print_board
+    puts '#######################################################'
+
+    #print out the disks
+    i = 2
+    while i > 0
+      if (left_stack[i] == nil)
+        s = " "
+      else
+        s = left_stack[i].size.to_s
+      end
+      print s + " "
+      if (middle_stack[i] == nil)
+        s = " "
+      else
+        s = middle_stack[i].size.to_s
+      end
+      print s + " "
+      if (right_stack[i] == nil)
+        s = " "
+      else
+        s = right_stack[i].size.to_s
+      end
+      print s + " "
+      puts ""
+      i -= 1
+    end
+    puts "a b c"
+    puts '#######################################################'
+  end
+
+end
+
+class TowersOfHanoi
+  def initialize
+    @board = GameBoard.new
+    @player = Player.new
+  end
+
+  def welcome_mat
+    puts "Welcome to this simulation of the ancient game TowersOfHanoi."
+    puts "Here's the board as it is now...I've been working on it for awhile but this is as far as I've gotten...."
+    @board.print_board()
+    puts "So you need to make the disks over from the left stack to the right stack,"
+    puts "BUT"
+    puts "you can't move a bigger disk on top of a smaller disk AND you can only move the topmost disk in a stack of disks at a time..."
+    puts "Can you solve the dastardly puzzle?"
+  end
+
+  def victory_screen
+
+  end
+
+  def play
+    welcome_mat()
+    #game loop
+    loop do
+
+      #get input
+      #validate the move
+      #if valid then move the disk
+      @board.print_board()
+      #check for victory
+      break if @board.victory?
+    end
+
+    victory_screen()
+  end
+
+end
+
+
+
+    #player class
+    #game class
+    #tower / stack class
+    #disk class
