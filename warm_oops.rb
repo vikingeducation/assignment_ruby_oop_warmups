@@ -213,7 +213,6 @@ class ComputerPlayer
   @selection = nil
   #getters and setters for selection
   attr_reader :selection
-  #@@options = ["rock", "paper", "scissors"]
 
   def initialize
     rock = Rock.new
@@ -224,7 +223,6 @@ class ComputerPlayer
 
   #choose rock paper or scissors
   def choose
-    #@selection = @@options[ rand(0..2) ]
     @selection = @options[ rand(0..2) ]
   end
 end
@@ -333,9 +331,7 @@ class RockPaperScissors
     puts "Congratualtions! You've won!"
   end
 
-  #..
 end
-#add rounds....maybe
 #test code
 #game = RockPaperScissors.new
 
@@ -526,5 +522,6 @@ class TowersOfHanoi
 
 end
 
+#test code
 #lets_play = TowersOfHanoi.new
 #lets_play.play
