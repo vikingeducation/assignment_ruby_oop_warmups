@@ -367,7 +367,7 @@ class Player
   end
 
   def get_move
-    @last_move = gets.chomp
+    @last_move = gets.chomp.to_i
     return @last_move
   end
 
@@ -392,38 +392,41 @@ class GameBoard
 
   def initialize
     #make the disks
-    disk_one = Disk.new(1)
-    disk_two = Disk.new(2)
-    disk_three = Disk.new(3)
+    @disk_one = Disk.new(1)
+    @disk_two = Disk.new(2)
+    @disk_three = Disk.new(3)
     #store the disks
-    @left_stack = [disk_three, disk_two, disk_one]
+    @left_stack = [@disk_three, @disk_two, @disk_one]
     @middle_stack = []
     @right_stack = []
     #make the stack locations
+    @stacks = [@left_stack, @middle_stack, @right_stack]
   end
 
-  def validate_move
-    #check that top disk of stack isn't < moved_disk
+  def valid_move?(input_to, input_from)
+    location_to_move_to = @stacks[input_to - 1]
+    disk = @stacks[input_from - 1].last
+
     #check that moved_disk != null
-    #
+    return false if disk.nil? #@stacks[input_from - 1].empty?
+
+    return true if location_to_move_to.last.nil?
+
+    #check that top disk of stack isn't < moved_disk
+    return disk < location_to_move_to.last
+
   end
 
-  def move(disk, location)
+  def move(input_to, input_from)
     #change location of disk
-    if left_stack.last = disk
-      left_stack.pop
-    elsif middle_stack.last = disk
-      middle_stack.pop
-    elsif right_stack.last = disk
-      right_stack.pop
-    else
-      #handle the error
-    end
+    disk = @stacks[input_from - 1].pop
+    #@stacks[input_from - 1].pop
+    location = @stacks[input_to - 1]
     location << disk
   end
 
   def victory?
-    return true if right_stack == [disk_three, disk_two, disk_one]
+    return true if @right_stack == [@disk_three, @disk_two, @disk_one]
     return false
   end
 
@@ -432,23 +435,23 @@ class GameBoard
 
     #print out the disks
     i = 2
-    while i > 0
-      if (left_stack[i] == nil)
+    while i >= 0
+      if (@left_stack[i].nil?)
         s = " "
       else
-        s = left_stack[i].size.to_s
+        s = @left_stack[i].size.to_s
       end
       print s + " "
-      if (middle_stack[i] == nil)
+      if (@middle_stack[i].nil?)
         s = " "
       else
-        s = middle_stack[i].size.to_s
+        s = @middle_stack[i].size.to_s
       end
       print s + " "
-      if (right_stack[i] == nil)
+      if (@right_stack[i].nil?)
         s = " "
       else
-        s = right_stack[i].size.to_s
+        s = @right_stack[i].size.to_s
       end
       print s + " "
       puts ""
@@ -477,18 +480,43 @@ class TowersOfHanoi
   end
 
   def victory_screen
+    puts "Ohhhhh goodness, I'm glad someone was able to figure that out. So you just move....oh no
+    - I spilt coffee on my notes in all the excitement,
+      now I'll never remember how you did that"
+
+    puts "Regardless it looks better on the right side, doesn't it?"
+    @board.print_board()
 
   end
 
   def play
     welcome_mat()
+
     #game loop
     loop do
-
+      input_from = nil
+      input_to = nil
+      puts "Ok just tell me if the disk you want moved is in the first stack, second stack, or third stack from the left."
       #get input
-      #validate the move
+      loop do
+        #print instructions
+        puts "What's the stack position of the disk you want moved? (1, 2, or 3?)"
+        input_from = @player.get_move()
+        puts "And where are we moving it to? Stack 1, 2 or 3?"
+        input_to = @player.get_move()
+        #validate the move
+        break if @board.valid_move?(input_to, input_from)
+
+        #print error message
+        puts "I'm sorry but that's not possible..."
+      end
+
       #if valid then move the disk
+      @board.move(input_to, input_from)
+
+      #print the board
       @board.print_board()
+
       #check for victory
       break if @board.victory?
     end
@@ -498,9 +526,5 @@ class TowersOfHanoi
 
 end
 
-
-
-    #player class
-    #game class
-    #tower / stack class
-    #disk class
+#lets_play = TowersOfHanoi.new
+#lets_play.play
