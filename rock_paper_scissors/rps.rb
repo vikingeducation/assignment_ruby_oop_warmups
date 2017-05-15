@@ -41,7 +41,7 @@ class RockPaperScissors
     answer = 'y'
     loop do
       print "Play again (y/n)? "
-      answer = gets.chomp.downcase
+      answer = gets.strip.downcase
 
       break if answer == 'y' or answer == 'n'
     end
@@ -115,7 +115,7 @@ puts "Welcome to rock, paper, scissors!"
 answer = 'y'
 loop do
   print "Start in single-player mode (y/n)? "
-  answer = gets.strip
+  answer = gets.strip.downcase
 
   break if answer == 'y' or answer == 'n'
 end
