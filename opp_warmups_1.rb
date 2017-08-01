@@ -23,4 +23,8 @@ class Array
   def my_each(proc = nil)
     size.times { |index| block_given? ? yield(self[index]) : proc.call(self[index]) }
   end
+
+  def my_map(proc = nil)
+    size.times { |index| block_given? ? self[index] = yield(self[index]) : self[index] = proc.call(self[index]) }
+  end
 end
