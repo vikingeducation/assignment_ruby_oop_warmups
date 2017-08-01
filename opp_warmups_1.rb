@@ -12,3 +12,9 @@ def fibs(order)
   end
   fibo
 end
+
+def my_benchmark(iter)
+  start = Time.now
+  iter.times {yield}
+  Time.now - start
+end
