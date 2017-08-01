@@ -18,3 +18,9 @@ def my_benchmark(iter)
   iter.times {yield}
   Time.now - start
 end
+
+class Array
+  def my_each(proc = nil)
+    size.times { |index| block_given? ? yield(self[index]) : proc.call(self[index]) }
+  end
+end
