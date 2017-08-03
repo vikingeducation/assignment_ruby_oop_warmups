@@ -45,4 +45,19 @@ class Array
     end
     select_ary
   end
+
+  def my_all?(proc = nil)
+    self.my_each do|element|
+      if block_given?
+        return false  unless yield(element)
+      else
+        if proc
+          return false  unless proc.call(element)
+        else
+          return false if (element.nil? || element == false)
+        end
+      end
+    end
+    true
+  end
 end
