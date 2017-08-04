@@ -32,7 +32,7 @@ class Array
 
   def my_select(proc = nil)
     select_ary = []
-    self.my_each do|element|
+    self.my_each do |element|
       if block_given?
         select_ary.push(element) if yield(element)
       else
@@ -47,7 +47,7 @@ class Array
   end
 
   def my_all?(proc = nil)
-    self.my_each do|element|
+    self.my_each do |element|
       if block_given?
         return false  unless yield(element)
       else
@@ -59,5 +59,42 @@ class Array
       end
     end
     true
+  end
+
+  def my_inject(*args)
+    if args
+      if args[0].class == Proc
+        result = self[0]
+        self[1...self.length].my_each do |element|
+          result = args[0].call(result, element)
+        end
+      elsif args[0].class == Symbol
+        result = self[0]
+        self[1...self.length].my_each do |element|
+          result = result.send(args[0].to_sym, element)
+        end
+      elsif args[0]
+        result = args[0]
+        if block_given?
+          self.my_each do |element|
+            result = yield(result, element)
+          end
+        else
+          self.my_each do |element|
+             result = result.send(args[1].to_sym, element)
+          end
+        end
+      else
+        if block_given?
+        result = self[0]
+        self[1...self.length].my_each do |element|
+            result = yield(result, element)
+          end
+        else
+          puts ("LocalJumpError: no block given")
+        end
+      end
+    end
+    return result
   end
 end
