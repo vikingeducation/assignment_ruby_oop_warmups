@@ -65,13 +65,13 @@ class Array
     if args
       if args[0].class == Proc
         result = self[0]
-        self[1...self.length].my_each do |element|
+        self[1...size].my_each do |element|
           result = args[0].call(result, element)
         end
 
       elsif args[0].class == Symbol
         result = self[0]
-        self[1...self.length].my_each do |element|
+        self[1...size].my_each do |element|
           result = result.send(args[0].to_sym, element)
         end
 
@@ -90,7 +90,7 @@ class Array
       else
         if block_given?
           result = self[0]
-          self[1...self.length].my_each do |element|
+          self[1...size].my_each do |element|
             result = yield(result, element)
           end
         else
