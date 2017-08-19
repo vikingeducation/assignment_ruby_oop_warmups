@@ -19,9 +19,11 @@ end
 
 class HumanPlayer<Player
   attr_reader :choice, :name
+  @@player = 0
   def initialize
     super()
-    print "Enter your name: "
+    @@player +=1
+    print "Player#{@@player}, enter your name: "
     @name = gets.chomp
   end
   def instructions
@@ -31,7 +33,7 @@ class HumanPlayer<Player
   end
   def get_choice
     begin
-      print "#{@name} your choice > "
+      print "#{@name}, your choice > "
     end until valid?(@choice = gets.chomp.to_sym, [:r, :s, :p])
     @choice
   end
@@ -57,11 +59,17 @@ def game(player1, player2)
     player1.play(player2)
 end
 
+def get_mode
+ until mode = gets.chomp.to_i.between?(1,2)
+  print "> "
+ end
+ mode.to_s
+end
 
 puts "Enter your choice '1' : Player vs Computer "
 puts "                  '2' : Player vs Player"
 print "> "
-mode = gets.chomp # valitations
+mode = get_mode
 if mode == '1'
   player1 = HumanPlayer.new
   player2 = IAPlayer.new
