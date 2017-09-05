@@ -62,10 +62,22 @@ class TowerGame
     elsif input == 'c'
       @c << @to
     end
+    p "Nice!"
+    p "Your arrays now look like this:"
+    p "a = #{@a}"
+    sleep(1)
+    p "b = #{@b}"
+    sleep(1)
+    p "c = #{@c}"
   end
 
-  def check(a, b, c)
-    return "You win!" if a == [] && b == [] && c == c.sort
+  def check
+    if @a == [] && @b == [] && @c == @c.sort
+      p "You win!"
+      return true
+    else
+      return false
+    end 
   end
 
 end
