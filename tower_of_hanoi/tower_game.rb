@@ -63,12 +63,6 @@ class TowerGame
       @c << @move
     end
     p "Nice!"
-    p "Your arrays now look like this:"
-    p "a = #{@a}"
-    sleep(1)
-    p "b = #{@b}"
-    sleep(1)
-    p "c = #{@c}"
   end
 
   def check
