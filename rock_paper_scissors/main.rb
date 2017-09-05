@@ -10,4 +10,4 @@ if choice = "1"
 else
   p "You've selected to play with a friend. Let's start!"
   game = TwoPlayer.new()
-end 
+end
