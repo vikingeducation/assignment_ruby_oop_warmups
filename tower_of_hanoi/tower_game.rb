@@ -5,10 +5,10 @@ class TowerGame
     @b = []
     @c = []
     i = @stack_num.to_s.dup
-    i = i.to_num
+    i = i.to_i
     while i > 0
       @a << i.to_s
-      i.to_num
+      i.to_i
       i -= 1
     end
   end
