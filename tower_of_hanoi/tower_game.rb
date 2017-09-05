@@ -47,7 +47,7 @@ class TowerGame
     sleep(1)
     p "c = #{@c}"
     sleep(1)
-    p "Which array do you want to move this stack '#{move}' to?"
+    p "Which array do you want to move this stack '#{@move}' to?"
     sleep(1)
     p "Press 'a' for a"
     sleep(1)
@@ -77,7 +77,7 @@ class TowerGame
       return true
     else
       return false
-    end 
+    end
   end
 
 end
