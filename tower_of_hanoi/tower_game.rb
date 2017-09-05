@@ -55,12 +55,12 @@ class TowerGame
     sleep(1)
     p "Press 'c' for c"
     @to = gets.chomp
-    if input == 'a'
-      @a << @to
-    elsif input == 'b'
-      @b << @to
-    elsif input == 'c'
-      @c << @to
+    if @to == 'a'
+      @a << @move
+    elsif @to == 'b'
+      @b << @move
+    elsif @to == 'c'
+      @c << @move
     end
     p "Nice!"
     p "Your arrays now look like this:"
