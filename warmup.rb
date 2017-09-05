@@ -47,9 +47,3 @@ end
 #print my_benchmark(10){puts "hi"}
 
 #################warmup3################
-
-def my_each(arr)
-  p arr
-end
-
-my_each(my_each)
