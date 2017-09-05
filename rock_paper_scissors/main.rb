@@ -18,4 +18,9 @@ if choice == "1"
 else
   p "You've selected to play with a friend. Let's start!"
   game = TwoPlayer.new()
+  input = game.get_input
+  friend = game.friend_input
+  p "You chose #{input} and your friend chose #{friend}"
+  sleep(1)
+  game.results(input, friend)
 end
