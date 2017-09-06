@@ -48,6 +48,17 @@ class GameBase
     end
   end
 
+  def announce_round_winner(player2_name, player2_score)
+    if @round_winner == 'tie'
+      puts "This round was a tie."
+    elsif @round_winner == 'player1'
+      puts "Player 1 wins the round."
+    else
+      puts "#{player2_name} wins the round."
+    end
+    puts "Current scores: Player 1: #{@player1_score} | #{player2_name}: #{player2_score}"
+  end
+
   def determine_game_winner
     if @player1_score == @player2_score
       @game_winner = 'tie'
@@ -58,13 +69,24 @@ class GameBase
     end
   end
 
-  def request_player_choice
-    puts "Please select a weapon by entering 'r', 'p', or 's':"
-    puts "r: Rock"
-    puts "p: Paper"
-    puts "s: Scissors"
-    response = gets.chomp.downcase
-    verify_response(response, WEAPONS)
+  def announce_game_winner(player2_name)
+    if @game_winner == 'tie'
+      puts "This game is a tie."
+    elsif @game_winner == 'player1'
+      puts "Player 1 wins the game!"
+    else
+      puts "#{player2_name} wins the game!"
+    end
+  end
+
+  def announce_game_winner(player2_name)
+    if @game_winner == 'tie'
+      puts "This game is a tie."
+    elsif @game_winner == 'player1'
+      puts "Player 1 wins the game!"
+    else
+      puts "#{player2_name} wins the game!"
+    end
   end
 
   def clear_screen
@@ -80,30 +102,21 @@ class OnePlayerGame < GameBase
     puts "You are playing against the Computer."
     3.times do
       announce_round
+      puts "Player 1's Turn:"
       player1_choice = request_player_choice
+      puts "","The Computer's Turn:"
       computer_choice = computer_makes_choice
       puts "The computer chose: #{computer_choice}"
       determine_round_winner(player1_choice, computer_choice)
       award_points
-      announce_round_winner
+      announce_round_winner("The Computer", @computer_score)
     end
     determine_game_winner
-    announce_game_winner
+    announce_game_winner("The Computer")
   end
 
   def computer_makes_choice
     ['r', 'p', 's'].sample
-  end
-
-  def announce_round_winner
-    if @round_winner == 'tie'
-      puts "This round was a tie."
-    elsif @round_winner == 'player1'
-      puts "Player 1 wins the round!"
-    else
-      puts "The computer wins the round!"
-    end
-    puts "Current scores: You: #{@player1_score} | Computer: #{@computer_score}"
   end
 
   def award_points
@@ -115,17 +128,8 @@ class OnePlayerGame < GameBase
     end
   end
 
-  def announce_game_winner
-    if @game_winner == 'tie'
-      puts "This game is a tie."
-    elsif @game_winner == 'player1'
-      puts "Player 1 wins the game!"
-    else
-      puts "The computer wins the game!"
-    end
-  end
-
 end
+
 
 class TwoPlayerGame < GameBase
 
@@ -134,26 +138,16 @@ class TwoPlayerGame < GameBase
     puts "You are playing against Player 2"
     3.times do
       announce_round
-      puts "Player 1:"
+      puts "Player 1's Turn:"
       player1_choice = request_player_choice
-      puts "Player 2:"
+      puts "","Player 2's Turn:"
       player2_choice = request_player_choice
       determine_round_winner(player1_choice, player2_choice)
       award_points
-      announce_round_winner
+      announce_round_winner("Player 2", @player2_score)
     end
     determine_game_winner
-    announce_game_winner
-  end
-
-  def announce_round_winner
-    if @round_winner == 'tie'
-      puts "This round is a tie."
-    elsif @round_winner == 'player1'
-      puts "Player 1 wins!"
-    else
-      puts "Player 2 wins!"
-    end
+    announce_game_winner("Player 2")
   end
 
   def award_points
@@ -162,16 +156,6 @@ class TwoPlayerGame < GameBase
       @player1_score += 1
     else
       @player2_score += 1
-    end
-  end
-
-  def announce_game_winner
-    if @game_winner == 'tie'
-      puts "This game is a tie."
-    elsif @game_winner == 'player1'
-      puts "Player 1 wins the game!"
-    else
-      puts "Player 2 wins the game!"
     end
   end
 end
