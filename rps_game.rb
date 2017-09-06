@@ -74,5 +74,28 @@ class TwoPlayerGame < GameBase
 
   def play
     puts "Playing against Player 2!"
+    player1_choice = request_player_choice
+    player2_choice = request_player_choice
+    determine_round_winner(player1_choice, player2_choice)
+    announce_round_winner
+    award_points
   end
+
+  def announce_round_winner
+    if @round_winner == 'player1'
+      puts "Player 1 wins!"
+    else
+      puts "Player 2 wins!"
+    end
+  end
+
+  def award_points
+    if @round_winner == 'player1'
+      @player1_score += 1
+    else
+      @player2_score += 1
+    end
+  end
+
 end
+
