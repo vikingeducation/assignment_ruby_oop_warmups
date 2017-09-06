@@ -1,23 +1,43 @@
 class Array
-  def my_each
+  def my_each(proc_argument = nil)
     index = 0 
     while index < self.size 
-      yield(self[index])
+      if block_given?
+        yield(self[index])
+      else
+        proc_argument.call(self[index])
+      end
       index += 1 
     end 
     self 
   end 
 
-  def my_map
-    mapped_arr = []
-    self.my_each { |elem| mapped_arr << yield(elem) }
+  def my_map(proc_argument = nil)
+    if block_given?
+      self.my_each { |elem| mapped_arr << yield(elem) }
+    else 
+      self.my_each { |elem| mapped_arr << proc_argument.call(elem) }
+    end
     mapped_arr
   end
 
-  def my_select
+  def my_select(proc_argument = nil)
     selected_elems = []
-    self.my_each { |elem| selected_elems << elem if yield(elem) }
+    if block_given?
+      self.my_each { |elem| selected_elems << elem if yield(elem) }
+    else
+      self.my_each { |elem| selected_elems << elem if proc_argument.call(elem) }
+    end
     selected_elems
+  end
+
+   def my_all?(proc_argument = nil)
+    if block_given
+      self.my_each { |elem| return false if !yield(elem) }
+    else
+      self.my_each { |elem| return false if proc_argument.call(elem) }
+    end
+    true
   end
 end
 
