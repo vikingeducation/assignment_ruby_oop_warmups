@@ -4,7 +4,9 @@ require_relative 'game'
 
 class Rps
   include Cli
-  attr_reader :play_game
+
+  attr_accessor :play_game
+
   def initialize
     @play_game = true
   end
