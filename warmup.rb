@@ -1,5 +1,4 @@
 #################warmup1################
-
 def reverse(str)
   array = str.split("")
   reverse_str = []
@@ -47,3 +46,50 @@ end
 #print my_benchmark(10){puts "hi"}
 
 #################warmup3################
+class Array
+  def my_each
+    i = 0
+    while i < self.count
+      yield(self[i])
+      i += 1
+    end
+  end
+
+  def my_map
+    i = 0
+    while i < self.count
+      self[i] = yield(self[i])
+      i += 1
+    end
+  end
+
+  def my_select
+    i = 0
+    @new_arr = []
+    while i < self.count
+      @new_arr << self[i] if yield(self[i])
+      i += 1
+    end
+    return @new_arr
+  end
+
+  def my_all?
+    i = 0
+    while i < self.count
+      return false unless yield(self[i])
+      i += 1
+    end
+    return true
+  end
+
+  def my_inject(sym)
+    if sym == :+
+      sum = 0
+      self.my_each do {|num| sum += num}
+      return sum
+    elsif sym == :*
+      prod = 1
+      self.my_each do {|num| prod *= num}
+      return prod
+  end
+end
