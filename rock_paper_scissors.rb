@@ -7,6 +7,7 @@ class Game
 
   def play
     welcome_player
+    play_again_option
   end
 
   private
@@ -18,6 +19,19 @@ class Game
     puts "-" * header.length
     puts "You go head to head against the computer's randomly-selected weapon."
     puts "The winner is the player who won the best out of 3 rounds."
+  end
+
+  def play_again_option
+    puts "Play again? Y | N"
+    player_response = gets.chomp.upcase
+    if player_response == "Y"
+      self.play
+    elsif player_response == "N"
+      puts "Okay Bye."
+    else
+      puts "I'm sorry, that's not an option."
+      play_again_option
+    end
   end
 
 end
