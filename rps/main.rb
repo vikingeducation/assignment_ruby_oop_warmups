@@ -1,5 +1,5 @@
-require './rps_ascii_art'
-require './rps_game'
+require_relative 'ascii_art'
+require_relative 'game'
 
 def welcome_player
   puts AsciiArt::TITLE

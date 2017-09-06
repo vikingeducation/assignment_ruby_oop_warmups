@@ -1,4 +1,4 @@
-require_relative 'toh_ascii_art'
+require_relative 'ascii_art'
 
 class Game
   def initialize(qty_rings)
