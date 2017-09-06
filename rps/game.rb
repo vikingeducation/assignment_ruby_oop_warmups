@@ -67,8 +67,8 @@ end
 class OnePlayerGame < GameBase
 
   def play
-    puts "You are playing against the Computer."
     clear_screen
+    puts "You are playing against the Computer."
     3.times do
       announce_round
       player1_choice = request_player_choice
@@ -121,8 +121,8 @@ end
 class TwoPlayerGame < GameBase
 
   def play
-    puts "You are playing against Player 2"
     clear_screen
+    puts "You are playing against Player 2"
     3.times do
       announce_round
       puts "Player 1:"
