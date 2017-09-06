@@ -7,7 +7,8 @@ class Game
 
   def play
     welcome_player
-    p determine_round_winner(player_select_weapon, computer_select_weapon)
+    determine_type_of_game(request_player_count)
+    # determine_round_winner(player_select_weapon, computer_select_weapon)
     play_again_option
   end
 
@@ -20,6 +21,24 @@ class Game
     puts "-" * header.length
     puts "You go head to head against the computer's randomly-selected weapon."
     puts "The winner is the player who won the best out of 3 rounds."
+  end
+
+  def request_player_count
+    puts "How many players? 1 or 2?"
+    response = gets.chomp
+  end
+
+  def determine_type_of_game(player_count)
+    if player_count == "1"
+      puts "This is a 1-player game"
+    elsif player_count == "2"
+      puts "This is a 2-player game"
+    else
+      while !["1", "2"].include?(player_count)
+        puts "I'm sorry, #{player_count} is not an option."
+        player_count = request_player_count
+      end
+    end
   end
 
   def determine_round_winner(player_weapon, computer_weapon)
