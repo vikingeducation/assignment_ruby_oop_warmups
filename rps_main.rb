@@ -46,8 +46,10 @@ while @play_game
   game_type = determine_type_of_game(request_player_count)
   if game_type == 'one_player'
     game = OnePlayerGame.new
+    game.play
   else
     game = TwoPlayerGame.new
+    game.play
   end
 
   @play_game = play_again?
