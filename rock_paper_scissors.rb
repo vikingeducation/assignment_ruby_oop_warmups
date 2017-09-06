@@ -7,6 +7,7 @@ class Game
 
   def play
     welcome_player
+    p determine_round_winner(player_select_weapon, computer_select_weapon)
     play_again_option
   end
 
@@ -19,6 +20,32 @@ class Game
     puts "-" * header.length
     puts "You go head to head against the computer's randomly-selected weapon."
     puts "The winner is the player who won the best out of 3 rounds."
+  end
+
+  def determine_round_winner(player_weapon, computer_weapon)
+    if player_weapon == computer_weapon
+      return 'tie'
+    elsif player_weapon == "r" && computer_weapon == "p"
+      return 'computer'
+    elsif player_weapon == "p" && computer_weapon == "s"
+      return 'computer'
+    elsif player_weapon == "s" && computer_weapon == "r"
+        return 'computer'
+    else
+      return 'player'
+    end
+  end
+
+  def player_select_weapon
+    puts "Please select a weapon by entering 'r', 'p', or 's':"
+    puts "r: Rock"
+    puts "p: Paper"
+    puts "s: Scissors"
+    gets.chomp.downcase
+  end
+
+  def computer_select_weapon
+    ['r', 'p', 's'].sample
   end
 
   def play_again_option
