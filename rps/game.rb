@@ -19,10 +19,19 @@ class GameBase
   private
 
   def announce_round
-    puts '-' * 15
+    puts '','-' * 15
     puts "Round #{@round_number}!"
     puts '-' * 15
     @round_number += 1
+  end
+
+  def request_player_choice
+    puts "Please select a weapon by entering 'r', 'p', or 's':"
+    puts "r: Rock"
+    puts "p: Paper"
+    puts "s: Scissors"
+    response = gets.chomp.downcase
+    verify_response(response, WEAPONS)
   end
 
   def determine_round_winner(player1_weapon, player2_weapon)
