@@ -15,7 +15,6 @@ class GameBase
   end
 
   WEAPONS = ['r', 'p', 's']
-  EXIT_COMMANDS = ['q', 'quit', 'exit']
 
   private
 
@@ -56,17 +55,7 @@ class GameBase
     puts "p: Paper"
     puts "s: Scissors"
     response = gets.chomp.downcase
-    if WEAPONS.include?(response)
-      return response
-    elsif EXIT_COMMANDS.include?(response)
-      exit_game
-    else
-      while !WEAPONS.include?(response)
-        puts "Sorry, '#{response}' is not a valid answer. Try again."
-        response = gets.chomp.downcase
-      end
-    end
-    response
+    verify_response(response, WEAPONS)
   end
 
   def clear_screen
