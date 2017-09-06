@@ -13,4 +13,11 @@ class Array
     self.my_each { |elem| mapped_arr << yield(elem) }
     mapped_arr
   end
+
+  def my_select
+    selected_elems = []
+    self.my_each { |elem| selected_elems << elem if yield(elem) }
+    selected_elems
+  end
 end
+
