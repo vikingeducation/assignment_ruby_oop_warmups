@@ -1,16 +1,25 @@
 class GameBase
-  attr_accessor :computer_score, :player1_score, :player2_score
+  attr_accessor :computer_score, :player1_score, :player2_score, :round_winner, :game_winner, :round_number
 
   def initialize
     @computer_score = 0
     @player1_score = 0
     @player2_score = 0
     @round_winner = ''
+    @game_winner = ''
+    @round_number = 1
   end
 
   WEAPONS = ['r', 'p', 's']
 
   private
+
+  def announce_round
+    puts '-' * 15
+    puts "Round #{@round_number}!"
+    puts '-' * 15
+    @round_number += 1
+  end
 
   def determine_round_winner(player1_weapon, player2_weapon)
     if player1_weapon == player2_weapon
@@ -53,18 +62,32 @@ class OnePlayerGame < GameBase
   end
 
   def announce_round_winner
-    if @round_winner == 'player1'
-      puts "Player 1 wins!"
+    if @round_winner == 'tie'
+      puts "This round was a tie."
+    elsif @round_winner == 'player1'
+      puts "Player 1 wins the round!"
     else
-      puts "The computer wins!"
+      puts "The computer wins the round!"
     end
+    puts "Current scores: You: #{@player1_score} | Computer: #{@computer_score}"
   end
 
   def award_points
-    if @round_winner == 'player1'
+    if @round_winner == 'tie'
+    elsif @round_winner == 'player1'
       @player1_score += 1
     else
       @computer_score += 1
+    end
+  end
+
+  def announce_game_winner
+    if @game_winner == 'tie'
+      puts "This game is a tie."
+    elsif @game_winner == 'player1'
+      puts "Player 1 wins the game!"
+    else
+      puts "The computer wins the game!"
     end
   end
 
@@ -73,16 +96,26 @@ end
 class TwoPlayerGame < GameBase
 
   def play
-    puts "Playing against Player 2!"
-    player1_choice = request_player_choice
-    player2_choice = request_player_choice
-    determine_round_winner(player1_choice, player2_choice)
-    announce_round_winner
-    award_points
+    puts "You are playing against Player 2"
+    clear_screen
+    3.times do
+      announce_round
+      puts "Player 1:"
+      player1_choice = request_player_choice
+      puts "Player 2:"
+      player2_choice = request_player_choice
+      determine_round_winner(player1_choice, player2_choice)
+      award_points
+      announce_round_winner
+    end
+    determine_game_winner
+    announce_game_winner
   end
 
   def announce_round_winner
-    if @round_winner == 'player1'
+    if @round_winner == 'tie'
+      puts "This round is a tie."
+    elsif @round_winner == 'player1'
       puts "Player 1 wins!"
     else
       puts "Player 2 wins!"
