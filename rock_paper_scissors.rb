@@ -73,11 +73,16 @@ class Game
     if player_response == "Y"
       self.play
     elsif player_response == "N"
-      puts "Okay Bye."
+      exit_game
     else
       puts "I'm sorry, that's not an option."
       play_again_option
     end
+  end
+
+  def exit_game
+    puts "Okay Bye."
+    exit
   end
 
 end
