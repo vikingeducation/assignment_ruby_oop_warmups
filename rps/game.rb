@@ -11,6 +11,7 @@ class GameBase
   end
 
   WEAPONS = ['r', 'p', 's']
+  EXIT_COMMANDS = ['q', 'quit', 'exit']
 
   private
 
@@ -45,13 +46,23 @@ class GameBase
     end
   end
 
-
   def request_player_choice
     puts "Please select a weapon by entering 'r', 'p', or 's':"
     puts "r: Rock"
     puts "p: Paper"
     puts "s: Scissors"
-    gets.chomp.downcase
+    response = gets.chomp.downcase
+    if WEAPONS.include?(response)
+      return response
+    elsif EXIT_COMMANDS.include?(response)
+      exit
+    else
+      while !WEAPONS.include?(response)
+        puts "Sorry, '#{response}' is not a valid answer. Try again."
+        response = gets.chomp.downcase
+      end
+    end
+    response
   end
 
   def clear_screen
