@@ -35,6 +35,16 @@ class GameBase
     end
   end
 
+  def determine_game_winner
+    if @player1_score == @player2_score
+      @game_winner = 'tie'
+    elsif @player1_score > @player2_score
+      @game_winner = 'player1'
+    else
+      @game_winner = 'player2'
+    end
+  end
+
 
   def request_player_choice
     puts "Please select a weapon by entering 'r', 'p', or 's':"
@@ -123,12 +133,22 @@ class TwoPlayerGame < GameBase
   end
 
   def award_points
-    if @round_winner == 'player1'
+    if @round_winner == 'tie'
+    elsif @round_winner == 'player1'
       @player1_score += 1
     else
       @player2_score += 1
     end
   end
 
+  def announce_game_winner
+    if @game_winner == 'tie'
+      puts "This game is a tie."
+    elsif @game_winner == 'player1'
+      puts "Player 1 wins the game!"
+    else
+      puts "Player 2 wins the game!"
+    end
+  end
 end
 
