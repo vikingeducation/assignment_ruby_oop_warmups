@@ -54,17 +54,28 @@ class GameBase
     gets.chomp.downcase
   end
 
+  def clear_screen
+    Gem.win_platform? ? (system "cls") : (system "clear")
+  end
+
 end
 
 class OnePlayerGame < GameBase
 
   def play
-    puts "Playing against the computer!"
-    player1_choice = request_player_choice
-    computer_choice = computer_makes_choice
-    determine_round_winner(player1_choice, computer_choice)
-    announce_round_winner
-    award_points
+    puts "You are playing against the Computer."
+    clear_screen
+    3.times do
+      announce_round
+      player1_choice = request_player_choice
+      computer_choice = computer_makes_choice
+      puts "The computer chose: #{computer_choice}"
+      determine_round_winner(player1_choice, computer_choice)
+      award_points
+      announce_round_winner
+    end
+    determine_game_winner
+    announce_game_winner
   end
 
   def computer_makes_choice
