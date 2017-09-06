@@ -1,4 +1,8 @@
+require_relative 'cli'
+
 class GameBase
+  include Cli
+
   attr_accessor :computer_score, :player1_score, :player2_score, :round_winner, :game_winner, :round_number
 
   def initialize
@@ -55,7 +59,7 @@ class GameBase
     if WEAPONS.include?(response)
       return response
     elsif EXIT_COMMANDS.include?(response)
-      exit
+      exit_game
     else
       while !WEAPONS.include?(response)
         puts "Sorry, '#{response}' is not a valid answer. Try again."

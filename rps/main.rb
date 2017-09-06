@@ -1,5 +1,6 @@
 require_relative 'ascii_art'
 require_relative 'game'
+require_relative 'cli'
 
 def welcome_player
   puts AsciiArt::TITLE
@@ -31,11 +32,6 @@ def play_again?
     puts "I'm sorry, that's not an option."
     play_again?
   end
-end
-
-def exit_game
-  puts "Okay Bye."
-  exit
 end
 
 
