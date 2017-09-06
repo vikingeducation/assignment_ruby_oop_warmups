@@ -7,4 +7,10 @@ class Array
     end 
     self 
   end 
+
+  def my_map
+    mapped_arr = []
+    self.my_each { |elem| mapped_arr << yield(elem) }
+    mapped_arr
+  end
 end
