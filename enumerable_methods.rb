@@ -68,3 +68,29 @@ end
 # takes a proc
 my_proc = Proc.new{|item| item.even?}
 [1,2,5].my_select(my_proc)
+
+
+
+# Create a method my_all? which extends the Array class and works the same
+# as Ruby's native all? method. You can use your my_each method to implement
+# this. Make it take either a block or a proc.
+class Array
+  def my_all?(proc_argument = nil)
+    selected_items = []
+    self.my_each do |item|
+      if block_given?
+        selected_items << item if yield(item)
+      else
+        selected_items << item if proc_argument.call(item)
+      end
+    end
+    p selected_items == self
+  end
+end
+
+# takes a block
+[1,2,5].my_all?{|item| item.even?}
+
+# takes a proc
+my_proc = Proc.new{|item| item.even?}
+[1,2,5].my_all?(my_proc)
