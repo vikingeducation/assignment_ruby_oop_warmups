@@ -3,10 +3,9 @@ require_relative 'cli'
 class GameBase
   include Cli
 
-  attr_accessor :computer_score, :player1_score, :player2_score, :round_winner, :game_winner, :round_number
+  attr_accessor :player1_score, :player2_score, :round_winner, :game_winner, :round_number
 
   def initialize
-    @computer_score = 0
     @player1_score = 0
     @player2_score = 0
     @round_winner = ''
@@ -48,7 +47,7 @@ class GameBase
     end
   end
 
-  def announce_round_winner(player2_name, player2_score)
+  def announce_round_winner(player2_name)
     if @round_winner == 'tie'
       puts "This round was a tie."
     elsif @round_winner == 'player1'
@@ -56,7 +55,7 @@ class GameBase
     else
       puts "#{player2_name} wins the round."
     end
-    puts "Current scores: Player 1: #{@player1_score} | #{player2_name}: #{player2_score}"
+    puts "Current scores: Player 1: #{@player1_score} | #{player2_name}: #{@player2_score}"
   end
 
   def determine_game_winner
@@ -69,13 +68,12 @@ class GameBase
     end
   end
 
-  def announce_game_winner(player2_name)
-    if @game_winner == 'tie'
-      puts "This game is a tie."
-    elsif @game_winner == 'player1'
-      puts "Player 1 wins the game!"
+  def award_points
+    if @round_winner == 'tie'
+    elsif @round_winner == 'player1'
+      @player1_score += 1
     else
-      puts "#{player2_name} wins the game!"
+      @player2_score += 1
     end
   end
 
@@ -93,70 +91,39 @@ class GameBase
     Gem.win_platform? ? (system "cls") : (system "clear")
   end
 
-end
-
-class OnePlayerGame < GameBase
-
-  def play
+  def play_base(player2_name, weapon_selection_proc)
     clear_screen
-    puts "You are playing against the Computer."
+    puts "You are playing against #{player2_name}."
     3.times do
       announce_round
       puts "Player 1's Turn:"
       player1_choice = request_player_choice
-      puts "","The Computer's Turn:"
-      computer_choice = computer_makes_choice
-      puts "The computer chose: #{computer_choice}"
-      determine_round_winner(player1_choice, computer_choice)
+      puts "","#{player2_name}'s Turn:"
+      player2_choice = weapon_selection_proc.call
+      puts "#{player2_name} chose: #{player2_choice}"
+      determine_round_winner(player1_choice, player2_choice)
       award_points
-      announce_round_winner("The Computer", @computer_score)
+      announce_round_winner(player2_name)
     end
     determine_game_winner
-    announce_game_winner("The Computer")
+    announce_game_winner(player2_name)
+  end
+end
+
+class OnePlayerGame < GameBase
+  def play
+    play_base("The Computer", Proc.new {computer_makes_choice})
   end
 
   def computer_makes_choice
-    ['r', 'p', 's'].sample
+    WEAPONS.sample
   end
-
-  def award_points
-    if @round_winner == 'tie'
-    elsif @round_winner == 'player1'
-      @player1_score += 1
-    else
-      @computer_score += 1
-    end
-  end
-
 end
 
 
 class TwoPlayerGame < GameBase
-
   def play
-    clear_screen
-    puts "You are playing against Player 2"
-    3.times do
-      announce_round
-      puts "Player 1's Turn:"
-      player1_choice = request_player_choice
-      puts "","Player 2's Turn:"
-      player2_choice = request_player_choice
-      determine_round_winner(player1_choice, player2_choice)
-      award_points
-      announce_round_winner("Player 2", @player2_score)
-    end
-    determine_game_winner
-    announce_game_winner("Player 2")
-  end
-
-  def award_points
-    if @round_winner == 'tie'
-    elsif @round_winner == 'player1'
-      @player1_score += 1
-    else
-      @player2_score += 1
-    end
+    play_base("Player 2", Proc.new { request_player_choice })
   end
 end
 
