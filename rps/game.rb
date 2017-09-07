@@ -1,6 +1,6 @@
 require_relative 'cli'
 
-class GameBase
+class Game
   include Cli
 
   attr_accessor :player1_score, :player2_score, :round_winner, :game_winner, :round_number
@@ -13,9 +13,21 @@ class GameBase
     @round_number = 1
   end
 
-  WEAPONS = ['r', 'p', 's']
+  def play_one_player
+    play("The Computer", Proc.new {computer_makes_choice})
+  end
+
+  def play_two_player
+    play("Player 2", Proc.new { request_player_choice })
+  end
 
   private
+
+  WEAPONS = ['r', 'p', 's']
+
+  def computer_makes_choice
+    WEAPONS.sample
+  end
 
   def announce_round
     puts '','-' * 15
@@ -91,7 +103,7 @@ class GameBase
     Gem.win_platform? ? (system "cls") : (system "clear")
   end
 
-  def play_base(player2_name, weapon_selection_proc)
+  def play(player2_name, weapon_selection_proc)
     clear_screen
     puts "You are playing against #{player2_name}."
     3.times do
@@ -108,22 +120,6 @@ class GameBase
     determine_game_winner
     announce_game_winner(player2_name)
   end
-end
 
-class OnePlayerGame < GameBase
-  def play
-    play_base("The Computer", Proc.new {computer_makes_choice})
-  end
-
-  def computer_makes_choice
-    WEAPONS.sample
-  end
-end
-
-
-class TwoPlayerGame < GameBase
-  def play
-    play_base("Player 2", Proc.new { request_player_choice })
-  end
 end
 

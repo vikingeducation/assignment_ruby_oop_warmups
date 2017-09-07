@@ -51,11 +51,11 @@ while rps.play_game
   rps.welcome_player
   game_type = rps.determine_type_of_game(rps.request_player_count)
   if game_type == 'one_player'
-    game = OnePlayerGame.new
-    game.play
+    game = Game.new
+    game.play_one_player
   else
-    game = TwoPlayerGame.new
-    game.play
+    game = Game.new
+    game.play_two_player
   end
 
   rps.play_game = rps.play_again?
