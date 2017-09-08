@@ -62,6 +62,17 @@ class PlayGame
   def display_results
     @player_wins ? (puts "Word!") : (puts "Sheeeit!")
   end 
+
+  def play_again
+    puts "Play again? Enter 'yes' to continue, 'no' to quit:"
+    repeat_game = gets.chomp.downcase
+    while !['yes', 'no'].include?(repeat_game)
+      puts "Invalid entry"
+      puts "Play again? Enter 'yes' to continue, 'no' to quit:"
+      repeat_game = gets.chomp.downcase
+    end
+    repeat_game
+  end
   
   def play 
     loop do
@@ -70,15 +81,7 @@ class PlayGame
       display_computer_move
       compute_winner
       display_results
-      puts "Play again? Enter 'yes' to continue, 'no' to quit:"
-      repeat_game = gets.chomp.downcase
-      while !['yes', 'no'].include?(repeat_game)
-        puts "Invalid entry"
-        puts "Play again? Enter 'yes' to continue, 'no' to quit:"
-        repeat_game = gets.chomp.downcase
-      end
-
-      break if repeat_game == 'no'
+      break if play_again == 'no'
     end
   end
 end
