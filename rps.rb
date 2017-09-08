@@ -65,15 +65,21 @@ class PlayGame
   
   def play 
     loop do
-    player_move
-    computer_move
-    display_computer_move
-    compute_winner
-    display_results
-    puts "Play again?"
-    repeat_game = gets.chomp.downcase
-    break if repeat_game == 'no'
-  end
+      player_move
+      computer_move
+      display_computer_move
+      compute_winner
+      display_results
+      puts "Play again? Enter 'yes' to continue, 'no' to quit:"
+      repeat_game = gets.chomp.downcase
+      while !['yes', 'no'].include?(repeat_game)
+        puts "Invalid entry"
+        puts "Play again? Enter 'yes' to continue, 'no' to quit:"
+        repeat_game = gets.chomp.downcase
+      end
+
+      break if repeat_game == 'no'
+    end
   end
 end
 
