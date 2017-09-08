@@ -38,33 +38,25 @@ class PlayGame
       @game_type = gets.chomp.to_i
     end
     
+    @player1 = HumanPlayer.new
+    
     if @game_type == 1
-      @human_player = HumanPlayer.new 
-      @computer_player = ComputerPlayer.new
-    elsif @game_type == 2 
-      @player1 = HumanPlayer.new
+       @player2 = ComputerPlayer.new
+    else
       @player2 = HumanPlayer.new
     end
   end
   
   def player1_move
-    if @game_type == 1
-      @player1_move = @human_player.move
-    else
-      @player1_move = @player1.move
-    end
+    @player1_move = @player1.move
   end
   
   def player2_move
-     if @game_type == 1
-      @player2_move = @computer_player.move
-    else
-      @player2_move = @player2.move
-    end
+    @player2_move = @player2.move
   end
   
   def display_computer_move
-    @computer_player.display_move
+    @player2.display_move
   end
   
   def compute_winner
