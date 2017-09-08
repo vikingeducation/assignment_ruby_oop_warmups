@@ -30,17 +30,37 @@ end
 
 class PlayGame
   def initialize
-    @human_player = HumanPlayer.new 
-    @computer_player = ComputerPlayer.new
     puts "**Welcome to Rock, Paper, scissors!**"
+    puts "Enter 1 for one-player game, 2 for two-player game:"
+    @game_type = gets.chomp.to_i 
+    while ![1, 2].include?(@game_type)
+      puts "Not an option; try again"
+      @game_type = gets.chomp.to_i
+    end
+    
+    if @game_type == 1
+      @human_player = HumanPlayer.new 
+      @computer_player = ComputerPlayer.new
+    elsif @game_type == 2 
+      @player1 = HumanPlayer.new
+      @player2 = HumanPlayer.new
+    end
   end
   
-  def player_move
-    @human_move = @human_player.move 
+  def player1_move
+    if @game_type == 1
+      @player1_move = @human_player.move
+    else
+      @player1_move = @player1.move
+    end
   end
   
-  def computer_move
-    @computer_move = @computer_player.move
+  def player2_move
+     if @game_type == 1
+      @player2_move = @computer_player.move
+    else
+      @player2_move = @player2.move
+    end
   end
   
   def display_computer_move
@@ -48,25 +68,30 @@ class PlayGame
   end
   
   def compute_winner
-    @player_wins = false
-    if @human_move == "rock" && @computer_move == 'scissors'
-      @player_wins = true
-    elsif @human_move == 'paper' && @computer_move == 'rock'
-      @player_wins = true
-    elsif @human_move == 'scissors' && @computer_move == 'paper'
-      @player_wins = true
-    elsif @human_move == @computer_move
-      @player_wins = 'tie'
+    @player1_wins = false
+    if @player1_move == "rock" && @player2_move == 'scissors'
+      @player1_wins = true
+    elsif @player1_move == 'paper' && @player2_move == 'rock'
+      @player1_wins = true
+    elsif @player1_move == 'scissors' && @player2_move == 'paper'
+      @player1_wins = true
+    elsif @player1_move == @player2_move
+      @player1_wins = 'tie'
     end
+    @player1_wins
   end
   
   def display_results
-    if @player_wins == 'tie'
+    if @player1_wins == 'tie'
       puts "It's a tie!"
-    elsif @player_wins
+    elsif @player1_wins == true && @game_type == 1
       puts "Human player wins!"
-    else
+    elsif @player1_wins == false && @game_type == 1
       puts "Computer wins!"
+    elsif @player1_wins == true && @game_type == 2
+      puts "Player 1 wins!"
+    else 
+      puts "Player 2 wins!"
     end
   end 
 
@@ -83,9 +108,10 @@ class PlayGame
   
   def play 
     loop do
-      player_move
-      computer_move
-      display_computer_move
+      player1_move
+      system("clear") if @game_type == 2
+      player2_move
+      display_computer_move if @game_type == 1
       compute_winner
       display_results
       break if play_again == 'no'
