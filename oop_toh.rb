@@ -1,9 +1,11 @@
 class Board
+  attr_accessor :board, :tower_height
+  
   def initialize(tower_height)
     @tower_height = tower_height
     @board = [(1..@tower_height).to_a, [], []]
   end
-  
+
   def display_board
     peg1, peg2, peg3 = [], [], []
 
@@ -33,24 +35,25 @@ class Game
     puts "Enter where you'd like to move from and to"
     puts "in the format '1,3'. Enter 'q' to quit."
     puts "Current Board:"
-    display_board
+    @pegs = Board.new(3)
+    @pegs.display_board
   end
 
   def make_move(move)
-    @board[move[1]].unshift(@board[move[0]].shift)
-    display_board
+    @pegs.board[move[1]].unshift(@pegs.board[move[0]].shift)
+    @pegs.display_board
   end
 
   def valid_move?(move)
-    move.length == 3 && (1..@tower_height).include?(move[0].to_i) && 
-    move[1] == ',' && (1..@tower_height).include?(move[2].to_i) &&
-    (@board[move[2].to_i - 1].empty? || (!@board[move[0].to_i - 1].empty? && 
-      @board[move[0].to_i - 1][0] < @board[move[2].to_i - 1][0])) &&
-    !@board[move[0].to_i - 1].empty?
+    move.length == 3 && (1..@pegs.tower_height).include?(move[0].to_i) && 
+    move[1] == ',' && (1..@pegs.tower_height).include?(move[2].to_i) &&
+    (@pegs.board[move[2].to_i - 1].empty? || (!@pegs.board[move[0].to_i - 1].empty? && 
+      @pegs.board[move[0].to_i - 1][0] < @pegs.board[move[2].to_i - 1][0])) &&
+    !@pegs.board[move[0].to_i - 1].empty?
   end
 
   def win?
-    @board[1..2].any? { |peg| peg.size == @tower_height }
+    @pegs.board[1..2].any? { |peg| peg.size == @pegs.tower_height }
   end
 
   def play
@@ -72,5 +75,6 @@ class Game
   end
 end
 
-Game.new
+game = Game.new
+game.play
 
