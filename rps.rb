@@ -55,12 +55,19 @@ class PlayGame
       @player_wins = true
     elsif @human_move == 'scissors' && @computer_move == 'paper'
       @player_wins = true
+    elsif @human_move == @computer_move
+      @player_wins = 'tie'
     end
-    
   end
   
   def display_results
-    @player_wins ? (puts "Word!") : (puts "Sheeeit!")
+    if @player_wins == 'tie'
+      puts "It's a tie!"
+    elsif @player_wins
+      puts "Human player wins!"
+    else
+      puts "Computer wins!"
+    end
   end 
 
   def play_again
