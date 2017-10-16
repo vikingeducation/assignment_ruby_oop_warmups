@@ -1,13 +1,14 @@
 require "./my_each.rb"
 
 class Array
-  def my_all?(proc_args = 0)
-    bool = nil
+  def my_all?(proc_args = nil)
     self.my_each do |x|
-      bool = proc_args.call(x)
-      break if bool == false
+      if block_given?
+        return false unless yield(self[x])
+      else
+        return false unless proc.call(self[x])
+      end
     end
-    bool
   end
 end
 

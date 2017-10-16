@@ -113,5 +113,5 @@ class TowerOfHanoi
 end
 
 
-t = TowerOfHanoi.new(3)
+t = TowerOfHanoi.new(5)
 t.play
