@@ -13,6 +13,8 @@ Created in Ruby.
 - rock_paper_scissors - command line OOP Rock-Paper-Scissors game, starting with one player against the computer.
 - tower_of_hanoi_oo.rb - Rebuilt Tower of Hanoi using good object-orientation
 ![Tower of Hanoi Command Line game](tower_of_hanoi_oo.png)
+![Screen Shot of Tower of Hanoi game in Bash](tower_of_hanoi.png "Screen Shot of Tower of Hanoi game in Ruby")
+
 
 
 ## Getting Started
