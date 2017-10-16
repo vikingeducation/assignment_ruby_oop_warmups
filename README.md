@@ -12,8 +12,7 @@ Created in Ruby.
 - fibs.rb - takes an integer and spits out an array of that many elements of the Fibonacci Sequence, which starts with 0 and 1 and computes the next element by adding the most recent two elements together.
 - rock_paper_scissors - command line OOP Rock-Paper-Scissors game, starting with one player against the computer.
 - tower_of_hanoi_oo.rb - Rebuilt Tower of Hanoi using good object-orientation
-![Tower of Hanoi Command Line game](tower_hanoi_oo.png)
-![Screen Shot of Tower of Hanoi game in Bash](tower_of_hanoi.png "Screen Shot of Tower of Hanoi game in Ruby")
+![Screen Shot of Tower of Hanoi game in Bash](tower_hanoi.png "Screen Shot of Tower of Hanoi game in Ruby")
 
 
 
