@@ -55,6 +55,23 @@ end
 #my_benchmark(100000) { 9 * 9 }
 #my_benchmark(10000) { 6857 % 8 }
 
+public
+def my_each(proc = nil)
+  if proc == nil
+    self.length.times do |value|
+      yield(self[value])
+    end
+  else
+    self.length.times do |value|
+      proc.call(self[value])
+    end
+  end
+end
+
+[1,2,5].my_each{ |item| puts item }
+
+my_proc = Proc.new{|item| puts item**2}
+[1,2,5].my_each(my_proc)
 
 
 
