@@ -1,4 +1,6 @@
 
+# Documents/Viking/Ruby/oop_warmups
+
 def reverse(string)
   if string != string.to_s
    puts "Please enter only a word or words to reverse, #{string} is not valid."
@@ -153,6 +155,25 @@ end
 proc3 = Proc.new{|item| item.even?}
 [8,9,10].my_all?(proc3)
 =end
+
+def my_inject(proc = nil)
+  if proc == nil
+
+  else
+
+  end
+end
+
+=begin
+[1,2,5].my_inject(0) do |memo, item|
+  memo + item
+end
+
+# needs proc test
+=end
+
+
+
 
 
 
