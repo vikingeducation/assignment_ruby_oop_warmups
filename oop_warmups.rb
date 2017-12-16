@@ -42,3 +42,30 @@ end
 #fibonacci(8)
 #fibonacci(0)
 #fibonacci(2)
+
+def my_benchmark(number_of_times)
+  start = Time.now
+    number_of_times.times { yield }
+    endy = Time.now
+    diff = endy - start
+    puts "The amount of time it took to run the block #{number_of_times} times is #{diff} seconds"
+end
+
+#my_benchmark(10000) { puts "hi" }
+#my_benchmark(100000) { 9 * 9 }
+#my_benchmark(10000) { 6857 % 8 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# spacing
