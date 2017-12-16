@@ -1,6 +1,8 @@
 
 # Documents/Viking/Ruby/oop_warmups
 
+require 'pry'
+
 def reverse(string)
   if string != string.to_s
    puts "Please enter only a word or words to reverse, #{string} is not valid."
@@ -156,21 +158,22 @@ proc3 = Proc.new{|item| item.even?}
 [8,9,10].my_all?(proc3)
 =end
 
-def my_inject(proc = nil)
-  if proc == nil
-
-  else
-
+def my_inject(arg)
+  binding.pry
+  self.my_each do |value|
+# something like yield(arg, value) then store the result in arg
+    binding.pry
   end
+  binding.pry
 end
 
-=begin
+#=begin
 [1,2,5].my_inject(0) do |memo, item|
   memo + item
 end
 
 # needs proc test
-=end
+#=end
 
 
 
