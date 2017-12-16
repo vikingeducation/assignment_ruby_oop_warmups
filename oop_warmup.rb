@@ -12,9 +12,11 @@ def reverse(string)
   end
 end
 
-#reverse("fish")
-#reverse(5.0)
-#reverse("french horn")
+=begin
+reverse("fish")
+reverse(5.0)
+reverse("french horn")
+=end
 
 def fibonacci(integer)
   sequence = []
@@ -38,10 +40,12 @@ def fibonacci(integer)
 
 end
 
-#fibonacci(1)
-#fibonacci(8)
-#fibonacci(0)
-#fibonacci(2)
+=begin
+fibonacci(1)
+fibonacci(8)
+fibonacci(0)
+fibonacci(2)
+=end
 
 def my_benchmark(number_of_times)
   start = Time.now
@@ -51,29 +55,56 @@ def my_benchmark(number_of_times)
     puts "The amount of time it took to run the block #{number_of_times} times is #{diff} seconds"
 end
 
-#my_benchmark(10000) { puts "hi" }
-#my_benchmark(100000) { 9 * 9 }
-#my_benchmark(10000) { 6857 % 8 }
+=begin
+my_benchmark(10000) { puts "hi" }
+my_benchmark(100000) { 9 * 9 }
+my_benchmark(10000) { 6857 % 8 }
+=end
 
 public
 def my_each(proc = nil)
   if proc == nil
-    self.length.times do |value|
-      yield(self[value])
+    self.length.times do |index|
+      yield(self[index])
     end
   else
-    self.length.times do |value|
-      proc.call(self[value])
+    self.length.times do |index|
+      proc.call(self[index])
     end
   end
 end
 
+=begin
 [1,2,5].my_each{ |item| puts item }
 
 my_proc = Proc.new{|item| puts item**2}
 [1,2,5].my_each(my_proc)
+=end
 
+def my_map(proc = nil)
+  if proc == nil
+    mapped1 = []
+    self.my_each do |index|
+      mapped1 << yield(index)
+    end
+    puts "#{mapped1}"
+  else
+    mapped2 = []
+    self.my_each do |index|
+      mapped2 << proc.call(index)
+    end
+    puts "#{mapped2}"
+  end
+end
 
+=begin
+[1,2,5].my_map do |item|
+  item ** 2
+end
+
+procy = Proc.new{|item| item/2}
+[10,20,50].my_map(procy)
+=end
 
 
 
