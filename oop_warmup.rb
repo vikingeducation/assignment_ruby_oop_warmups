@@ -84,14 +84,14 @@ my_proc = Proc.new{|item| puts item**2}
 def my_map(proc = nil)
   if proc == nil
     mapped1 = []
-    self.my_each do |index|
-      mapped1 << yield(index)
+    self.my_each do |value|
+      mapped1 << yield(value)
     end
     puts "#{mapped1}"
   else
     mapped2 = []
-    self.my_each do |index|
-      mapped2 << proc.call(index)
+    self.my_each do |value|
+      mapped2 << proc.call(value)
     end
     puts "#{mapped2}"
   end
@@ -106,11 +106,28 @@ procy = Proc.new{|item| item/2}
 [10,20,50].my_map(procy)
 =end
 
+def my_select(proc = nil)
+  if proc == nil
+    selected1 = []
+    self.my_each do |value|
+      selected1 << value if yield(value)
+    end
+    puts "#{selected1}"
+  else
+    selected2 = []
+    self.my_each do |value|
+      selected2 << value if proc.call(value)
+    end
+    puts "#{selected2}"
+  end
+end
 
+#=begin
+[2,3,6].my_select{|item| item.frozen?}
 
-
-
-
+proc2 = Proc.new{|item| item.even?}
+[1,2,5].my_select(proc2)
+#=end
 
 
 
