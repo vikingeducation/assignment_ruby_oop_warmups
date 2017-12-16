@@ -122,12 +122,37 @@ def my_select(proc = nil)
   end
 end
 
-#=begin
+=begin
 [2,3,6].my_select{|item| item.frozen?}
 
 proc2 = Proc.new{|item| item.even?}
 [1,2,5].my_select(proc2)
-#=end
+=end
+
+def my_all?(proc = nil)
+  if proc == nil
+    block_result = false
+    self.my_each do |value|
+      block_result = yield(value)
+      break if block_result == false
+    end
+    puts block_result
+  else
+    proc_result = false
+    self.my_each do |value|
+      proc_result = proc.call(value)
+      break if proc_result == false
+    end
+    puts proc_result
+  end
+end
+
+=begin
+[2,3,6].my_all?{|item| item.frozen?}
+
+proc3 = Proc.new{|item| item.even?}
+[8,9,10].my_all?(proc3)
+=end
 
 
 
