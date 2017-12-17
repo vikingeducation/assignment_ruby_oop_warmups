@@ -1,7 +1,6 @@
 
 =begin
   Documents/Viking/Ruby/oop_warmups
-  ruby oop_warmup.rb
 
   require 'pry'
   binding.pry
