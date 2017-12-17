@@ -5,81 +5,95 @@
   require 'pry'
   binding.pry
 
-  need to add 2 player mode
 =end
 
 class RockPaperScissors
   def initialize
     @options = ["rock", "paper", "scissors"]
-    @bot_pick = @options.sample
-    puts "Welcome to rock, paper, scissors\n"
-    choose
+    @p2_pick = @options.sample
+    @p1_win = false
+    @p2_win = false
+    system "cls"
+    system "clear"
+    puts "\nWelcome to rock, paper, scissors\n"
+    mode
+  end
+
+  def mode
+    puts "\nPlease enter 1 to start a single player session or 2 for a two player game.\n\n"
+    @mode = gets.chomp
+    check_mode
+  end
+
+  def check_mode
+    if @mode == "1"
+      @mode = 1
+      choose
+    elsif @mode == "2"
+      @mode = 2
+      choose
+    else
+      puts "\nSomething went wrong, try choosing the number of players again."
+      mode
+    end
   end
 
   def choose
-    puts "\nPlease enter which option you'd like to pick\n\n"
-    @player_one_pick = gets.chomp
-    validatey
+    if @mode == 1
+      puts "\nPlease enter which option you'd like to pick\n\n"
+      @p1_pick = gets.chomp
+    else
+      @p1_pick = @options.sample
+      puts "\nSince the second player could simply pick the winning option everytime\nin all fairness you've both been assigned a random option."
+      puts "\nPlayer one got #{@p1_pick}, and player two got #{@p2_pick}."
+    end
+    valid_choice
   end
 
-  def validatey
-    if @player_one_pick == "rock" || @player_one_pick == "paper"
-      judge
-    elsif @player_one_pick == "scissors"
-      judge
+  def valid_choice
+    if @mode == 1
+      if @options.include?(@p1_pick)
+        judge
+      else
+        puts "\nPlease enter one of the following options\nrock\npaper\nscissors"
+        choose
+      end
     else
-      puts "\nPlease enter one of the following options\nrock\npaper\nscissors"
-      choose
+      judge
     end
   end
 
   def judge
-    @win = false
-    if @player_one_pick == "rock" && @bot_pick == "scissors"
-      @win = true
-    elsif @player_one_pick == "paper" && @bot_pick == "rock"
-      @win = true
-    elsif @player_one_pick == "scissors" && @bot_pick == "papper"
-      @win = true
-    elsif @player_one_pick == @bot_pick
-      @win = "tie"
+    if @p1_pick == "rock" && @p2_pick == "scissors"
+      @p1_win = true
+    elsif @p1_pick == "paper" && @p2_pick == "rock"
+      @p1_win = true
+    elsif @p1_pick == "scissors" && @p2_pick == "paper"
+      @p1_win = true
+    elsif @p1_pick == @p2_pick
+      @p1_win = "tie"
+    elsif @p2_pick == "rock" && @p1_pick == "scissors"
+      @p2_win = true
+    elsif @p2_pick == "paper" && @p1_pick == "rock"
+      @p2_win = true
+    elsif @p2_pick == "scissors" && @p1_pick == "paper"
+      @p2_win = true
+    else
+      puts "I am broken"
     end
     results
   end
 
   def results
-    if @win == true
-      puts "\nYou won with #{@player_one_pick} against #{@bot_pick}!"
-    elsif @win == "tie"
-      puts "\nYou tied with #{@player_one_pick} against #{@bot_pick}."
-    elsif @win == false
-      puts "\nThe bot won with #{@bot_pick} against your #{@player_one_pick}."
-    end
+    @mode == 1 ? p2 = "The computer" : p2 = "player two"
+      if @p1_win == true
+        puts "\nPlayer one is the winner with #{@p1_pick} against #{@p2_pick}!"
+      elsif @p1_win == "tie"
+        puts "\nThe result is a tie with player one's #{@p1_pick} against #{p2}'s #{@p2_pick}."
+      elsif @p2_win == true
+        puts "\n#{p2} won with #{@p2_pick} against #{@p1_pick}!"
+      end
   end
-
 end
 
 RockPaperScissors.new
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# spacing
