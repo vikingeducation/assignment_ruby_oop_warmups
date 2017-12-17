@@ -1,7 +1,11 @@
 
-# Documents/Viking/Ruby/oop_warmups
+=begin
+  Documents/Viking/Ruby/oop_warmups
+  ruby oop_warmup.rb
 
-require 'pry'
+  require 'pry'
+  binding.pry
+=end
 
 def reverse(string)
   if string != string.to_s
@@ -158,22 +162,28 @@ proc3 = Proc.new{|item| item.even?}
 [8,9,10].my_all?(proc3)
 =end
 
-def my_inject(arg)
-  binding.pry
-  self.my_each do |value|
-# something like yield(arg, value) then store the result in arg
-    binding.pry
+def my_inject(sum, proc = nil)
+  if proc == nil
+    self.my_each do |value|
+      sum = yield(sum, value)
+    end
+    puts sum
+  else
+    self.my_each do |value|
+      sum = proc.call(sum, value)
+    end
+    puts sum
   end
-  binding.pry
 end
 
-#=begin
+=begin
 [1,2,5].my_inject(0) do |memo, item|
   memo + item
 end
 
-# needs proc test
-#=end
+proc4 = Proc.new{|memo, item| memo + item}
+[1,2,3].my_inject(0, proc4)
+=end
 
 
 
