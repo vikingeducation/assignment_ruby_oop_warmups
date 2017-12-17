@@ -11,8 +11,7 @@ class RockPaperScissors
   def initialize
     @options = ["rock", "paper", "scissors"]
     @p2_pick = @options.sample
-    @p1_win = false
-    @p2_win = false
+    @p1_win, @p2_win = false, false
     system "cls"
     system "clear"
     puts "\nWelcome to rock, paper, scissors\n"
@@ -51,13 +50,9 @@ class RockPaperScissors
   end
 
   def valid_choice
-    if @mode == 1
-      if @options.include?(@p1_pick)
-        judge
-      else
-        puts "\nPlease enter one of the following options\nrock\npaper\nscissors"
-        choose
-      end
+    if !@options.include?(@p1_pick)
+      puts "\nPlease enter one of the following options\nrock\npaper\nscissors"
+      choose
     else
       judge
     end
@@ -72,14 +67,8 @@ class RockPaperScissors
       @p1_win = true
     elsif @p1_pick == @p2_pick
       @p1_win = "tie"
-    elsif @p2_pick == "rock" && @p1_pick == "scissors"
-      @p2_win = true
-    elsif @p2_pick == "paper" && @p1_pick == "rock"
-      @p2_win = true
-    elsif @p2_pick == "scissors" && @p1_pick == "paper"
-      @p2_win = true
     else
-      puts "I am broken"
+      @p2_win = true
     end
     results
   end
@@ -90,7 +79,7 @@ class RockPaperScissors
         puts "\nPlayer one is the winner with #{@p1_pick} against #{@p2_pick}!"
       elsif @p1_win == "tie"
         puts "\nThe result is a tie with player one's #{@p1_pick} against #{p2}'s #{@p2_pick}."
-      elsif @p2_win == true
+      else
         puts "\n#{p2} won with #{@p2_pick} against #{@p1_pick}!"
       end
   end
