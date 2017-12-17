@@ -1,4 +1,6 @@
 
+# need to add 2 player mode
+
 class RockPaperScissors
   def initialize
     @options = ["rock", "paper", "scissors"]
