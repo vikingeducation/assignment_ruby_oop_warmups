@@ -1,12 +1,4 @@
 
-=begin
-  Documents/Viking/Ruby/oop_warmups
-
-  require 'pry'
-  binding.pry
-
-=end
-
 class RockPaperScissors
   def initialize
     @options = ["rock", "paper", "scissors"]
@@ -26,10 +18,8 @@ class RockPaperScissors
 
   def check_mode
     if @mode == "1"
-      @mode = 1
       choose
     elsif @mode == "2"
-      @mode = 2
       choose
     else
       puts "\nSomething went wrong, try choosing the number of players again."
@@ -38,7 +28,7 @@ class RockPaperScissors
   end
 
   def choose
-    if @mode == 1
+    if @mode == "1"
       puts "\nPlease enter which option you'd like to pick\n\n"
       @p1_pick = gets.chomp
     else
@@ -74,7 +64,7 @@ class RockPaperScissors
   end
 
   def results
-    @mode == 1 ? p2 = "The computer" : p2 = "player two"
+    @mode == "1" ? p2 = "The computer" : p2 = "player two"
       if @p1_win == true
         puts "\nPlayer one is the winner with #{@p1_pick} against #{@p2_pick}!"
       elsif @p1_win == "tie"

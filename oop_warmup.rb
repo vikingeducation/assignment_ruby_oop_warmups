@@ -1,16 +1,5 @@
 
-=begin
-  Documents/Viking/Ruby/oop_warmups
-
-  require 'pry'
-  binding.pry
-
-  to do's:
-  1. simplify/reduce puts duplicate for split if loops
-  2. review variable/other elements names to make sure they make sense
-  3. usual checklist items
-=end
-
+# this method is simply a replacement for ruby's built in reverse method
 def reverse(string)
   if string != string.to_s
    puts "Please enter only a word or words to reverse, #{string} is not valid."
@@ -24,12 +13,11 @@ def reverse(string)
   end
 end
 
-=begin
 reverse("fish")
 reverse(5.0)
 reverse("french horn")
-=end
 
+# this method outputs an array of the fibonacci sequence starting at 0 and up to the integer given
 def fibonacci(integer)
   sequence = []
   if integer == 0
@@ -39,161 +27,136 @@ def fibonacci(integer)
   else
     first = 0
     second = 1
-    counter = 0
-    while counter < integer
+    integer.times {
       sequence << first
       increment = first + second
       first = second
       second = increment
-      counter += 1
-    end
+    }
     puts "The first #{integer.to_s} numbers in the Fibonacci Sequence are #{sequence}"
   end
-
 end
 
-=begin
 fibonacci(1)
 fibonacci(8)
 fibonacci(0)
 fibonacci(2)
-=end
 
+# this method will run the block its given the amount of times requested then determine how long it took
 def my_benchmark(number_of_times)
   start = Time.now
-    number_of_times.times { yield }
+    number_of_times.times {
+      yield
+    }
     endy = Time.now
     diff = endy - start
     puts "The amount of time it took to run the block #{number_of_times} times is #{diff} seconds"
 end
 
-=begin
 my_benchmark(10000) { puts "hi" }
 my_benchmark(100000) { 9 * 9 }
 my_benchmark(10000) { 6857 % 8 }
-=end
 
+# this method is a replacement for ruby's native each
 public
 def my_each(proc = nil)
   if proc == nil
-    self.length.times do |index|
+    length.times do |index|
       yield(self[index])
     end
   else
-    self.length.times do |index|
+    length.times do |index|
       proc.call(self[index])
     end
   end
 end
 
-=begin
 [1,2,5].my_each{ |item| puts item }
 
-my_proc = Proc.new{|item| puts item**2}
-[1,2,5].my_each(my_proc)
-=end
+exponent = Proc.new{|item| puts item**2}
+[1,2,5].my_each(exponent)
 
+# this method is a replacement for ruby's native map
 def my_map(proc = nil)
+  mapped = []
   if proc == nil
-    mapped1 = []
-    self.my_each do |value|
-      mapped1 << yield(value)
+    my_each do |value|
+      mapped << yield(value)
     end
-    puts "#{mapped1}"
   else
-    mapped2 = []
-    self.my_each do |value|
-      mapped2 << proc.call(value)
+    my_each do |value|
+      mapped << proc.call(value)
     end
-    puts "#{mapped2}"
   end
+  puts "#{mapped}"
 end
 
-=begin
 [1,2,5].my_map do |item|
   item ** 2
 end
 
-procy = Proc.new{|item| item/2}
-[10,20,50].my_map(procy)
-=end
+half = Proc.new{|item| item/2}
+[10,20,50].my_map(half)
 
+# this method is a replacement for ruby's native select
 def my_select(proc = nil)
+  selected = []
   if proc == nil
-    selected1 = []
-    self.my_each do |value|
-      selected1 << value if yield(value)
+    my_each do |value|
+      selected << value if yield(value)
     end
-    puts "#{selected1}"
   else
-    selected2 = []
-    self.my_each do |value|
-      selected2 << value if proc.call(value)
+    my_each do |value|
+      selected << value if proc.call(value)
     end
-    puts "#{selected2}"
   end
+  puts "#{selected}"
 end
 
-=begin
 [2,3,6].my_select{|item| item.frozen?}
 
-proc2 = Proc.new{|item| item.even?}
-[1,2,5].my_select(proc2)
-=end
+even = Proc.new{|item| item.even?}
+[1,2,5].my_select(even)
 
+# this method is a replacement for ruby's native all?
 def my_all?(proc = nil)
+  result = false
   if proc == nil
-    block_result = false
-    self.my_each do |value|
-      block_result = yield(value)
-      break if block_result == false
+    my_each do |value|
+      result = yield(value)
+      break if result == false
     end
-    puts block_result
   else
-    proc_result = false
-    self.my_each do |value|
-      proc_result = proc.call(value)
-      break if proc_result == false
+    my_each do |value|
+      result = proc.call(value)
+      break if result == false
     end
-    puts proc_result
   end
+  puts result
 end
 
-=begin
 [2,3,6].my_all?{|item| item.frozen?}
 
-proc3 = Proc.new{|item| item.even?}
-[8,9,10].my_all?(proc3)
-=end
+not_odd = Proc.new{|item| item.even?}
+[8,9,10].my_all?(not_odd)
 
+# this method is a replacement for ruby's native inject
 def my_inject(sum, proc = nil)
   if proc == nil
-    self.my_each do |value|
+    my_each do |value|
       sum = yield(sum, value)
     end
-    puts sum
   else
-    self.my_each do |value|
+    my_each do |value|
       sum = proc.call(sum, value)
     end
-    puts sum
   end
+  puts sum
 end
 
-=begin
 [1,2,5].my_inject(0) do |memo, item|
   memo + item
 end
 
-proc4 = Proc.new{|memo, item| memo + item}
-[1,2,3].my_inject(0, proc4)
-=end
-
-
-
-
-
-
-
-
-# spacing
+total = Proc.new{|memo, item| memo + item}
+[1,2,3].my_inject(0, total)
