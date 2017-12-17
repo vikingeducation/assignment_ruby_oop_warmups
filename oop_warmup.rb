@@ -4,6 +4,11 @@
 
   require 'pry'
   binding.pry
+
+  to do's:
+  1. simplify/reduce puts duplicate for split if loops
+  2. review variable/other elements names to make sure they make sense
+  3. usual checklist items
 =end
 
 def reverse(string)
