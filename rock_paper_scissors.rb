@@ -1,5 +1,12 @@
 
-# need to add 2 player mode
+=begin
+  Documents/Viking/Ruby/oop_warmups
+
+  require 'pry'
+  binding.pry
+
+  need to add 2 player mode
+=end
 
 class RockPaperScissors
   def initialize
@@ -11,14 +18,14 @@ class RockPaperScissors
 
   def choose
     puts "\nPlease enter which option you'd like to pick\n\n"
-    @player_pick = gets.chomp
+    @player_one_pick = gets.chomp
     validatey
   end
 
   def validatey
-    if @player_pick == "rock" || @player_pick == "paper"
+    if @player_one_pick == "rock" || @player_one_pick == "paper"
       judge
-    elsif @player_pick == "scissors"
+    elsif @player_one_pick == "scissors"
       judge
     else
       puts "\nPlease enter one of the following options\nrock\npaper\nscissors"
@@ -28,13 +35,13 @@ class RockPaperScissors
 
   def judge
     @win = false
-    if @player_pick == "rock" && @bot_pick == "scissors"
+    if @player_one_pick == "rock" && @bot_pick == "scissors"
       @win = true
-    elsif @player_pick == "paper" && @bot_pick == "rock"
+    elsif @player_one_pick == "paper" && @bot_pick == "rock"
       @win = true
-    elsif @player_pick == "scissors" && @bot_pick == "papper"
+    elsif @player_one_pick == "scissors" && @bot_pick == "papper"
       @win = true
-    elsif @player_pick == @bot_pick
+    elsif @player_one_pick == @bot_pick
       @win = "tie"
     end
     results
@@ -42,11 +49,11 @@ class RockPaperScissors
 
   def results
     if @win == true
-      puts "\nYou won with #{@player_pick} against #{@bot_pick}!"
+      puts "\nYou won with #{@player_one_pick} against #{@bot_pick}!"
     elsif @win == "tie"
-      puts "\nYou tied with #{@player_pick} against #{@bot_pick}."
+      puts "\nYou tied with #{@player_one_pick} against #{@bot_pick}."
     elsif @win == false
-      puts "\nThe bot won with #{@bot_pick} against your #{@player_pick}."
+      puts "\nThe bot won with #{@bot_pick} against your #{@player_one_pick}."
     end
   end
 
