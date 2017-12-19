@@ -4,13 +4,15 @@ def reverse(string)
   if string != string.to_s
    puts "Please enter only a word or words to reverse, #{string} is not valid."
   else
-    letters = string.split(//)
-    flipped = []
-    letters.each do |flip|
-      flipped.unshift(letters[letters.index(flip)])
+    index = string.length - 1
+    flipped = ""
+    while index > -1
+      flipped += string[index]
+      index -= 1
     end
-    puts "The reverse of #{string} is #{flipped.join}."
+    puts "The reverse of #{string} is #{flipped}."
   end
+  flipped
 end
 
 reverse("fish")

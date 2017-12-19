@@ -11,7 +11,7 @@ class RockPaperScissors
   end
 
   def mode
-    puts "\nPlease enter 1 to start a single player session or 2 for a two player game.\n\n"
+    print "\nPlease enter 1 to start a single player session or 2 for a two player game. "
     @mode = gets.chomp
     check_mode
   end
@@ -29,7 +29,7 @@ class RockPaperScissors
 
   def choose
     if @mode == "1"
-      puts "\nPlease enter which option you'd like to pick\n\n"
+      print "\nPlease enter which option you'd like to pick. "
       @p1_pick = gets.chomp
     else
       @p1_pick = @options.sample
