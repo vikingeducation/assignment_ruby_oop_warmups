@@ -43,12 +43,13 @@ fibonacci(2)
 # this method will run the block its given the amount of times requested then determine how long it took
 def my_benchmark(number_of_times)
   start = Time.now
-    number_of_times.times {
-      yield
-    }
-    endy = Time.now
-    diff = endy - start
-    puts "The amount of time it took to run the block #{number_of_times} times is #{diff} seconds"
+  number_of_times.times {
+    yield
+  }
+  endy = Time.now
+  length = endy - start
+  puts "The amount of time it took to run the block #{number_of_times} times is #{length} seconds"
+  length
 end
 
 my_benchmark(10000) { puts "hi" }
@@ -58,103 +59,82 @@ my_benchmark(10000) { 6857 % 8 }
 # this method is a replacement for ruby's native each
 public
 def my_each(proc = nil)
-  if proc == nil
-    length.times do |index|
+  length.times do |index|
+    if proc == nil
       yield(self[index])
-    end
-  else
-    length.times do |index|
+    else
       proc.call(self[index])
     end
   end
+  self
 end
 
-[1,2,5].my_each{ |item| puts item }
-
-exponent = Proc.new{|item| puts item**2}
-[1,2,5].my_each(exponent)
+[1,2,5].my_each{|item| puts item**2}
+[1,2,5].my_each(Proc.new{|item| puts item**2})
 
 # this method is a replacement for ruby's native map
 def my_map(proc = nil)
   mapped = []
-  if proc == nil
-    my_each do |value|
+  my_each do |value|
+    if proc == nil
       mapped << yield(value)
-    end
-  else
-    my_each do |value|
+    else
       mapped << proc.call(value)
     end
   end
   puts "#{mapped}"
+  mapped
 end
 
-[1,2,5].my_map do |item|
-  item ** 2
-end
-
-half = Proc.new{|item| item/2}
-[10,20,50].my_map(half)
+[1,2,5].my_map{|item| item ** 2}
+[10,20,50].my_map(Proc.new{|item| item/2})
 
 # this method is a replacement for ruby's native select
 def my_select(proc = nil)
   selected = []
-  if proc == nil
-    my_each do |value|
+  my_each do |value|
+    if proc == nil
       selected << value if yield(value)
-    end
-  else
-    my_each do |value|
+    else
       selected << value if proc.call(value)
     end
   end
   puts "#{selected}"
+  selected
 end
 
-[2,3,6].my_select{|item| item.frozen?}
-
-even = Proc.new{|item| item.even?}
-[1,2,5].my_select(even)
+[4,6,8].my_select{|item| item.even?}
+[1,2,5].my_select(Proc.new{|item| item.even?})
 
 # this method is a replacement for ruby's native all?
 def my_all?(proc = nil)
-  result = false
-  if proc == nil
-    my_each do |value|
-      result = yield(value)
-      break if result == false
-    end
-  else
-    my_each do |value|
-      result = proc.call(value)
-      break if result == false
+  my_each do |value|
+    if proc == nil
+      return false if !yield(value)
+    else
+      return false if !proc.call(value)
     end
   end
-  puts result
+  return true
 end
 
-[2,3,6].my_all?{|item| item.frozen?}
-
-not_odd = Proc.new{|item| item.even?}
-[8,9,10].my_all?(not_odd)
+test1 = [2,4,6].my_all?{|item| item.even?}
+puts test1
+test2 = [8,9,10].my_all?(Proc.new{|item| item.even?})
+puts test2
 
 # this method is a replacement for ruby's native inject
 def my_inject(sum, proc = nil)
-  if proc == nil
-    my_each do |value|
+  my_each do |value|
+    if proc == nil
       sum = yield(sum, value)
-    end
-  else
-    my_each do |value|
+    else
       sum = proc.call(sum, value)
     end
   end
   puts sum
+  sum
 end
 
-[1,2,5].my_inject(0) do |memo, item|
-  memo + item
-end
-
-total = Proc.new{|memo, item| memo + item}
-[1,2,3].my_inject(0, total)
+[6,7,8].my_inject(0){|memo, item| memo + item}
+[1,2,3].my_inject(0, Proc.new{|sum, value| sum += value})
