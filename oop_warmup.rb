@@ -19,24 +19,20 @@ reverse("fish")
 reverse(5.0)
 reverse("french horn")
 
-# this method outputs an array of the fibonacci sequence starting at 0 and up to the integer given
+# this method outputs an array of the fibonacci sequence up to the specified number of members
 def fibonacci(integer)
-  sequence = []
+  sequence = [0]
   if integer == 0
     puts "Please enter a number above 0"
-  elsif integer == 1
-    puts "The first number in the Fibonacci Sequence is [0]"
   else
-    first = 0
-    second = 1
-    integer.times {
-      sequence << first
-      increment = first + second
-      first = second
-      second = increment
-    }
+    pattern = 1
+    (integer - 1).times do |index|
+      sequence << pattern
+      pattern = pattern + sequence[index]
+    end
     puts "The first #{integer.to_s} numbers in the Fibonacci Sequence are #{sequence}"
   end
+  sequence
 end
 
 fibonacci(1)
