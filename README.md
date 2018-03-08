@@ -2,5 +2,4 @@
 
 by Brennan Fulmer
 
-for Tower of Hanoi game see original repo
 
