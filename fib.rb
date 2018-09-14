@@ -1,9 +1,9 @@
-def fibonacci(n)
+def fibonacci(elements)
   fib_array = [0 , 1]
   print "["
-  n.times do |i|
+  elements.times do |i|
     print "#{fib_array[0,1]}"
-    if i == (n - 1)
+    if i == (elements - 1)
       puts "]"
     else
       print ", "
