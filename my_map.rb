@@ -12,9 +12,10 @@ class Array
         map_arr << proc.call(x)
       end
     end
+    puts map_arr.inspect
   end
 end
 
 [1, 2, 5].my_map do |item|
   item ** 2
- end
+end
