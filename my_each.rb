@@ -12,7 +12,7 @@ class Array
   end
 end
 
-#[1,2,5].my_each{ |item| puts item }
+[1, 2, 5].my_each{ |item| puts item }
 
-# my_proc = Proc.new{|item| puts item**2}
-# [1,2,5].my_each(my_proc)
+my_proc = Proc.new{|item| puts item ** 2}
+[1, 2, 5].my_each(my_proc)
