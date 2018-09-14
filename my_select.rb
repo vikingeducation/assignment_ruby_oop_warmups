@@ -16,6 +16,7 @@ class Array
         end
       end
     end
+    puts new_arr
   end
 end
 
