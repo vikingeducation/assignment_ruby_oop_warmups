@@ -1,5 +1,4 @@
 require_relative 'my_each'
-# require 'pry'
 
 class Array
   def my_map(proc = nil, &block)
