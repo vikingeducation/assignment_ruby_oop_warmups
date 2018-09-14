@@ -1,8 +1,8 @@
 def reverse(string)
   rev = []
-  word = string.split("")
-  (word.length - 1).downto(0) do |x|
-    rev.push(word[x])
+  letters = string.split("")
+  (letters.length - 1).downto(0) do |x|
+    rev.push(letters[x])
   end
 puts  rev.join
 
