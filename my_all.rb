@@ -1,5 +1,4 @@
 require_relative 'my_each'
-require 'pry'
 
 class Array
   def my_all?(proc = nil, &block)
@@ -24,4 +23,4 @@ class Array
 end
 
 my_proc = Proc.new{|item| item.even?}
-[1,2,5].my_all?(my_proc)
+[1, 2, 5].my_all?(my_proc)
