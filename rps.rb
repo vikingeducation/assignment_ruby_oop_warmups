@@ -1,23 +1,24 @@
+
 class Player
-    attr_reader :name, :choice
+  attr_accessor :name, :choice
+
   def initialize
-    puts "What is your name?"
-    @name = gets.chomp
   end
 
-  def choose
-    puts "Do you choose rock, paper, or scissors? (Enter: r, p or s)"
+  def choose(name)
+    puts "#{@name}, do you choose rock, paper, or scissors? (Enter: r, p or s)"
     @choice = gets.chomp
   end
 end
 
 class Comp
-  attr_reader :choice
+  attr_reader :choice, :name
   def initialize
+    @name = "Conrad"
   end
 
-  def greeting(name)
-    puts "Hello #{name}, I'm Conrad.  Let's play a game of Rock Paper Scissors. "
+  def greeting1(name1)
+    puts "Hello #{name1}, I'm #{@name}.  Let's play a game of Rock Paper Scissors. "
   end
 
   def choose
@@ -36,46 +37,57 @@ class Comp
 end
 
 class Game
-  def initialize
-    @game = Game.new
+  def initialize(num_players)
+    player_1 = Player.new
+    puts "What is Player 1's name?"
+    player_1.name = gets.chomp
+    if num_players == 2
+      player_2 = Player.new
+      puts "What is Player 2's name?"
+      player_2.name = gets.chomp
+    else
+      player_2 = Comp.new
+    end
+    game_play(player_1, player_2)
   end
 
-  def self.winner(player_choice, comp_choice )
-    case player_choice
-    when "r"
-      if comp_choice == "r"
-        puts "It's a tie!"
-      elsif comp_choice == "p"
-        puts "I win!  Better luck next time."
-      else
-        puts "You win!"
-      end
-    when "p"
-      if comp_choice == "r"
-        puts "You win!"
-      elsif comp_choice == "p"
-        puts "It's a tie!"
-      else
-        puts "I win!  Better luck next time."
-      end
-    when "s"
-      if comp_choice == "r"
-        puts puts "I win!  Better luck next time."
-      elsif comp_choice == "p"
-        puts "You win!"
-      else
-        puts "It's a tie!"
-      end
+  def game_play(player_1, player_2)
+    player_1.choice = player_1.choose(player_1.name)
+    player_2.choice = player_2.choose(player_2.name)
+    Game.winner(player_1, player_2)
+  end
+
+
+  def self.winner(player_1, player_2 )
+    case player_1.choice
+      when "r"
+        if player_2.choice == "r"
+          puts "It's a tie!"
+        elsif player_2.choice == "p"
+          puts "#{player_2.name} wins!"
+        else
+          puts "#{player_1.name} wins!"
+        end
+      when "p"
+        if player_2.choice == "r"
+          puts "#{player_1.name} wins!"
+        elsif player_2.choice == "p"
+          puts "It's a tie!"
+        else
+          puts "#{player_2.name} wins!"
+        end
+      when "s"
+        if player_2.choice == "r"
+          puts puts "#{player_2.name} wins!"
+        elsif player_2.choice == "p"
+          puts "#{player_1.name} wins!"
+        else
+          puts "It's a tie!"
+        end
     end
   end
 end
 
-def game_play
-  player = Player.new
-  comp = Comp.new
-  comp.greeting(player.name)
-  player.choose
-  comp.choose
-  Game.winner(player.choice, comp.choice)
-end
-game_play
+
+
+Game.new(2)
